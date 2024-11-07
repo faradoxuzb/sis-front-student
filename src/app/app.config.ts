@@ -1,5 +1,5 @@
-import { provideHttpClient } from '@angular/common/http';
-import { APP_INITIALIZER, ApplicationConfig, inject } from '@angular/core';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { APP_INITIALIZER, ApplicationConfig, inject, InjectionToken } from '@angular/core';
 import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -17,11 +17,20 @@ import { provideIcons } from 'app/core/icons/icons.provider';
 import { mockApiServices } from 'app/mock-api';
 import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
+import { APP_BASE_HREF } from '@angular/common';
+import { authInterceptor } from './core/auth/auth.interceptor';
+import { environment } from 'environments/environment';
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        // {
+        //     provide: API_BASE_URL,
+        //     useValue:environment.API_BASE_URL
+        // },
         provideAnimations(),
-        provideHttpClient(),
+        provideHttpClient(
+            withInterceptors([authInterceptor])
+        ),
         provideRouter(
             appRoutes,
             withPreloading(PreloadAllModules),

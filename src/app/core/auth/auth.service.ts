@@ -3,12 +3,15 @@ import { inject, Injectable } from '@angular/core';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import { BaseService } from '../baseHttpService';
+import { LoginModel } from './LoginModel';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     private _authenticated: boolean = false;
     private _httpClient = inject(HttpClient);
     private _userService = inject(UserService);
+    private _baseHttpService = inject(BaseService);
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -58,16 +61,16 @@ export class AuthService {
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.post('api/auth/sign-in', credentials).pipe(
-            switchMap((response: any) => {
+        return this._baseHttpService.post<LoginModel>('auth/login', credentials).pipe(
+            switchMap((response: LoginModel) => {
                 // Store the access token in the local storage
-                this.accessToken = response.accessToken;
+                this.accessToken = response.user.token.access_token;
 
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
                 // Store the user on the user service
-                this._userService.user = response.user;
+                // this._userService.user = response.user;
 
                 // Return a new observable with the response
                 return of(response);
@@ -173,6 +176,7 @@ export class AuthService {
         }
 
         // If the access token exists, and it didn't expire, sign in using it
-        return this.signInUsingToken();
+        // return this.signInUsingToken();
+        return of(true)
     }
 }
