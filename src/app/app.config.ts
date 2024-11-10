@@ -17,16 +17,15 @@ import { provideIcons } from 'app/core/icons/icons.provider';
 import { mockApiServices } from 'app/mock-api';
 import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
-import { APP_BASE_HREF } from '@angular/common';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { environment } from 'environments/environment';
-
+import { DITokens } from './core/utils/di.tokens';
 export const appConfig: ApplicationConfig = {
     providers: [
-        // {
-        //     provide: API_BASE_URL,
-        //     useValue:environment.API_BASE_URL
-        // },
+        {
+            provide:DITokens.API_BASE_URL,
+            useValue:environment.API_BASE_URL
+        },
         provideAnimations(),
         provideHttpClient(
             withInterceptors([authInterceptor])

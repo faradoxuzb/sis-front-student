@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { User } from 'app/core/user/user.types';
 import { map, Observable, ReplaySubject, tap } from 'rxjs';
 import { allResponseUser } from './user.interface';
-import { BaseService } from '../baseHttpService';
+import { BaseService } from '../services/baseHttp.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {

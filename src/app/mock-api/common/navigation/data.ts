@@ -3,37 +3,65 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
     {
-        id   : 'example',
-        title: 'Example',
+        id   : 'schedule',
+        title: 'Schedule',
         type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/example'
+        icon : 'heroicons_outline:academic-cap',
+        link : '/schedule'
+    },
+    {
+        id   : 'profile',
+        title: 'Profile',
+        type : 'basic',
+        icon : 'heroicons_outline:user',
+        link : '/profile'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
     {
-        id   : 'example',
-        title: 'Example',
+        id   : 'schedule',
+        title: 'Schedule',
         type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/example'
+        icon : 'heroicons_outline:academic-cap',
+        link : '/schedule'
+    },
+    {
+        id   : 'profile',
+        title: 'Profile',
+        type : 'basic',
+        icon : 'heroicons_outline:user',
+        link : '/profile'
     }
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
-        id   : 'example',
-        title: 'Example',
+        id   : 'schedule',
+        title: 'Schedule',
         type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/example'
+        icon : 'heroicons_outline:academic-cap',
+        link : '/schedule'
+    },
+    {
+        id   : 'profile',
+        title: 'Profile',
+        type : 'basic',
+        icon : 'heroicons_outline:user',
+        link : '/profile'
     }
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
     {
-        id   : 'example',
-        title: 'Example',
+        id   : 'schedule',
+        title: 'Schedule',
         type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/example'
+        icon : 'heroicons_outline:academic-cap',
+        link : '/schedule'
+    },
+    {
+        id   : 'profile',
+        title: 'Profile',
+        type : 'basic',
+        icon : 'heroicons_outline:user',
+        link : '/profile'
     }
 ];

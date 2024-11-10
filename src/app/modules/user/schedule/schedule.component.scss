@@ -1,0 +1,68 @@
+:host {
+    ::ng-deep.p-inputtext {
+      width: 100%;
+    }
+
+    $border-radius: 2px;
+
+    .my-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+
+
+
+      tr th {
+        padding: 12px;
+      }
+
+      tr td {
+        text-align: center;
+
+        .wrapper-subject:hover,
+        .wrapper-subject-active {
+          transition: all 0.3s ease;
+          background-color: #F2F5FC;
+          border-color: #5C79D5 !important;
+
+          .subject {
+            background-color: #fff !important;
+            transition: all 0.3s ease;
+          }
+        }
+      }
+
+      tr td,
+      tr th {
+        border-color: #E7E7E7;
+        border-style: solid;
+        border-top-width: 1px;
+        border-left-width: 1px;
+      }
+
+      tr th:last-child,
+      tr td:last-child {
+        border-right-width: 1px;
+      }
+
+      tr:last-child td {
+        border-bottom-width: 1px;
+      }
+
+      tr:first-child th:first-child {
+        border-top-left-radius: $border-radius;
+      }
+
+      tr:first-child th:last-child {
+        border-top-right-radius: $border-radius;
+      }
+
+      tr:last-child td:first-child {
+        border-bottom-left-radius: $border-radius;
+      }
+
+      tr:last-child td:last-child {
+        border-bottom-right-radius: $border-radius;
+      }
+    }
+  }
