@@ -20,12 +20,14 @@ import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
 import { authInterceptor } from './core/auth/auth.interceptor';
 import { environment } from 'environments/environment';
 import { DITokens } from './core/utils/di.tokens';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 export const appConfig: ApplicationConfig = {
     providers: [
         {
             provide:DITokens.API_BASE_URL,
             useValue:environment.API_BASE_URL
         },
+        provideEnvironmentNgxMask(),
         provideAnimations(),
         provideHttpClient(
             withInterceptors([authInterceptor])

@@ -75,7 +75,7 @@ export const appRoutes: Route[] = [
         },
         children: [
             {path: 'schedule', loadComponent: () => import('app/modules/user/schedule/schedule.component')},
-            {path: 'profile', loadComponent: () => import('app/modules/user/profile/profile.component')},
+            {path: 'profile', loadChildren: () => import('app/modules/user/profile/profile.routing')},
         ]
     }
 ];
