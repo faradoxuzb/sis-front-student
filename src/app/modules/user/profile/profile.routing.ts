@@ -12,6 +12,18 @@ export default [
                 path: 'classes',
                 loadComponent: () => import('./classes/classes.component'),
             },
+            {
+                path: 'files',
+                loadComponent: () => import('./files/files.component'),
+            },
+            {
+                path: 'contracts',
+                loadComponent: () => import('./contracts/contracts.component'),
+            },
+            {
+                path: 'payments',
+                loadComponent: () => import('./payments/payments.component'),
+            },
         ],
     },
 ];

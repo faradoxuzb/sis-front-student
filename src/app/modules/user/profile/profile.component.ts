@@ -214,6 +214,24 @@ export default class ProfileComponent implements OnInit {
             title: 'Classes',
             description: "Student's classes info",
         },
+        {
+            id: 'files',
+            icon: 'heroicons_outline:clipboard-document-check',
+            title: 'Files',
+            description: "Student's files",
+        },
+        {
+            id: 'contracts',
+            icon: 'heroicons_outline:document-text',
+            title: 'Contracts',
+            description: "Contracts",
+        },
+        {
+            id: 'payments',
+            icon: 'heroicons_outline:banknotes',
+            title: 'Payments',
+            description: "Payments Menu",
+        },
         // {
         //     id: 'attendance',
         //     icon: 'heroicons_outline:calendar-days',
@@ -258,16 +276,13 @@ export default class ProfileComponent implements OnInit {
         if (this.drawerMode === 'over') {
             this.drawer.close();
         }
+        this.selectedPanel = panel;
         if (panel == 'bio') {
             this._router.navigate(['profile']);
         }
-        if (panel == 'contacts') {
-            this._router.navigate(['profile/contacts']);
+        else{
+            this._router.navigate([`profile/${panel}`]);
         }
-        if (panel == 'classes') {
-            this._router.navigate(['profile/classes']);
-        }
-        this.selectedPanel = panel;
     }
     getPanelInfo(id: string): any {
         return this.panels.find((panel) => panel.id === id);

@@ -117,5 +117,14 @@
                 }
             }
         }
+    },
+    "schematics": {
+        "@schematics/angular:component": {
+            "style": "scss",
+            "standalone": true,
+            "changeDetection": "OnPush",
+            "skipTests": true,
+            "inlineTemplate": true
+        }
     }
 }

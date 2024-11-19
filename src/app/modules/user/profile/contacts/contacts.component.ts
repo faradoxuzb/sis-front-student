@@ -14,6 +14,7 @@ import { NoAvatarPipe } from 'app/modules/shared/Pipes/no-avatar.pipe';
 import { PhonePipe } from 'app/modules/shared/Pipes/phone.pipe';
 import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe';
 import { ProfileService } from '../profile.service';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
     selector: 'app-contacts',
@@ -134,12 +135,15 @@ import { ProfileService } from '../profile.service';
 export default class ContactsComponent implements OnInit {
     guardians: any;
     private _changeDetectorRef = inject(ChangeDetectorRef);
+    private _user = inject(UserService)
     constructor(private _profileService: ProfileService) {}
 
     ngOnInit() {
-        this._profileService.getGuardiansByStudentId(3).subscribe((res) => {
-            this.guardians = res;
-            this._changeDetectorRef.markForCheck();
-        });
+        this._user.user$.subscribe(res=>{
+            this._profileService.getGuardiansByStudentId(res.id).subscribe((res) => {
+                this.guardians = res;
+                this._changeDetectorRef.markForCheck();
+            });
+        })
     }
 }
