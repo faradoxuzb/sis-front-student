@@ -61,21 +61,26 @@ export class AuthService {
             return throwError('User is already logged in.');
         }
 
-        return this._baseHttpService.post<LoginModel>('auth/login', credentials).pipe(
-            switchMap((response: LoginModel) => {
-                // Store the access token in the local storage
-                this.accessToken = response.user.token.access_token;
-
-                // Set the authenticated flag to true
-                this._authenticated = true;
-
-                // Store the user on the user service
-                // this._userService.user = response.user;
-
-                // Return a new observable with the response
-                return of(response);
-            })
-        );
+        return this._baseHttpService
+            .post<LoginModel>('auth/login', credentials)
+            .pipe(
+                catchError(() => of(false)),
+                switchMap((response: LoginModel) => {
+                    if (response.user) {
+                        // Store the access token in the local storage
+                        this.accessToken = response.user.token.access_token;
+                        // Set the authenticated flag to true
+                        this._authenticated = true;
+                        // Store the user on the user service
+                        // this._userService.user = response.user;
+                        // Return a new observable with the response
+                        return of(response);
+                    }
+                    else{
+                        return of(false);
+                    }
+                })
+            );
     }
 
     /**
@@ -177,6 +182,6 @@ export class AuthService {
 
         // If the access token exists, and it didn't expire, sign in using it
         // return this.signInUsingToken();
-        return of(true)
+        return of(true);
     }
 }

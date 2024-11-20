@@ -48,7 +48,7 @@ export const authInterceptor = (
     return next(newReq).pipe(
         catchError((error) => {
             // Catch "401 Unauthorized" responses
-            if (error instanceof HttpErrorResponse && error.status === 401) {
+            if (error instanceof HttpErrorResponse && error.status === 406) {
                 // Sign out
                 authService.signOut();
 
