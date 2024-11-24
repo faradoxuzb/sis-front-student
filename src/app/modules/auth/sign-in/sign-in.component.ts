@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
     FormsModule,
@@ -40,6 +40,7 @@ import { AuthService } from 'app/core/auth/auth.service';
         MatProgressSpinnerModule,
         TranslocoModule,
         NgClass,
+        NgIf
     ],
 })
 export class AuthSignInComponent implements OnInit {

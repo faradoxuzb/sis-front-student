@@ -1,0 +1,10 @@
+Dockerfile
+.dockerignore
+/node_modules/
+/.git
+/README.md
+/LICENSE.md
+/npm-debug.log
+/dist
+/.idea
+/.angular

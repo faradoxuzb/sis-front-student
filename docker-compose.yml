@@ -1,0 +1,22 @@
+services:
+    sis-student:
+        container_name: sis-student
+        build:
+            context: .
+            dockerfile: Dockerfile
+        networks:
+            - sis_student_network
+        restart: always
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.sis-student.rule=Host(`student.sis.uz`)"
+            - "traefik.http.routers.sis-student.entrypoints=websecure"
+            - "traefik.http.routers.sis-student.tls=true"
+            - "traefik.http.services.sis-student.loadbalancer.server.port=80"
+            - "traefik.http.routers.sis-student.middlewares=redirect-to-https"
+            - "traefik.http.middlewares.redirect-to-https.redirectScheme.scheme=https"
+            - "traefik.http.middlewares.redirect-to-https.redirectScheme.permanent=true"
+networks:
+    sis_student_network:
+        name: production_network
+        external: true
