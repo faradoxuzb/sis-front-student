@@ -1,8 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    OnInit,
+} from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslocoModule } from '@ngneat/transloco';
+import { ProfileService } from '../profile.service';
 
 @Component({
     selector: 'app-files',
@@ -11,13 +18,13 @@ import { TranslocoModule } from '@ngneat/transloco';
             <thead>
                 <tr>
                     <td class="font-semibold">
-                        {{ 'FileName' | transloco }}
+                        {{ 'File name' | transloco }}
                     </td>
                     <td class="font-semibold">
                         {{ 'Type' | transloco }}
                     </td>
                     <td class="font-semibold">
-                        {{ 'Upload Date' | transloco }}
+                        {{ 'Upload date' | transloco }}
                     </td>
                     <td class="font-semibold">
                         {{ 'Action' | transloco }}
@@ -25,139 +32,65 @@ import { TranslocoModule } from '@ngneat/transloco';
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>StudentPhoto.png</td>
-                    <td>
-                        <button
-                            class="typeAllStyles border-[#91d5ff] bg-[#e6f7ff] text-[#096dd9]"
-                        >
-                            Фото
-                        </button>
-                    </td>
-                    <td>2024-11-15</td>
-                    <td>
-                        <div class="">
-                            <button
-                                mat-icon-button
-                                [matMenuTriggerFor]="summaryMenu"
-                            >
-                                <mat-icon
-                                    class="icon-size-4"
-                                    [svgIcon]="
-                                        'heroicons_mini:ellipsis-vertical'
-                                    "
-                                ></mat-icon>
-                            </button>
-                            <mat-menu #summaryMenu="matMenu">
-                                <button mat-menu-item>Yesterday</button>
-                                <button mat-menu-item>2 days ago</button>
-                                <button mat-menu-item>3 days ago</button>
-                            </mat-menu>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>BirthCertificate.pdf</td>
-                    <td>
-                        <button
-                            class="typeAllStyles w-fit border-[#b7eb8f] bg-[#f6ffed] text-[#389e0d]"
-                        >
-                            Свидетельство о рождении
-                        </button>
-                    </td>
-                    <td>2024-11-15</td>
-                    <td>
-                        <div class="">
-                            <button
-                                mat-icon-button
-                                [matMenuTriggerFor]="summaryMenu"
-                            >
-                                <mat-icon
-                                    class="icon-size-4"
-                                    [svgIcon]="
-                                        'heroicons_mini:ellipsis-vertical'
-                                    "
-                                ></mat-icon>
-                            </button>
-                            <mat-menu #summaryMenu="matMenu">
-                                <button mat-menu-item>Yesterday</button>
-                                <button mat-menu-item>2 days ago</button>
-                                <button mat-menu-item>3 days ago</button>
-                            </mat-menu>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Diploma.pdf</td>
-                    <td>
-                        <button
-                            class="typeAllStyles w-fit border-[#ffe58f] bg-[#fffbe6] text-[#d48806]"
-                        >
-                            Дипломы
-                        </button>
-                    </td>
-                    <td>2024-11-15</td>
-                    <td>
-                        <div class="">
-                            <button
-                                mat-icon-button
-                                [matMenuTriggerFor]="summaryMenu"
-                            >
-                                <mat-icon
-                                    class="icon-size-4"
-                                    [svgIcon]="
-                                        'heroicons_mini:ellipsis-vertical'
-                                    "
-                                ></mat-icon>
-                            </button>
-                            <mat-menu #summaryMenu="matMenu">
-                                <button mat-menu-item>Yesterday</button>
-                                <button mat-menu-item>2 days ago</button>
-                                <button mat-menu-item>3 days ago</button>
-                            </mat-menu>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Certificate.png</td>
-                    <td>
-                        <button
-                            class="typeAllStyles w-fit border-[#d3adf7] bg-[#f9f0ff] text-[#531dab]"
-                        >
-                            Сертификат
-                        </button>
-                    </td>
-                    <td>2024-11-15</td>
-                    <td>
-                        <div class="">
-                            <button
-                                mat-icon-button
-                                [matMenuTriggerFor]="summaryMenu"
-                            >
-                                <mat-icon
-                                    class="icon-size-4"
-                                    [svgIcon]="
-                                        'heroicons_mini:ellipsis-vertical'
-                                    "
-                                ></mat-icon>
-                            </button>
-                            <mat-menu #summaryMenu="matMenu">
-                                <button mat-menu-item>Yesterday</button>
-                                <button mat-menu-item>2 days ago</button>
-                                <button mat-menu-item>3 days ago</button>
-                            </mat-menu>
-                        </div>
-                    </td>
-                </tr>
+                @if (_profileService.profileInfo$ | async; as profileInfo) {
+                    @for (item of profileInfo.files; track $index) {
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>
+                                <button class="typeAllStyles">
+                                    {{ item.key | transloco }}
+                                </button>
+                            </td>
+                            <td>2024-11-15</td>
+                            <td class="cursor-pointer">
+                                <a [href]="item.presigned_url" target="_blank">
+                                    <mat-icon
+                                        svgIcon="heroicons_outline:eye"
+                                        class="icon-size-5"
+                                    ></mat-icon>
+                                </a>
+                                <!-- <div class="">
+                                    <button
+                                        mat-icon-button
+                                        [matMenuTriggerFor]="summaryMenu"
+                                    >
+                                        <mat-icon
+                                            class="icon-size-4"
+                                            [svgIcon]="
+                                                'heroicons_mini:ellipsis-vertical'
+                                            "
+                                        ></mat-icon>
+                                    </button>
+                                    <mat-menu #summaryMenu="matMenu">
+                                        <button mat-menu-item>Yesterday</button>
+                                        <button mat-menu-item>
+                                            2 days ago
+                                        </button>
+                                        <button mat-menu-item>
+                                            3 days ago
+                                        </button>
+                                    </mat-menu>
+                                </div> -->
+                            </td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
     `,
     styleUrls: ['./files.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [TranslocoModule, MatIconButton, MatIconModule, MatMenuModule],
+    imports: [
+        TranslocoModule,
+        MatIconButton,
+        MatIconModule,
+        MatMenuModule,
+        AsyncPipe,
+    ],
 })
 export default class FilesComponent implements OnInit {
+    protected _profileService = inject(ProfileService);
     constructor() {}
 
     visible: any = {};
@@ -185,16 +118,16 @@ export default class FilesComponent implements OnInit {
     ];
 
     // Get color for resource type tags
-    getTagColor(type: string): string {
-        switch (type) {
-            case 'Фото':
-                return 'blue';
-            case 'Свидетельство о рождении':
-                return 'green';
-            case 'Дипломы':
-                return 'gold';
-            case 'Сертификат':
-                return 'purple';
+    getTagColor(key: string): string {
+        switch (key) {
+            case 'photo':
+                return 'border-[#91d5ff] bg-[#e6f7ff] text-[#096dd9]';
+            case 'diplomas':
+                return 'border-[#b7eb8f] bg-[#f6ffed] text-[#389e0d]';
+            case 'sertificates':
+                return 'border-[#ffe58f] bg-[#fffbe6] text-[#d48806]';
+            case 'personalDocument':
+                return 'border-[#d3adf7] bg-[#f9f0ff] text-[#531dab]';
             default:
                 return 'default';
         }

@@ -1,14 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { ProfileService } from '../profile.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'app-attendance',
-    template: ``,
+    template: `
+
+    `,
     styleUrls: ['./attendance.component.scss'],
     standalone: true,
-    imports: [],
+    imports: [AsyncPipe],
 })
 export class AttendanceComponent implements OnInit {
     constructor() {}
+    protected _profileService = inject(ProfileService);
+    ngOnInit() {
 
-    ngOnInit() {}
+    }
 }

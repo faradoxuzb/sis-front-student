@@ -1,123 +1,127 @@
-import { NgTemplateOutlet } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { ProfileService } from '../profile/profile.service';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
     selector: 'app-schedule',
     template: `
-       <div class="w-full p-5">
-       <table class="my-table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Dushanba</th>
-                    <th>Seshanba</th>
-                    <th>Chorshanba</th>
-                    <th>Payshanba</th>
-                    <th>Juma</th>
-                    <th>Shanba</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (item of data; track item.order; let rowInd = $index) {
-                    <tr>
-                        <td class="p-4">{{ rowInd + 1 }}</td>
-                        @for (
-                            day of item.days;
-                            track colInd;
-                            let colInd = $index
-                        ) {
-                            <ng-container
-                                [ngTemplateOutlet]="templateScheduleCell"
-                                [ngTemplateOutletContext]="{
-                                    $implicit: day,
-                                    rowInd,
-                                    colInd,
-                                }"
-                            ></ng-container>
+        @if (_profileService._lessonSchedule | async; as schedule) {
+            <div class="w-full p-5">
+                <table class="my-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>{{'Monday' | transloco}}</th>
+                            <th>{{'Tuesday' | transloco}}</th>
+                            <th>{{'Wednesday' | transloco}}</th>
+                            <th>{{'Thursday' | transloco}}</th>
+                            <th>{{'Friday' | transloco}}</th>
+                            <th>{{'Saturday' | transloco}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of data; track item.order; let rowInd = $index) {
+                            <tr>
+                                <td class="p-4">{{ rowInd + 1 }}</td>
+                                @for (
+                                    day of item.days;
+                                    track colInd;
+                                    let colInd = $index
+                                ) {
+                                    <ng-container
+                                        [ngTemplateOutlet]="templateScheduleCell"
+                                        [ngTemplateOutletContext]="{
+                                            $implicit: day,
+                                            rowInd,
+                                            colInd,
+                                        }"
+                                    ></ng-container>
+                                }
+                            </tr>
                         }
-                    </tr>
-                }
-            </tbody>
-        </table>
-       </div>
+                    </tbody>
+                </table>
+            </div>
 
-        <ng-template
-            #templateScheduleCell
-            let-cellData
-            let-rowInd="rowInd"
-            let-colInd="colInd"
-        >
-            <td class="h-[182px]" (click)="showScheduleEdit(rowInd, colInd)">
-                <div
-                    class="wrapper-subject h-full cursor-pointer border border-transparent p-4"
-                    [ngClass]="{
-                        'wrapper-subject-active':
-                            colIndex === colInd && rowIndex === rowInd,
-                    }"
-                >
-                    @if (cellData.subjects.length > 0) {
-                        <div class="flex h-full flex-col gap-2">
-                            @for (
-                                subject of cellData.subjects;
-                                track i;
-                                let i = $index
-                            ) {
-                                <div
-                                    class="flex flex-col justify-between gap-1 {{
-                                        subject.subjectColor
-                                    }} border {{
-                                        subject.borderColor
-                                    }} rounded-md p-4 text-left h-full subject"
-                                >
-                                    <div>
-                                        <p class="text-lg font-semibold">
-                                            {{ subject.subject }}
-                                        </p>
-                                        <!-- <span class="text-[#6D6D6D]">{{
-                                    item.time
-                                  }}</span> -->
-                                    </div>
-
+            <ng-template
+                #templateScheduleCell
+                let-cellData
+                let-rowInd="rowInd"
+                let-colInd="colInd"
+            >
+                <td class="h-[182px]" (click)="showScheduleEdit(rowInd, colInd)">
+                    <div
+                        class="wrapper-subject h-full cursor-pointer border border-transparent p-4"
+                        [ngClass]="{
+                            'wrapper-subject-active':
+                                colIndex === colInd && rowIndex === rowInd,
+                        }"
+                    >
+                        @if (cellData.subjects.length > 0) {
+                            <div class="flex h-full flex-col gap-2">
+                                @for (
+                                    subject of cellData.subjects;
+                                    track i;
+                                    let i = $index
+                                ) {
                                     <div
-                                        class="flex items-center justify-between gap-2"
+                                        class="flex flex-col justify-between gap-1 {{
+                                            subject.subjectColor
+                                        }} border {{
+                                            subject.borderColor
+                                        }} rounded-md p-4 text-left h-full subject"
                                     >
-                                        <span class="text-[#454545]">{{
-                                            subject.teacher
-                                        }}</span>
+                                        <div>
+                                            <p class="text-lg font-semibold">
+                                                {{ subject.subject }}
+                                            </p>
+                                            <!-- <span class="text-[#6D6D6D]">{{
+                                        item.time
+                                      }}</span> -->
+                                        </div>
+
                                         <div
-                                            class="text-[white] {{
-                                                subject.roomColor
-                                            }} rounded-3xl px-2"
+                                            class="flex items-center justify-between gap-2"
                                         >
-                                            {{ subject.room }}
+                                            <span class="text-[#454545]">{{
+                                                subject.teacher
+                                            }}</span>
+                                            <div
+                                                class="text-[white] {{
+                                                    subject.roomColor
+                                                }} rounded-3xl px-2"
+                                            >
+                                                {{ subject.room }}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
-                        </div>
-                    } @else {
-                        <div
-                            class="subject flex h-full items-center justify-center rounded-xl border border-dashed border-[#5C79D5] bg-[#F2F5FC] p-4"
-                        >
-                            <span
-                                nz-icon
-                                nzType="plus-circle"
-                                nzTheme="outline"
-                                style="color: #5C79D5"
-                            ></span>
-                        </div>
-                    }
-                </div>
-            </td>
-        </ng-template>
+                                }
+                            </div>
+                        } @else {
+                            <div
+                                class="subject flex h-full items-center justify-center rounded-xl border border-dashed border-[#5C79D5] bg-[#F2F5FC] p-4"
+                            >
+                                <span
+                                    nz-icon
+                                    nzType="plus-circle"
+                                    nzTheme="outline"
+                                    style="color: #5C79D5"
+                                ></span>
+                            </div>
+                        }
+                    </div>
+                </td>
+            </ng-template>
+        }
     `,
     styleUrls: ['./schedule.component.scss'],
     standalone: true,
-    imports: [NgTemplateOutlet],
+    imports: [NgTemplateOutlet, AsyncPipe, TranslocoModule],
 })
 export default class ScheduleComponent implements OnInit {
     constructor() {}
-
+    protected _profileService = inject(ProfileService)
     readonly SUBJECT_ALGEBRA = {
         subject: 'Algebra',
         subjectColor: 'bg-[#F2F5FC]',

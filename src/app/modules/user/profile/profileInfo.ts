@@ -1,45 +1,6 @@
 export interface ProfileInfo {
-    branches: BranchElement[];
-    countries: Country[];
-    genders: Genders;
-    status: { [key: string]: string };
-    languages: Languages;
-    student: WelcomeStudent;
-}
-
-export interface BranchElement {
     id: number;
-    name: string;
-}
-
-export interface Country {
-    id: number;
-    name: Name;
-}
-
-export interface Name {
-    uz: string;
-    en: string;
-    ru: string;
-}
-
-export interface Genders {
-    male: string;
-    female: string;
-}
-
-export interface Languages {
-    uz: string;
-    ru: string;
-    en: string;
-    ka: string;
-    tg: string;
-    tk: string;
-}
-
-export interface WelcomeStudent {
-    id: number;
-    branch: StudentBranch;
+    branch: Branch;
     first_name: string;
     last_name: string;
     middle_name: string;
@@ -54,14 +15,14 @@ export interface WelcomeStudent {
     address: string;
     actual_address: string;
     id_card: string;
-    registration_number: null;
+    registration_number: string;
     photo: null;
-    files: null;
+    files: File[];
     user: User;
     citizenship: Citizenship;
     studentContracts: any[];
-    registration_date: null;
-    guardians: GuardianElement[];
+    registration_date: Date;
+    guardians: any[];
     studentGroups: StudentGroup[];
     currentGroup: CurrentGroup;
     knowingLanguages: string[];
@@ -69,14 +30,14 @@ export interface WelcomeStudent {
     transports: Transport[];
 }
 
-export interface StudentBranch {
+export interface Branch {
     id: number;
     name: string;
     address: string;
     phone: string;
-    email: null;
+    email: string;
     status: string;
-    prefix: null;
+    prefix: string;
 }
 
 export interface Citizenship {
@@ -89,49 +50,24 @@ export interface Citizenship {
     active: boolean;
 }
 
+export interface Name {
+    uz: string;
+    en: string;
+    ru: string;
+}
+
 export interface CurrentGroup {
     groupName: string;
     classType: Name;
 }
 
-export interface GuardianElement {
-    type: string;
-    guardian: GuardianFullData;
-}
-
-export interface GuardianFullData {
-    id: number;
-    first_name: string;
-    last_name: string;
-    middle_name: string;
-    birth_date: Date;
-    identity_number: string;
-    identity_serial: string;
-    pnfl_number: string;
-    gender: string;
-    phone: string;
-    extra_phone: null | string;
-    user: User;
-    citizenship: Citizenship;
-    students: StudentElement[];
-}
-
-export interface StudentElement {
-    id: number;
-    first_name: string;
-    last_name: string;
-    middle_name: string;
-    birth_date: Date;
-    gender: string;
-}
-
-export interface User {
+export interface File {
     id: number;
     name: string;
-    email: string;
-    branch: StudentBranch | null;
-    additional_branches: any[];
-    roles: any[];
+    path: string;
+    type: string;
+    key: string;
+    presigned_url: string;
 }
 
 export interface StudentGroup {
@@ -165,4 +101,20 @@ export interface Transport {
     name: string;
     phone: string;
     extra_phone: string;
+}
+
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+    branch: Branch;
+    additional_branches: any[];
+    roles: Role[];
+}
+
+export interface Role {
+    id: number;
+    name: string;
+    guard_name: string;
+    permissions: any[];
 }

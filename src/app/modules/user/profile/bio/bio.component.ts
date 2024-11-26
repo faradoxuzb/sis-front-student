@@ -19,73 +19,67 @@ import { ProfileService } from '../profile.service';
                 @if (profileService.profileInfo$ | async; as profileInfo) {
                     <tbody>
                         <tr>
-                            <td>{{ 'name' | transloco }}</td>
-                            <td>{{ profileInfo.student.first_name }}</td>
+                            <td>{{ 'First name' | transloco }}</td>
+                            <td>{{ profileInfo.first_name }}</td>
                         </tr>
                         <tr>
-                            <td>{{ 'surname' | transloco }}</td>
-                            <td>{{ profileInfo.student.last_name }}</td>
+                            <td>{{ 'Last name' | transloco }}</td>
+                            <td>{{ profileInfo.last_name }}</td>
                         </tr>
                         <tr>
-                            <td>{{ 'patronymic' | transloco }}</td>
-                            <td>{{ profileInfo.student.middle_name }}</td>
+                            <td>{{ 'Patronymic' | transloco }}</td>
+                            <td>{{ profileInfo.middle_name }}</td>
                         </tr>
                         <tr>
-                            <td>{{ 'email' | transloco }}</td>
-                            <td>{{ profileInfo.student.user.email }}</td>
+                            <td>{{ 'Email' | transloco }}</td>
+                            <td>{{ profileInfo.user.email }}</td>
                         </tr>
                         <tr>
-                            <td>{{ 'phoneNumber' | transloco }}</td>
-                            <td>{{ profileInfo.student.phone }}</td>
+                            <td>{{ 'Phone number' | transloco }}</td>
+                            <td>{{ profileInfo.phone }}</td>
                         </tr>
                         <tr>
-                            <td>{{ 'additionalPhoneNumber' | transloco }}</td>
-                            <td>{{ profileInfo.student.extra_phone }}</td>
+                            <td>{{ 'Additional number' | transloco }}</td>
+                            <td>{{ profileInfo.extra_phone }}</td>
                         </tr>
                         <tr>
-                            <td>{{ 'SeriaDoc/passportNumber' | transloco }}</td>
+                            <td>{{ 'Passport series / passport number' | transloco }}</td>
                             <td>
-                                {{ profileInfo.student.identity_serial }} /
-                                {{ profileInfo.student.identity_number }}
+                                {{ profileInfo.identity_serial }} /
+                                {{ profileInfo.identity_number }}
                             </td>
                         </tr>
                         <tr>
-                            <td>{{ 'pinfl' | transloco }}</td>
+                            <td>{{ 'Pinfl' | transloco }}</td>
                             <td>
-                                {{ profileInfo.student.pnfl_number }}
+                                {{ profileInfo.pnfl_number }}
                             </td>
                         </tr>
                         <tr>
-                            <td>{{ 'IdCard' | transloco }}</td>
+                            <td>{{ 'Id Card' | transloco }}</td>
                             <td>
-                                {{ profileInfo.student.id_card }}
+                                {{ profileInfo.id_card }}
                             </td>
                         </tr>
                         <tr>
-                            <td>{{ 'birthDate' | transloco }}</td>
+                            <td>{{ 'Birth date' | transloco }}</td>
                             <td>
                                 {{
-                                    profileInfo.student.birth_date
+                                    profileInfo.birth_date
                                         | date: 'dd.MM.yyyy'
                                 }}
                             </td>
                         </tr>
                         <tr>
-                            <td>{{ 'sex' | transloco }}</td>
+                            <td>{{ 'Sex' | transloco }}</td>
                             <td>
-                                {{ profileInfo.student.gender | transloco }}
+                                {{ profileInfo.gender | transloco }}
                             </td>
                         </tr>
                         <tr>
-                            <td>{{ 'Filial' | transloco }}</td>
+                            <td>{{ 'Branch' | transloco }}</td>
                             <td>
-                                {{ profileInfo.student.branch?.name }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{ 'Filial' | transloco }}</td>
-                            <td>
-                                {{ profileInfo.student.branch?.name }}
+                                {{ profileInfo.branch?.name }}
                             </td>
                         </tr>
                         <tr>
@@ -93,8 +87,7 @@ import { ProfileService } from '../profile.service';
                             <td>
                                 <span class="px-[11px]">
                                     @for (
-                                        transport of profileInfo.student
-                                            .transports;
+                                        transport of profileInfo.transports;
                                         track transport.id
                                     ) {
                                         <span
@@ -107,11 +100,11 @@ import { ProfileService } from '../profile.service';
                         </tr>
                         <tr>
                             <td>
-                                {{ 'citizenship' | transloco }}
+                                {{ 'Citizenship' | transloco }}
                             </td>
                             <td>
                                 {{
-                                    profileInfo.student.citizenship.name
+                                    profileInfo.citizenship.name
                                         | translateJson
                                         | async
                                 }}
@@ -119,18 +112,18 @@ import { ProfileService } from '../profile.service';
                         </tr>
                         <tr>
                             <td>
-                                {{ 'address' | transloco }}
+                                {{ 'Address' | transloco }}
                             </td>
                             <td>
-                                {{ profileInfo.student.address }}
+                                {{ profileInfo.address }}
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                {{ 'actual_address' | transloco }}
+                                {{ 'Residential address' | transloco }}
                             </td>
                             <td>
-                                {{ profileInfo.student.actual_address }}
+                                {{ profileInfo.actual_address }}
                             </td>
                         </tr>
                         <tr>
@@ -138,17 +131,16 @@ import { ProfileService } from '../profile.service';
                                 {{ 'Status' | transloco }}
                             </td>
                             <td>
-                                {{ STUDENT_STATUS[profileInfo.student.status] }}
+                                {{ STUDENT_STATUS[profileInfo.status] }}
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                {{ 'Knowing Languages' | transloco }}
+                                {{ 'Knowing languages' | transloco }}
                             </td>
                             <td>
                                 @for (
-                                    item of profileInfo.student
-                                        .knowingLanguages;
+                                    item of profileInfo.knowingLanguages;
                                     track $index
                                 ) {
                                     <span
@@ -160,11 +152,11 @@ import { ProfileService } from '../profile.service';
                         </tr>
                         <tr>
                             <td>
-                                {{ 'hobbies' | transloco }}
+                                {{ 'Hobbies' | transloco }}
                             </td>
                             <td>
                                 @for (
-                                    hobby of profileInfo.student.hobbies;
+                                    hobby of profileInfo.hobbies;
                                     track hobby
                                 ) {
                                     <span
@@ -190,7 +182,6 @@ export default class BioComponent implements OnInit {
     readonly STUDENT_LANGUAGES = Constants.STUDENT_LANGUAGES;
 
     protected profileService = inject(ProfileService);
-    private _changeDetectorRef = inject(ChangeDetectorRef);
 
     constructor() {}
 

@@ -76,7 +76,7 @@ import { ProfileService } from './profile.service';
                         <div
                             class="text-4xl font-extrabold leading-none tracking-tight"
                         >
-                            {{ 'profileInfo' | transloco }}
+                            {{ 'Profile informations' | transloco }}
                         </div>
                         <!-- Close button -->
                         <div class="lg:hidden">
@@ -199,13 +199,13 @@ export default class ProfileComponent implements OnInit {
         {
             id: 'bio',
             icon: 'heroicons_outline:user-circle',
-            title: 'bio',
+            title: 'Bio',
             description: 'Main information of student',
         },
         {
             id: 'contacts',
             icon: 'heroicons_outline:newspaper',
-            title: 'Contacts',
+            title: 'Contact informations',
             description: "Contacts of student's parent",
         },
         {
@@ -247,6 +247,9 @@ export default class ProfileComponent implements OnInit {
 
     ngOnInit() {
         this._profileService.getProfileInfo();
+        this._profileService.profileInfo$.subscribe(res=>{
+            console.log(res);
+        })
         const indexSymbol = this._router.url.lastIndexOf('/');
         if(indexSymbol!=0) {
             this.selectedPanel = this._router.url.substring(indexSymbol+1);

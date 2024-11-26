@@ -62,7 +62,8 @@ export class LanguagesComponent implements OnInit, OnDestroy {
         // Set the country iso codes for languages for flags
         this.flagCodes = {
             en: 'us',
-            tr: 'tr',
+            uz: 'uz',
+            ru: 'ru',
         };
     }
 
@@ -83,6 +84,7 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     setActiveLang(lang: string): void {
         // Set the active lang
         this._translocoService.setActiveLang(lang);
+        localStorage.setItem('lang', lang)
     }
 
     /**
