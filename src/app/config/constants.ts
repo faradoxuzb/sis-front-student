@@ -80,4 +80,5 @@ export class Constants {
       label: 'Sunday',
     },
   ];
+    static DEFAULT_CLASS_NUMBERS: number=7;
 }
