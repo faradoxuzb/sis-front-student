@@ -1,0 +1,9 @@
+.headerP::after
+{
+    content: '';
+    margin-top: 4px;
+    width: 25%;
+    height: 2px;
+    display: block;
+    background: #Bf9000;
+}
