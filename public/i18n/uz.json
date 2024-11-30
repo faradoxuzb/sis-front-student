@@ -9,6 +9,13 @@
     "Friday": "Juma",
     "Saturday": "Shanba",
     "Sunday": "Yakshanba",
+    "Mon": "Dush",
+    "Tue": "Sesh",
+    "Wed": "Chor",
+    "Thu": "Pay",
+    "Fri": "Jum",
+    "Sat": "Shan",
+    "Sun": "Yak",
     "Classes":"Sinflar",
     "Files":"Fayllar",
     "Contracts":"Shartnomalar",
@@ -39,6 +46,11 @@
     "File name":"Fayl nomi",
     "Type":"Turi",
     "Upload date":"Yuklangan vaqti",
-    "Action":"Harakat"
+    "Action":"Harakat",
+    "Teacher": "O'qituvchi",
+    "Personal Information": "Shaxsiy ma'lumotlari",
+    "Contact information": "Kontakt ma'lumotlari",
+    "School Details": "Maktab ma'lumotlari",
+    "Additional details": "Qo'shimcha ma'lumotlar"
 
 }

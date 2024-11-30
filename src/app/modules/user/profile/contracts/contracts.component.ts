@@ -1,21 +1,20 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ComingSoonComponent } from '../../../shared/components/coming-soon/coming-soon.component';
 
 @Component({
-  selector: 'app-contracts',
-  template: `
-   <p>
-  		contracts Works!
-   </p>
-  `,
-  styleUrls: ['./contracts.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone:true,
+    selector: 'app-contracts',
+    template: `
+        <div class="w-full p-4">
+            <app-coming-soon></app-coming-soon>
+        </div>
+    `,
+    styleUrls: ['./contracts.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [ComingSoonComponent],
 })
 export default class ContractsComponent implements OnInit {
+    constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+    ngOnInit() {}
 }

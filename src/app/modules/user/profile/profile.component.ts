@@ -20,42 +20,6 @@ import { ProfileService } from './profile.service';
 @Component({
     selector: 'app-profile',
     template: `
-        <!-- <div class="w-full p-5">
-            <div class="w-full rounded-md bg-white dark:bg-black p-5">
-                <div class="mb-5 flex gap-4">
-                    <div class="overflow-hidden rounded-md">
-                        <mat-icon
-                            class="icon-size-[50px]"
-                            svgIcon="heroicons_outline:user-circle"
-                        ></mat-icon>
-                    </div>
-                    <div>
-                        <h1 class="text-lg font-semibold">Ergashev Marufjon</h1>
-                        <span>01.04.1998</span>
-                    </div>
-                </div>
-                <mat-tab-group>
-                    <mat-tab label="BIO">
-                        <app-bio></app-bio>
-                    </mat-tab>
-                    <mat-tab label="Контакты"> Content 2 </mat-tab>
-                    <mat-tab label="Посещаемость"> Content 3 </mat-tab>
-                    <mat-tab label="Классы"> Content 3 </mat-tab>
-                    <mat-tab label="Отчеты"> Content 3 </mat-tab>
-                    <mat-tab label="Инциденты или происшествия">
-                        Content 3
-                    </mat-tab>
-                    <mat-tab
-                        label="Файловый кабинет куда мы можем прикреплять документы "
-                    >
-                        Content 3
-                    </mat-tab>
-                    <mat-tab label="Контракты"> Content 3 </mat-tab>
-                    <mat-tab label="Оплата"> Content 3 </mat-tab>
-                    <mat-tab label=" Общее сведения "> Content 3 </mat-tab>
-                </mat-tab-group>
-            </div>
-        </div> -->
         <div
             class="flex w-full min-w-0 flex-col sm:absolute sm:inset-0 sm:overflow-hidden"
         >
@@ -140,7 +104,7 @@ import { ProfileService } from './profile.service';
                         class="flex-auto bg-white px-6 pb-12 pt-9 dark:bg-transparent md:p-8 md:pb-12 lg:p-12"
                     >
                         <!-- Panel header -->
-                        <div class="flex items-center">
+                        <div class="flex items-center mb-3">
                             <!-- Drawer toggle -->
                             <button
                                 class="-ml-2 lg:hidden"
@@ -154,7 +118,7 @@ import { ProfileService } from './profile.service';
 
                             <!-- Panel title -->
                             <div
-                                class="ml-2 text-3xl font-bold leading-none tracking-tight mb-3 lg:ml-0"
+                                class="ml-2 md:text-3xl text-xl font-bold leading-none tracking-tight lg:ml-0"
                             >
                                 {{
                                     getPanelInfo(selectedPanel).title

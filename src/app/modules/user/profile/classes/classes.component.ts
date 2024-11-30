@@ -8,13 +8,6 @@ import { ProfileService } from '../profile.service';
     template: `
         <div id="classes" class="tab-content">
             <!-- Description -->
-            <p class="mb-6 text-gray-600">
-                Below is the schedule for the classes the student is registered
-                for. Each term (T1, T2, T3) contains a weekly schedule with
-                subjects and their respective periods. Certain subjects may
-                occur multiple times on the same day.
-            </p>
-
             <!-- Class List -->
             <div class="space-y-8">
                 <!-- Example Class Schedule -->
@@ -35,11 +28,6 @@ import { ProfileService } from '../profile.service';
                     <div class="space-y-6">
                         <!-- Term T1 -->
                         <div>
-                            <h4
-                                class="mb-2 text-md font-semibold text-gray-700"
-                            >
-                                Term T1
-                            </h4>
                             <!-- <div class="grid grid-cols-5 gap-4">
                                 <div class="rounded border bg-gray-100 p-3">
                                     <h5 class="mb-2 font-medium text-gray-700">
@@ -112,7 +100,7 @@ import { ProfileService } from '../profile.service';
                                     </ul>
                                 </div>
                             </div> -->
-                            <div class="grid grid-cols-5 gap-4">
+                            <div class="grid sm:grid-cols-5 grid-cols-3 gap-4">
                                 @if (
                                     _profileService._classes | async;
                                     as classes

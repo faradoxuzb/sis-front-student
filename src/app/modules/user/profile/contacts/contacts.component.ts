@@ -18,9 +18,15 @@ import { ProfileService } from '../profile.service';
 @Component({
     selector: 'app-contacts',
     template: `
-        <div class="grid w-full grid-cols-2 justify-between">
+        <div
+            class="grid w-full grid-cols-1 justify-between gap-4 md:grid-cols-2"
+        >
             @if (_profileService.profileInfo$ | async; as profileInfo) {
-                @for (guardian of profileInfo.guardians; track guardian.id) {
+                @for (
+                    guardian of profileInfo.guardians;
+                    track guardian.id;
+                    let count = $count
+                ) {
                     <div>
                         <div class="flex items-start justify-between">
                             <div class="mb-4 flex items-center gap-4">
@@ -80,8 +86,6 @@ import { ProfileService } from '../profile.service';
                                         | async
                                 }}
                             </p>
-
-
 
                             <p>
                                 <span class="font-bold"
@@ -153,6 +157,11 @@ import { ProfileService } from '../profile.service';
                         </div>
                         <!-- Actions -->
                     </div>
+                    @if (count-1!==$index) {
+                        <div
+                            class="flex h-[1px] w-full bg-gray-400 bg-opacity-50 md:hidden"
+                        ></div>
+                    }
                 }
             }
         </div>

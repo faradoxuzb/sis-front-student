@@ -1,4 +1,4 @@
-import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Constants } from 'app/config/constants';
@@ -18,20 +18,21 @@ import { ProfileService } from '../profile/profile.service';
         TranslocoModule,
         TranslateJsonPipe,
         FullNamePipe,
+        NgClass
     ],
 })
 export default class ScheduleComponent implements OnInit {
     readonly WEEK_DAYS = Constants.WEEK_DAYS;
-
+    readonly WEEK_DAYSSHORT = Constants.WEEK_DAYSSHORT;
+    readonly TIME = Constants.time;
+    activeTab = 0;  //delete
+    activeDay = 0;
     private readonly SCHEDULE_TEMPLATE = Array.from({
         length: Constants.DEFAULT_CLASS_NUMBERS,
     }).map((classNumber, index) => {
         return {
             classNumber: index + 1,
             days: [
-                {
-                    subjects: [],
-                },
                 {
                     subjects: [],
                 },
@@ -80,6 +81,8 @@ export default class ScheduleComponent implements OnInit {
                         day.subjects.push(structuredClone(lesson));
                     }
                 });
+                console.log(this.schedule);
+
             }
         });
     }

@@ -1,7 +1,6 @@
 import { AsyncPipe, DatePipe } from '@angular/common';
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     OnInit,
     inject,
@@ -19,6 +18,14 @@ import { ProfileService } from '../profile.service';
                 @if (profileService.profileInfo$ | async; as profileInfo) {
                     <tbody>
                         <tr>
+                            <td
+                                colspan="2"
+                                class="text-xl font-bold text-gray-800"
+                            >
+                                {{ 'Personal Information' | transloco }}
+                            </td>
+                        </tr>
+                        <tr>
                             <td>{{ 'First name' | transloco }}</td>
                             <td>{{ profileInfo.first_name }}</td>
                         </tr>
@@ -31,9 +38,21 @@ import { ProfileService } from '../profile.service';
                             <td>{{ profileInfo.middle_name }}</td>
                         </tr>
                         <tr>
-                            <td>{{ 'Email' | transloco }}</td>
-                            <td>{{ profileInfo.user.email }}</td>
+                            <td>{{ 'Sex' | transloco }}</td>
+                            <td>
+                                {{ profileInfo.gender | transloco }}
+                            </td>
                         </tr>
+
+                        <tr>
+                            <td
+                                colspan="2"
+                                class="text-xl font-bold text-gray-800"
+                            >
+                                {{ 'Contact information' | transloco }}
+                            </td>
+                        </tr>
+
                         <tr>
                             <td>{{ 'Phone number' | transloco }}</td>
                             <td>{{ profileInfo.phone }}</td>
@@ -43,7 +62,89 @@ import { ProfileService } from '../profile.service';
                             <td>{{ profileInfo.extra_phone }}</td>
                         </tr>
                         <tr>
-                            <td>{{ 'Passport series / passport number' | transloco }}</td>
+                            <td>{{ 'Email' | transloco }}</td>
+                            <td>{{ profileInfo.user.email }}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ 'Address' | transloco }}
+                            </td>
+                            <td>
+                                {{ profileInfo.address }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ 'Residential address' | transloco }}
+                            </td>
+                            <td>
+                                {{ profileInfo.actual_address }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td
+                                colspan="2"
+                                class="text-xl font-bold text-gray-800"
+                            >
+                                {{ 'School Details' | transloco }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ 'Student ID' | transloco }}
+                            </td>
+                            <td>
+                                {{ profileInfo.id }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'Branch' | transloco }}</td>
+                            <td>
+                                {{ profileInfo.branch?.name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ 'Status' | transloco }}
+                            </td>
+                            <td>
+                                {{ STUDENT_STATUS[profileInfo.status] }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'Transport' | transloco }}</td>
+                            <td>
+                                <span class="px-[11px]">
+                                    @for (
+                                        transport of profileInfo.transports;
+                                        track transport.id
+                                    ) {
+                                        <span
+                                            >{{ transport.transport }} -
+                                            {{ transport.name }}</span
+                                        >
+                                    }
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td
+                                colspan="2"
+                                class="text-xl font-bold text-gray-800"
+                            >
+                                {{ 'Additional details' | transloco }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                {{
+                                    'Passport series / passport number'
+                                        | transloco
+                                }}
+                            </td>
                             <td>
                                 {{ profileInfo.identity_serial }} /
                                 {{ profileInfo.identity_number }}
@@ -65,21 +166,21 @@ import { ProfileService } from '../profile.service';
                             <td>{{ 'Birth date' | transloco }}</td>
                             <td>
                                 {{
-                                    profileInfo.birth_date
-                                        | date: 'dd.MM.yyyy'
+                                    profileInfo.birth_date | date: 'dd.MM.yyyy'
                                 }}
                             </td>
                         </tr>
+
                         <tr>
-                            <td>{{ 'Sex' | transloco }}</td>
                             <td>
-                                {{ profileInfo.gender | transloco }}
+                                {{ 'Citizenship' | transloco }}
                             </td>
-                        </tr>
-                        <tr>
-                            <td>{{ 'Branch' | transloco }}</td>
                             <td>
-                                {{ profileInfo.branch?.name }}
+                                {{
+                                    profileInfo.citizenship.name
+                                        | translateJson
+                                        | async
+                                }}
                             </td>
                         </tr>
                         <tr>
@@ -96,42 +197,6 @@ import { ProfileService } from '../profile.service';
                                         >
                                     }
                                 </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ 'Citizenship' | transloco }}
-                            </td>
-                            <td>
-                                {{
-                                    profileInfo.citizenship.name
-                                        | translateJson
-                                        | async
-                                }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ 'Address' | transloco }}
-                            </td>
-                            <td>
-                                {{ profileInfo.address }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ 'Residential address' | transloco }}
-                            </td>
-                            <td>
-                                {{ profileInfo.actual_address }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ 'Status' | transloco }}
-                            </td>
-                            <td>
-                                {{ STUDENT_STATUS[profileInfo.status] }}
                             </td>
                         </tr>
                         <tr>
