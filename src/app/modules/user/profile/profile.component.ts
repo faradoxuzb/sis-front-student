@@ -104,7 +104,7 @@ import { ProfileService } from './profile.service';
                         class="flex-auto bg-white px-6 pb-12 pt-9 dark:bg-transparent md:p-8 md:pb-12 lg:p-12"
                     >
                         <!-- Panel header -->
-                        <div class="flex items-center mb-3">
+                        <div class="mb-3 flex items-center">
                             <!-- Drawer toggle -->
                             <button
                                 class="-ml-2 lg:hidden"
@@ -118,7 +118,7 @@ import { ProfileService } from './profile.service';
 
                             <!-- Panel title -->
                             <div
-                                class="ml-2 md:text-3xl text-xl font-bold leading-none tracking-tight lg:ml-0"
+                                class="ml-2 text-xl font-bold leading-none tracking-tight md:text-3xl lg:ml-0"
                             >
                                 {{
                                     getPanelInfo(selectedPanel).title
@@ -158,6 +158,7 @@ export default class ProfileComponent implements OnInit {
     private _profileService = inject(ProfileService);
     private _router = inject(Router);
     private _activatedRoute = inject(ActivatedRoute);
+    link = 'profile';
 
     panels = [
         {
@@ -188,13 +189,13 @@ export default class ProfileComponent implements OnInit {
             id: 'contracts',
             icon: 'heroicons_outline:document-text',
             title: 'Contracts',
-            description: "Contracts",
+            description: 'Contracts',
         },
         {
             id: 'payments',
             icon: 'heroicons_outline:banknotes',
             title: 'Payments',
-            description: "Payments Menu",
+            description: 'Payments Menu',
         },
         // {
         //     id: 'attendance',
@@ -210,16 +211,16 @@ export default class ProfileComponent implements OnInit {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     ngOnInit() {
-        this._profileService.getProfileInfo();
-        this._profileService.profileInfo$.subscribe(res=>{
-            console.log(res);
-        })
-        const indexSymbol = this._router.url.lastIndexOf('/');
-        if(indexSymbol!=0) {
-            this.selectedPanel = this._router.url.substring(indexSymbol+1);
-            this.getPanelInfo(this.selectedPanel);
+        this._profileService.id = +this._activatedRoute.snapshot.paramMap.get('id');
+        if (this._profileService.id) {
+            this.link = `children/${this._profileService.id}`;
         }
+        this._profileService.getProfileInfo(+this._profileService.id);
+        const url = this._router.url.split('/').at(-1);
 
+        if (url !== 'profile' || isNaN(+url)) {
+            this.getPanelInfo(url);
+        }
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -245,10 +246,9 @@ export default class ProfileComponent implements OnInit {
         }
         this.selectedPanel = panel;
         if (panel == 'bio') {
-            this._router.navigate(['profile']);
-        }
-        else{
-            this._router.navigate([`profile/${panel}`]);
+            this._router.navigate([this.link]);
+        } else {
+            this._router.navigate([this.link + '/' + panel]);
         }
     }
     getPanelInfo(id: string): any {

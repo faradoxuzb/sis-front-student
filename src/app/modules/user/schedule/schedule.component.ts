@@ -5,6 +5,7 @@ import { Constants } from 'app/config/constants';
 import { FullNamePipe } from 'app/modules/shared/Pipes/full-name.pipe';
 import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe';
 import { ProfileService } from '../profile/profile.service';
+import { ActivatedRoute } from '@angular/router';
 
 // template: ``,
 @Component({
@@ -60,6 +61,7 @@ export default class ScheduleComponent implements OnInit {
     protected $cdr = inject(ChangeDetectorRef);
     protected $transloco = inject(TranslocoModule);
     protected $profileService = inject(ProfileService);
+    protected $activatedRoute = inject(ActivatedRoute);
 
     maxShowClassNumber = Constants.DEFAULT_CLASS_NUMBERS;
 
@@ -69,7 +71,8 @@ export default class ScheduleComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.$profileService._lessonSchedule.subscribe((lessons) => {
+        const id = this.$activatedRoute.snapshot.paramMap.get('id');
+        this.$profileService.getSchedule(+id).subscribe((lessons) => {
             if (lessons.length > 0) {
                 this.schedule = structuredClone(this.SCHEDULE_TEMPLATE);
                 lessons.forEach((lesson) => {
@@ -81,8 +84,6 @@ export default class ScheduleComponent implements OnInit {
                         day.subjects.push(structuredClone(lesson));
                     }
                 });
-                console.log(this.schedule);
-
             }
         });
     }

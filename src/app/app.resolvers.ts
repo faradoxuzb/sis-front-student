@@ -17,11 +17,11 @@ export const initialDataResolver = () => {
 
     // Fork join multiple API endpoint calls to wait all of them to finish
     return forkJoin([
+        // userService.get(),
         navigationService.get(),
         messagesService.getAll(),
         notificationsService.getAll(),
         quickChatService.getChats(),
         shortcutsService.getAll(),
-        userService.get()
     ]);
 };

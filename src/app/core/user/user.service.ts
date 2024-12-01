@@ -1,15 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { User } from 'app/core/user/user.types';
-import { map, Observable, ReplaySubject, tap } from 'rxjs';
-import { allResponseUser } from './user.interface';
+import { BehaviorSubject, map, Observable, of, ReplaySubject, tap } from 'rxjs';
+import { Parent } from '../../modules/shared/models/parent.model';
 import { BaseService } from '../services/baseHttp.service';
+import { allResponseUser } from './user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
     private _httpClient = inject(HttpClient);
     private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
-    private _baseHttpService = inject(BaseService)
+    private _parent: BehaviorSubject<Parent> = new BehaviorSubject<Parent>(
+        null
+    );
+    private _baseHttpService = inject(BaseService);
+    public firstTimeGet = true;
+    public userRole: string;
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -29,6 +35,15 @@ export class UserService {
         return this._user.asObservable();
     }
 
+    set parent(value: Parent) {
+        // Store the value
+        this._parent.next(value);
+    }
+
+    get parent$(): Observable<Parent> {
+        return this._parent.asObservable();
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -40,6 +55,13 @@ export class UserService {
         return this._baseHttpService.get<allResponseUser>('auth/me').pipe(
             tap((user) => {
                 this._user.next(user.user);
+            })
+        );
+    }
+    getParent(): Observable<Parent> {
+        return this._baseHttpService.get<Parent>('guardians/profile').pipe(
+            tap((parent) => {
+                this.parent = parent;
             })
         );
     }

@@ -153,5 +153,9 @@ export default class ClassesComponent implements OnInit {
 
     _profileService = inject(ProfileService);
 
-    ngOnInit() {}
+    ngOnInit() {
+        this._profileService.getSubjects().subscribe(res=>{
+            this._profileService._classes.next(res);
+        });
+    }
 }

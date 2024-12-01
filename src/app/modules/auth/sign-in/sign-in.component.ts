@@ -19,6 +19,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { TranslocoModule } from '@ngneat/transloco';
 import { AuthService } from 'app/core/auth/auth.service';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
     selector: 'auth-sign-in',
@@ -40,7 +41,7 @@ import { AuthService } from 'app/core/auth/auth.service';
         MatProgressSpinnerModule,
         TranslocoModule,
         NgClass,
-        NgIf
+        NgIf,
     ],
 })
 export class AuthSignInComponent implements OnInit {
@@ -60,7 +61,8 @@ export class AuthSignInComponent implements OnInit {
         private _activatedRoute: ActivatedRoute,
         private _authService: AuthService,
         private _formBuilder: UntypedFormBuilder,
-        private _router: Router
+        private _router: Router,
+        private _userService: UserService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -101,13 +103,15 @@ export class AuthSignInComponent implements OnInit {
         // Sign in
         this._authService.signIn(this.signInForm.value).subscribe((res) => {
             if (res) {
-                const redirectURL =
-                    this._activatedRoute.snapshot.queryParamMap.get(
-                        'redirectURL'
-                    ) || '/signed-in-redirect';
+                this._userService.get().subscribe((res) => {
+                    const redirectURL =
+                        this._activatedRoute.snapshot.queryParamMap.get(
+                            'redirectURL'
+                        ) || '/signed-in-redirect';
 
-                // Navigate to the redirect url
-                this._router.navigateByUrl(redirectURL);
+                    // Navigate to the redirect url
+                    this._router.navigateByUrl(redirectURL);
+                });
             } else {
                 // Re-enable the form
                 this.signInForm.enable();

@@ -12,7 +12,7 @@ export class AuthService {
     private _httpClient = inject(HttpClient);
     private _userService = inject(UserService);
     private _baseHttpService = inject(BaseService);
-
+    firstTimeGet = true;
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
     // -----------------------------------------------------------------------------------------------------
@@ -127,7 +127,6 @@ export class AuthService {
     signOut(): Observable<any> {
         // Remove the access token from the local storage
         localStorage.removeItem('accessToken');
-
         // Set the authenticated flag to false
         this._authenticated = false;
 
@@ -165,6 +164,12 @@ export class AuthService {
      * Check the authentication status
      */
     check(): Observable<boolean> {
+
+        if(this.firstTimeGet)
+        {
+            this.firstTimeGet = false
+            this._userService.get().subscribe();
+        }
         // Check if the user is logged in
         if (this._authenticated) {
             return of(true);

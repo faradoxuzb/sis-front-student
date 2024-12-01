@@ -1,6 +1,10 @@
 import { MultiLanguageField } from 'app/modules/shared/models/multi-language-field.model';
 
 export class Constants {
+    public static Roles = {
+        Student: "student",
+        Parent: "guardian",
+    }
     public static readonly LOCAL_STORAGE_KEYS = {
         access_token: 'access_token',
         refresh_token: 'refresh_token',
