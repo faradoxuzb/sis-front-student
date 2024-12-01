@@ -39,11 +39,11 @@ export class NavigationService {
                         this._userService.getParent().subscribe((res) => {
                             navigation.default = [
                                 {
-                                    id: 'profile',
-                                    title: 'Profile',
+                                    id: 'Parent Profile',
+                                    title: 'Parent Profile',
                                     type: 'basic',
-                                    icon: 'heroicons_outline:user',
-                                    link: '/profile',
+                                    icon: 'heroicons_outline:identification',
+                                    link: '/parentProfile',
                                 },
                                 {
                                     id: 'children',
@@ -62,7 +62,7 @@ export class NavigationService {
                                 res.students.forEach((student) => {
                                     navigation.default[1].children.push({
                                         id: 'children/' + student.id,
-                                        title: student.first_name,
+                                        title: student.first_name+' '+student.last_name,
                                         type: 'basic',
                                         icon: 'heroicons_outline:user',
                                         link: '/children/' + student.id,
@@ -71,9 +71,9 @@ export class NavigationService {
                                 res.students.forEach((student) => {
                                     navigation.default[2].children.push({
                                         id: 'children-schedule/' + student.id,
-                                        title: student.first_name,
+                                        title: student.first_name+' '+student.last_name,
                                         type: 'basic',
-                                        icon: 'heroicons_outline:user',
+                                        icon: 'heroicons_outline:academic-cap',
                                         link: '/children-schedule/' + student.id,
                                     });
                                 });

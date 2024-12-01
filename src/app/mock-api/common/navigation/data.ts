@@ -3,11 +3,11 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const parentNavigation: FuseNavigationItem[] = [
     {
-        id: 'profile',
-        title: 'Profile',
+        id: 'parentProfile',
+        title: 'Parent Profile',
         type: 'basic',
         icon: 'heroicons_outline:user',
-        link: '/profile',
+        link: '/parentProfile',
     },
     {
         id: "Children's profile",
