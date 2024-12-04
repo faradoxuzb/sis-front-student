@@ -14,8 +14,19 @@
         <!-- Navigation header hook -->
         <ng-container fuseVerticalNavigationContentHeader>
             <!-- Logo -->
-            <div class="flex h-20 items-center justify-center">
-                <img class="w-8" src="images/logo/logo.svg" alt="Logo image" />
+            <div class="flex items-center px-4 py-6 space-x-2">
+                <img
+                    class="transition-all duration-300"
+                    src="images/logo/logo.svg"
+                    alt="logo"
+                    [ngStyle]="{ width: navigationAppearance === 'dense' ? '50px' : '72px' }"
+                />
+                <div class="flex flex-col" [ngClass]="{'hidden': navigationAppearance === 'dense'}">
+                    <div class="text-white font-semibold text-lg leading-none">
+                        Singapore
+                    </div>
+                    <div class="text-white font-semibold">International School</div>
+                </div>
             </div>
         </ng-container>
     </fuse-vertical-navigation>
