@@ -158,6 +158,7 @@ export default class ProfileComponent implements OnInit {
     private _profileService = inject(ProfileService);
     private _router = inject(Router);
     private _activatedRoute = inject(ActivatedRoute);
+
     link = 'profile';
 
     panels = [
@@ -174,6 +175,36 @@ export default class ProfileComponent implements OnInit {
             description: "Contacts of student's parent",
         },
         {
+            id: 'notes',
+            icon: 'heroicons_outline:paper-clip',
+            title: 'Notes/Incidents',
+            description: "Incident's student",
+        },
+        {
+            id: 'payments',
+            icon: 'heroicons_outline:banknotes',
+            title: 'Contracts and Payments',
+            description: 'Payments Menu',
+        },
+        {
+            id: 'attendance',
+            icon: 'heroicons_outline:calendar-days',
+            title: 'Attendance',
+            description: 'Student attendance appear calendar',
+        },
+        {
+            id: 'grades',
+            icon: 'heroicons_outline:book-open',
+            title: 'Grades',
+            description: "Student' grades",
+        },
+        {
+            id: 'medicalInfo',
+            icon: 'heroicons_outline:beaker',
+            title: 'Medical info',
+            description: "Medical info",
+        },
+        {
             id: 'classes',
             icon: 'heroicons_outline:building-library',
             title: 'Classes',
@@ -185,23 +216,11 @@ export default class ProfileComponent implements OnInit {
             title: 'Files',
             description: "Student's files",
         },
-        {
-            id: 'contracts',
-            icon: 'heroicons_outline:document-text',
-            title: 'Contracts',
-            description: 'Contracts',
-        },
-        {
-            id: 'payments',
-            icon: 'heroicons_outline:banknotes',
-            title: 'Payments',
-            description: 'Payments Menu',
-        },
         // {
-        //     id: 'attendance',
-        //     icon: 'heroicons_outline:calendar-days',
-        //     title: 'Attendance',
-        //     description: "Student's classes info",
+        //     id: 'contracts',
+        //     icon: 'heroicons_outline:document-text',
+        //     title: 'Contracts',
+        //     description: 'Contracts',
         // },
     ];
     selectedPanel: string = 'bio';
@@ -219,7 +238,7 @@ export default class ProfileComponent implements OnInit {
         const url = this._router.url.split('/').at(-1);
 
         if (url !== 'profile' || isNaN(+url)) {
-            this.getPanelInfo(url);
+            this.selectedPanel = url;
         }
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$

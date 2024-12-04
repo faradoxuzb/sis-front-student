@@ -54,6 +54,11 @@
     "Additional details": "Qo'shimcha ma'lumotlar",
     "Children's profile": "Bolalar profili",
     "Children's schedule": "Bolalar dars jadvali",
-    "Parent Profile": "Vasiy profili"
-
+    "Parent Profile": "Vasiy profili",
+    "Birthdate":"Tug'ilgan sana",
+    "Contracts and Payments": "Kontrakt va to'lovlar",
+    "Notes/Incidents":"Eslatmalar/hodisalar",
+    "Attendance":"Qatnashish",
+    "Grades":"Baholar",
+    "Medical info":"Tibbiy ma'lumot"
 }

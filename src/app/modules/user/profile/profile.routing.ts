@@ -24,6 +24,22 @@ export default [
                 path: 'payments',
                 loadComponent: () => import('./payments/payments.component'),
             },
+            {
+                path: 'notes',
+                loadComponent: () => import('./notes/notes.component'),
+            },
+            {
+                path: 'attendance',
+                loadComponent: () => import('./attendance/attendance.component'),
+            },
+            {
+                path: 'grades',
+                loadComponent: () => import('./grades/grades.component'),
+            },
+            {
+                path: 'medicalInfo',
+                loadComponent: () => import('./medicalInfo/medicalInfo.component'),
+            },
         ],
     },
 ];
