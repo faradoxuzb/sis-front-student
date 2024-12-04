@@ -202,7 +202,7 @@ export default class ProfileComponent implements OnInit {
             id: 'medicalInfo',
             icon: 'heroicons_outline:beaker',
             title: 'Medical info',
-            description: "Medical info",
+            description: 'Medical info',
         },
         {
             id: 'classes',
@@ -230,14 +230,17 @@ export default class ProfileComponent implements OnInit {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     ngOnInit() {
-        this._profileService.id = +this._activatedRoute.snapshot.paramMap.get('id');
+        this._profileService.id =
+            +this._activatedRoute.snapshot.paramMap.get('id');
         if (this._profileService.id) {
             this.link = `children/${this._profileService.id}`;
         }
         this._profileService.getProfileInfo(+this._profileService.id);
         const url = this._router.url.split('/').at(-1);
 
-        if (url !== 'profile' || isNaN(+url)) {
+        if (url !== 'profile' && isNaN(+url)) {
+            console.log(url);
+
             this.selectedPanel = url;
         }
         // Subscribe to media changes

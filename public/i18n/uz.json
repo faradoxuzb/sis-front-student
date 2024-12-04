@@ -60,5 +60,20 @@
     "Notes/Incidents":"Eslatmalar/hodisalar",
     "Attendance":"Qatnashish",
     "Grades":"Baholar",
-    "Medical info":"Tibbiy ma'lumot"
+    "Medical info":"Tibbiy ma'lumot",
+    "Absent":"Kelmagan",
+    "Present":"O'z vaqtida kelgan",
+    "Late":"Kech qolgan",
+    "January":"Yanvar",
+    "February":"Fevral",
+    "March":"Mart",
+    "April":"Aprel",
+    "May":"May",
+    "June":"Iyun",
+    "July":"Iyul",
+    "August":"Avgust",
+    "September":"Sentyabr",
+    "October":"Оktyabr",
+    "November":"Noyabr",
+    "December":"Dekabr"
 }
