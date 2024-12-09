@@ -26,7 +26,6 @@ export default class ScheduleComponent implements OnInit {
     readonly WEEK_DAYS = Constants.WEEK_DAYS;
     readonly WEEK_DAYSSHORT = Constants.WEEK_DAYSSHORT;
     readonly TIME = Constants.time;
-    activeTab = 0;  //delete
     activeDay = 0;
     private readonly SCHEDULE_TEMPLATE = Array.from({
         length: Constants.DEFAULT_CLASS_NUMBERS,

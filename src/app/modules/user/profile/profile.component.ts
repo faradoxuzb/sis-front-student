@@ -239,8 +239,6 @@ export default class ProfileComponent implements OnInit {
         const url = this._router.url.split('/').at(-1);
 
         if (url !== 'profile' && isNaN(+url)) {
-            console.log(url);
-
             this.selectedPanel = url;
         }
         // Subscribe to media changes

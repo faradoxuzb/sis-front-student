@@ -1,5 +1,5 @@
 import { Directive, HostBinding, input } from '@angular/core';
-import { DayStatus, MyDay } from './attendance.component';
+import { MyDay } from './attendance.component';
 
 @Directive({
     selector: '[appDayStatus]',
@@ -13,13 +13,13 @@ export class DayStatusDirective {
     }
     treatClass(): string {
         if (this.day().isCurrentMonth && !this.day().isDayOff) {
-            if (this.day().daystatus == DayStatus.present) {
+            if (this.day().daystatus == 'present') {
                 return 'bg-[#ede7ff]';
             }
-            if (this.day().daystatus == DayStatus.late) {
+            if (this.day().daystatus ==  'late') {
                 return 'bg-red-400 text-white';
             }
-            if (this.day().daystatus == DayStatus.absent) {
+            if (this.day().daystatus == 'absent') {
                 return 'bg-red-600 text-white';
             }
         }
