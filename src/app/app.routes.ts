@@ -115,6 +115,11 @@ export const appRoutes: Route[] = [
         },
         children: [
             {
+                path: 'timetable',
+                loadChildren: () =>
+                    import('app/modules/user/calendar/calendar.module').then(t => t.CalendarModule),
+            },
+            {
                 path: 'schedule',
                 loadComponent: () =>
                     import('app/modules/user/schedule/schedule.component'),
