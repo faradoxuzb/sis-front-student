@@ -13,7 +13,7 @@ export const CheckUserRole: CanActivateFn | CanActivateChildFn = (route, state) 
         .user$
         .pipe(
             switchMap((user) => {
-                if (user.roles[0].name !== 'student') {
+                if (user.roles[0].name!== 'student') {
                     const urlTree = router.parseUrl(`parentProfile`);
                     return of(urlTree);
                 }
