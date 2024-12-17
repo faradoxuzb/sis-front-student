@@ -4,6 +4,7 @@ import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { CheckUserRole } from './core/auth/guards/checkRole.guard';
+import { GetUserGuard } from './core/auth/guards/user.guard';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -107,8 +108,8 @@ export const appRoutes: Route[] = [
     // Admin routes
     {
         path: '',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
+        canActivate: [AuthGuard, GetUserGuard],
+        canActivateChild: [AuthGuard, GetUserGuard],
         component: LayoutComponent,
         resolve: {
             initialData: initialDataResolver,
@@ -128,7 +129,9 @@ export const appRoutes: Route[] = [
             {
                 path: 'parentProfile',
                 loadComponent: () =>
-                    import('app/modules/user/parentProfile/parentProfile.component'),
+                    import(
+                        'app/modules/user/parentProfile/parentProfile.component'
+                    ),
             },
             {
                 path: 'children/:id',

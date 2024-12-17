@@ -51,7 +51,6 @@ export const authInterceptor = (
             if (error instanceof HttpErrorResponse && error.status === 401) {
                 // Sign out
                 authService.signOut();
-
                 // Reload the app
                 location.reload();
             }

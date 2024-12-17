@@ -126,5 +126,8 @@
             "skipTests": true,
             "inlineTemplate": true
         }
+    },
+    "cli": {
+      "analytics": false
     }
 }

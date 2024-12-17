@@ -75,8 +75,7 @@ export class AuthService {
                         // this._userService.user = response.user;
                         // Return a new observable with the response
                         return of(response);
-                    }
-                    else{
+                    } else {
                         return of(false);
                     }
                 })
@@ -164,12 +163,6 @@ export class AuthService {
      * Check the authentication status
      */
     check(): Observable<boolean> {
-
-        if(this.firstTimeGet)
-        {
-            this.firstTimeGet = false
-            this._userService.get().subscribe();
-        }
         // Check if the user is logged in
         if (this._authenticated) {
             return of(true);
