@@ -1,310 +1,208 @@
-<!-- <div class="mx-auto w-full max-w-[1280px] p-4">
-    <div class="hidden w-full md:flex">
-        <table class="table-bordered table h-full w-full text-center">
-            <thead>
-                <tr>
-                    <th>{{ 'Time' | transloco }}</th>
-                    <th>
-                        {{ 'Monday' | transloco }}
-                    </th>
-                    <th>
-                        {{ 'Tuesday' | transloco }}
-                    </th>
-                    <th>
-                        {{ 'Wednesday' | transloco }}
-                    </th>
-                    <th>
-                        {{ 'Thursday' | transloco }}
-                    </th>
-                    <th>
-                        {{ 'Friday' | transloco }}
-                    </th>
-                    <th>
-                        {{ 'Saturday' | transloco }}
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (
-                    item of schedule;
-                    track item.classNumber;
-                    let rowInd = $index
-                ) {
-                    @if (rowInd < maxShowClassNumber + 1) {
-                        <tr>
-                            <td class="font-medium">{{ TIME[rowInd] }}</td>
-                            @for (
-                                day of item.days;
-                                track colInd;
-                                let colInd = $index
-                            ) {
-                                <td class="bg-white">
-                                    @if (day.subjects.length > 0) {
-                                        @for (
-                                            subject of day.subjects;
-                                            track i;
-                                            let i = $index
-                                        ) {
-                                            <div
-                                                class="flex h-full flex-col items-center gap-2"
-                                            >
-                                                <span
-                                                    class="rounded-lg bg-primary-50 p-3 font-medium"
-                                                >
-                                                    {{
-                                                        subject.subject.name
-                                                            | translateJson
-                                                            | async
-                                                    }}
+<div class="flex flex-col flex-auto w-full">
 
-                                                    {{ subject.room.name }}
-                                                </span>
-                                                <div
-                                                    class="text-gray-60 0 text-[16px] font-medium"
-                                                >
-                                                    {{
-                                                        subject.teacher
-                                                            | appFullName: true
-                                                    }}
-                                                </div>
-                                            </div>
-                                        }
-                                    }
-                                </td>
-                            }
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="w-full md:hidden">
-        <div class="mb-3 rounded-xl bg-white p-1">
-            <div class="relative flex h-[80%] w-full">
-                @for (item of WEEK_DAYSSHORT; track $index) {
-                    <button
-                        class="notActiveBtn relative z-10 max-h-[110px] min-h-[44px] w-full break-words rounded-[10px] bg-transparent px-2 font-bold"
-                        [ngClass]="{
-                            'bg-green-600 text-white': activeTab == $index,
-                        }"
-                        (click)="activeTab = $index; activeDay = $index"
-                    >
-                        {{ item.label | transloco }}
-                    </button>
-                }
+    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+
+        <!-- Title and action buttons -->
+        <div class="flex items-center justify-between w-full">
+            <div>
+                <div class="text-3xl font-semibold tracking-tight leading-8">Timetable</div>
+                <div class="font-medium tracking-tight text-secondary">Your weekly schedule</div>
+            </div>
+            <div class="flex items-center ml-6">
+
             </div>
         </div>
-        <div class="flex w-full flex-col gap-3">
-            @for (item of schedule; track $index) {
-                <div
-                    class="flex h-[70px] w-full items-center gap-3 rounded-lg bg-white px-3 py-2 font-semibold shadow-lg"
-                >
-                    <p class="w-[50px] text-green-800">{{ TIME[$index] }}</p>
-                    <div class="h-full w-[1px] bg-gray-400 opacity-50"></div>
-                    @for (
-                        subject of item.days[activeDay].subjects;
-                        track $index
-                    ) {
-                        <div class="flex w-full items-center justify-between">
-                            <div>
-                                <p class="mb-1 text-green-600">
-                                    {{
-                                        subject.subject.name
-                                            | translateJson
-                                            | async
-                                    }}
-                                </p>
-                                <p class="text-gray-600">
-                                    <span>{{ 'Teacher' | transloco }}:</span
-                                    >{{ subject.teacher | appFullName: true }}
-                                </p>
-                            </div>
-                            <p class="text-gray-400">{{ subject.room.name }}</p>
-                        </div>
-                    }
-                </div>
-            }
-        </div>
-    </div>
-</div> -->
-<div class="mx-auto w-full max-w-[1280px] p-4">
-    <div class="hidden w-full md:flex">
-        <table class="my-table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>
-                        {{ 'Monday' | transloco }}
-                    </th>
-                    <th>
-                        {{ 'Tuesday' | transloco }}
-                    </th>
-                    <th>
-                        {{ 'Wednesday' | transloco }}
-                    </th>
-                    <th>
-                        {{ 'Thursday' | transloco }}
-                    </th>
-                    <th>
-                        {{ 'Friday' | transloco }}
-                    </th>
-                    <th>
-                        {{ 'Saturday' | transloco }}
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (
-                    item of schedule;
-                    track item.classNumber;
-                    let rowInd = $index
-                ) {
-                    @if (rowInd < maxShowClassNumber + 1) {
-                        <tr>
-                            <td class="p-4">{{ rowInd + 1 }}</td>
-                            @for (
-                                day of item.days;
-                                track colInd;
-                                let colInd = $index
-                            ) {
-                                <td class="h-[182px]">
-                                    <div
-                                        class="h-full min-w-[200px] border border-transparent p-4"
-                                        [ngClass]="{
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full mt-8">
+            <!-- Visitors overview -->
+            <div class="sm:col-span-2 lg:col-span-3 flex flex-col flex-auto    overflow-hidden">
+                <div class="mx-auto w-full">
+                    <div class="hidden w-full md:flex ">
+                        <table class="my-table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    {{ 'Monday' | transloco }}
+                                </th>
+                                <th>
+                                    {{ 'Tuesday' | transloco }}
+                                </th>
+                                <th>
+                                    {{ 'Wednesday' | transloco }}
+                                </th>
+                                <th>
+                                    {{ 'Thursday' | transloco }}
+                                </th>
+                                <th>
+                                    {{ 'Friday' | transloco }}
+                                </th>
+                                <th>
+                                    {{ 'Saturday' | transloco }}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @for (
+                                        item of schedule;
+                                    track item.classNumber;
+                                    let rowInd = $index
+                                    ) {
+                                    @if (rowInd < maxShowClassNumber + 1) {
+                                        <tr>
+                                            <td class="p-4">{{ rowInd + 1 }}</td>
+                                            @for (
+                                                    day of item.days;
+                                                track colInd;
+                                                let colInd = $index
+                                                ) {
+                                                <td class="h-[182px]">
+                                                    <div
+                                                        class="h-full min-w-[200px] border border-transparent p-4"
+                                                        [ngClass]="{
                                             'wrapper-subject-active':
                                                 colIndex === colInd &&
                                                 rowIndex === rowInd,
                                             'cursor-pointer': !readonly,
                                             'wrapper-subject': !readonly,
                                         }"
-                                    >
-                                        @if (day.subjects.length > 0) {
-                                            <div
-                                                class="flex h-full flex-col gap-2"
-                                            >
-                                                @for (
-                                                    subject of day.subjects;
-                                                    track i;
-                                                    let i = $index
-                                                ) {
-                                                    <div
-                                                        class="subject relative flex h-full flex-col justify-between gap-1 rounded-md border p-5 text-left"
                                                     >
-                                                        <div>
-                                                            <p
-                                                                class="text-lg font-semibold"
+                                                        @if (day.subjects.length > 0) {
+                                                            <div
+                                                                class="flex h-full flex-col gap-2"
                                                             >
-                                                                {{
-                                                                    subject
-                                                                        .subject
-                                                                        .name
-                                                                        | translateJson
-                                                                        | async
-                                                                }}
-                                                            </p>
-                                                        </div>
+                                                                @for (
+                                                                        subject of day.subjects;
+                                                                    track i;
+                                                                    let i = $index
+                                                                    ) {
+                                                                    <div
+                                                                        class="subject relative flex h-full flex-col rounded-md border p-3 text-left"
+                                                                    >
+                                                                        <div>
+                                                                            <p
+                                                                                class="text-lg font-semibold"
+                                                                            >
+                                                                                {{
+                                                                                    subject
+                                                                                        .subject
+                                                                                        .name
+                                                                                        | translateJson
+                                                                                        | async
+                                                                                }}
+                                                                            </p>
+                                                                        </div>
 
-                                                        <div
-                                                            class="flex items-center justify-between gap-2"
-                                                        >
+                                                                        <div
+                                                                            class="flex flex-col "
+                                                                        >
                                                             <span
                                                                 class="text-[#454545]"
-                                                                >{{
+                                                            >{{
                                                                     subject.teacher
                                                                         | appFullName
-                                                                            : true
+                                                                        : true
                                                                 }}</span
                                                             >
-                                                        </div>
+                                                                            <span class="text-sm">
+                                                                {{ subject.start_time }} - {{ subject.end_time }}
+                                                                            </span>
+                                                                        </div>
 
-                                                        <div
-                                                            class="absolute bottom-1 right-1"
-                                                        >
-                                                            <div
-                                                                class="rounded-3xl bg-[#BF9000] px-2 text-white"
-                                                            >
-                                                                {{
-                                                                    subject.room
-                                                                        .name
-                                                                }}
+                                                                        <div
+                                                                            class="absolute bottom-2 right-2"
+                                                                        >
+                                                                            <div
+                                                                                class="rounded-3xl bg-[#BF9000] px-2 text-white"
+                                                                            >
+                                                                                R: {{
+                                                                                    subject.room
+                                                                                        .name
+                                                                                }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                }
                                                             </div>
-                                                        </div>
+                                                        }
                                                     </div>
-                                                }
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="w-full md:hidden">
+                        <div class="mb-3 rounded-xl bg-white p-1">
+                            <div class="relative flex h-[80%] w-full">
+                                @for (item of WEEK_DAYSSHORT; track $index) {
+                                    <button
+                                        class="notActiveBtn relative z-10 max-h-[110px] min-h-[44px] w-full break-words rounded-[10px] px-2 font-bold"
+                                        [ngClass]="{
+                            'bg-primary-600 text-white': activeDay == $index,
+                        }"
+                                        (click)="activeDay = $index"
+                                    >
+                                        {{ item.label | transloco }}
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                        <div class="flex w-full flex-col gap-3">
+                            @for (item of schedule; track $index) {
+                                <div
+                                    class="flex min-h-[70px] w-full items-center gap-3 rounded-lg bg-white px-3 py-2 font-semibold shadow-lg"
+                                >
+                                    <div
+                                        class="flex min-h-[70px] h-full min-w-[50px] items-center justify-center border-r border-r-gray-400 text-accent-800 opacity-50"
+                                    >
+                                        <p class="">{{ $index + 1 }}</p>
+                                    </div>
+                                    <div class="w-full">
+                                        @for (
+                                                subject of item.days[activeDay].subjects;
+                                            track $index; let count = $count
+                                            ) {
+                                            <div
+                                                class="flex w-full items-center justify-between"
+                                            >
+                                                <div>
+                                                    <p class="mb-1 text-primary-600">
+                                                        {{
+                                                            subject.subject.name
+                                                                | translateJson
+                                                                | async
+                                                        }}
+                                                    </p>
+                                                    <p class="text-gray-600">
+                                                        {{
+                                                            subject.teacher | appFullName: true
+                                                        }}
+                                                    </p>
+                                                </div>
+                                                <p class="text-gray-400">
+                                                    {{ subject.room.name }}
+                                                </p>
                                             </div>
+
+                                            @if ($index!==count-1) {
+                                                <div class="h-[1px] my-2 w-full bg-gray-400"></div>
+                                            }
+                                        }
+                                        @empty {
+                                            <p class="text-red-600">{{'No lesson' | transloco}}</p>
                                         }
                                     </div>
-                                </td>
-                            }
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="w-full md:hidden">
-        <div class="mb-3 rounded-xl bg-white p-1">
-            <div class="relative flex h-[80%] w-full">
-                @for (item of WEEK_DAYSSHORT; track $index) {
-                    <button
-                        class="notActiveBtn relative z-10 max-h-[110px] min-h-[44px] w-full break-words rounded-[10px] px-2 font-bold"
-                        [ngClass]="{
-                            'bg-green-600 text-white': activeDay == $index,
-                        }"
-                        (click)="activeDay = $index"
-                    >
-                        {{ item.label | transloco }}
-                    </button>
-                }
-            </div>
-        </div>
-        <div class="flex w-full flex-col gap-3">
-            @for (item of schedule; track $index) {
-                <div
-                    class="flex min-h-[70px] w-full items-center gap-3 rounded-lg bg-white px-3 py-2 font-semibold shadow-lg"
-                >
-                    <div
-                        class="flex min-h-[70px] h-full min-w-[50px] items-center justify-center border-r border-r-gray-400 text-green-800 opacity-50"
-                    >
-                        <p class="">{{ $index + 1 }}</p>
-                    </div>
-                    <div class="w-full">
-                        @for (
-                            subject of item.days[activeDay].subjects;
-                            track $index; let count = $count
-                        ) {
-                            <div
-                                class="flex w-full items-center justify-between"
-                            >
-                                <div>
-                                    <p class="mb-1 text-green-600">
-                                        {{
-                                            subject.subject.name
-                                                | translateJson
-                                                | async
-                                        }}
-                                    </p>
-                                    <p class="text-gray-600">
-                                        {{
-                                            subject.teacher | appFullName: true
-                                        }}
-                                    </p>
                                 </div>
-                                <p class="text-gray-400">
-                                    {{ subject.room.name }}
-                                </p>
-                            </div>
-
-                            @if ($index!==count-1) {
-                                <div class="h-[1px] my-2 w-full bg-gray-400"></div>
                             }
-                        }
-                        @empty {
-                            <p class="text-red-600">{{'No lesson' | transloco}}</p>
-                        }
+                        </div>
                     </div>
                 </div>
-            }
+            </div>
         </div>
+
     </div>
+
 </div>

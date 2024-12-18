@@ -9,6 +9,8 @@
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
+      @apply bg-card;
+      @apply border-radius-5;
       tr th {
         padding: 12px;
       }

@@ -97,7 +97,7 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
                 // Change the navigation appearance
                 this.navigationAppearance = this.isScreenSmall
                     ? 'default'
-                    : 'dense';
+                    : 'default';
             });
     }
 

@@ -20,7 +20,7 @@ export const parentNavigation: FuseNavigationItem[] = [
 export const defaultNavigation: FuseNavigationItem[] = [
     {
         id: 'schedule',
-        title: 'Schedule',
+        title: 'Timetable',
         type: 'basic',
         icon: 'heroicons_outline:academic-cap',
         link: '/schedule',
@@ -36,7 +36,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
 export const compactNavigation: FuseNavigationItem[] = [
     {
         id: 'schedule',
-        title: 'Schedule',
+        title: 'Timetable',
         type: 'basic',
         icon: 'heroicons_outline:academic-cap',
         link: '/schedule',
@@ -52,7 +52,7 @@ export const compactNavigation: FuseNavigationItem[] = [
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
         id: 'schedule',
-        title: 'Schedule',
+        title: 'Timetable',
         type: 'basic',
         icon: 'heroicons_outline:academic-cap',
         link: '/schedule',
@@ -68,7 +68,7 @@ export const futuristicNavigation: FuseNavigationItem[] = [
 export const horizontalNavigation: FuseNavigationItem[] = [
     {
         id: 'schedule',
-        title: 'Schedule',
+        title: 'Timetable',
         type: 'basic',
         icon: 'heroicons_outline:academic-cap',
         link: '/schedule',
