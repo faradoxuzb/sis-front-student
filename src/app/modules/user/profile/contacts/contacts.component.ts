@@ -14,10 +14,11 @@ import { IdentityPipe } from 'app/modules/shared/Pipes/identity.pipe';
 import { PhonePipe } from 'app/modules/shared/Pipes/phone.pipe';
 import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe';
 import { ProfileService } from '../profile.service';
+import { FuseCardComponent } from '../../../../../@fuse/components/card';
 
 @Component({
     selector: 'app-contacts',
-    template: `
+    /*template: `
         <div
             class="grid w-full grid-cols-1 justify-between gap-4 md:grid-cols-2"
         >
@@ -165,7 +166,8 @@ import { ProfileService } from '../profile.service';
                 }
             }
         </div>
-    `,
+    `,*/
+    templateUrl: './contacts.component.html',
     styleUrls: ['./contacts.component.scss'],
     standalone: true,
     imports: [
@@ -176,6 +178,7 @@ import { ProfileService } from '../profile.service';
         AsyncPipe,
         FullNamePipe,
         MatIconModule,
+        FuseCardComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

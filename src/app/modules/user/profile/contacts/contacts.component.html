@@ -1,0 +1,67 @@
+<div class="w-full max-w-4xl">
+
+    <!-- Section -->
+    <div class="w-full">
+        <div class="text-xl">Your contacts</div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mt-8">
+        @if (_profileService.profileInfo$ | async; as profileInfo) {
+            @for (
+                    guardian of profileInfo.guardians;
+                track guardian.id;
+                let count = $count
+                ) {
+                <fuse-card class="flex flex-wrap items-center max-w-100 w-full p-8 pb-6 filter-info">
+                    <div class="flex items-center max-w-100 w-full">
+                        <img
+                            class="w-16 h-16 mr-6 rounded-full"
+                            src="/images/avatars/male-04.jpg"
+                            alt="Card cover image">
+                        <div class="flex flex-col">
+                            <div class="text-2xl font-semibold leading-tight">{{ guardian.guardian | appFullName }}</div>
+                            <div class="text-md leading-tight text-primary capitalize">{{ guardian.type | transloco }}</div>
+                            <div class="text-md text-secondary mt-2">{{ guardian.guardian.email }}</div>
+                        </div>
+                    </div>
+                    <hr class="w-full border-t my-6">
+                    <div class="flex flex-col">
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5 mr-3"
+                                [svgIcon]="'heroicons_solid:cake'"></mat-icon>
+                            <span class="leading-none">{{ 'Birthdate' | transloco }}:  {{ guardian.guardian.birth_date }}</span>
+                        </div>
+                        <div class="flex items-center mt-4">
+                            <mat-icon
+                                class="icon-size-5 mr-3"
+                                [svgIcon]="'heroicons_solid:globe-europe-africa'"></mat-icon>
+                            <span class="leading-none">{{ 'Citizenship' | transloco }}:  {{ guardian.guardian.citizenship.name | translateJson | async }}</span>
+                        </div>
+                        <div class="flex items-center mt-4">
+                            <mat-icon
+                                class="icon-size-5 mr-3"
+                                [svgIcon]="'heroicons_solid:document-text'"></mat-icon>
+                            <span class="leading-none">{{ 'Pinfl' | transloco }}: {{ guardian.guardian.pnfl_number }}</span>
+                        </div>
+                        <div class="flex items-center mt-4">
+                            <mat-icon
+                                class="icon-size-5 mr-3"
+                                [svgIcon]="'heroicons_solid:document-text'"></mat-icon>
+                            <span class="leading-none">{{ 'Passport series/number' | transloco }}: {{ guardian.guardian | appIdentity }}</span>
+                        </div>
+                        <div class="flex items-center mt-4">
+                            <mat-icon
+                                class="icon-size-5 mr-3"
+                                [svgIcon]="'heroicons_solid:globe-europe-africa'"></mat-icon>
+                            <span class="leading-none">{{ 'Birth place' | transloco }}:  {{ guardian.guardian.address }}</span>
+                        </div>
+                    </div>
+                </fuse-card>
+            }
+        }
+    </div>
+
+    <!-- Divider -->
+
+
+</div>
