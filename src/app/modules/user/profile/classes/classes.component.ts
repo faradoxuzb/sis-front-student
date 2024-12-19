@@ -1,11 +1,11 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe';
 import { ProfileService } from '../profile.service';
 
 @Component({
     selector: 'app-classes',
-    template: `
+    /*template: `
         <div id="classes" class="tab-content">
             <!-- Description -->
             <!-- Class List -->
@@ -143,10 +143,11 @@ import { ProfileService } from '../profile.service';
                 </div>
             </div>
         </div>
-    `,
+    `,*/
     styleUrls: ['./classes.component.scss'],
+    templateUrl: './classes.component.html',
     standalone: true,
-    imports: [AsyncPipe, TranslateJsonPipe],
+    imports: [AsyncPipe, TranslateJsonPipe, JsonPipe],
 })
 export default class ClassesComponent implements OnInit {
     constructor() {}
@@ -154,7 +155,7 @@ export default class ClassesComponent implements OnInit {
     _profileService = inject(ProfileService);
 
     ngOnInit() {
-        this._profileService.getSubjects().subscribe(res=>{
+        this._profileService.getSubjects().subscribe((res) => {
             this._profileService._classes.next(res);
         });
     }

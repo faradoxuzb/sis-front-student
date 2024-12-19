@@ -1,0 +1,74 @@
+<div class="w-full max-w-4xl">
+
+    <!-- Section -->
+    <div class="w-full">
+        <div class="text-xl">Your registered classes for group
+            @if (_profileService.profileInfo$ | async; as class) {
+                <span class="mb-4 text-lg font-bold text-primary-800">
+                    {{ class.currentGroup.groupName }}-
+                    {{
+                        class.currentGroup.classType
+                            | translateJson
+                            | async
+                    }}
+                </span>
+            }
+        </div>
+        <div class="text-secondary">If you want to add a new class, please contact the administrator.</div>
+    </div>
+    <div class="grid grid-cols-1 gap-6 w-full mt-8">
+        @if (_profileService._classes | async;
+            as classes) {
+            @for (clas of classes; track $index) {
+                <div class="flex items-center justify-between bg-white dark:bg-card py-4 rounded-lg shadow-md">
+                    <div class="flex flex-col w-full">
+                        <div class="flex flex-col px-6">
+                            <div class="text-lg font-semibold ">{{ clas.quarterly.name | translateJson | async }}</div>
+                            <span class="text-secondary">Start: {{ clas.quarterly.start_date}},  End: {{ clas.quarterly.end_date }}</span>
+                        </div>
+                        <div class="mt-3 border-t"></div>
+                        <div>
+                            <div class="z-10 sticky top-0 grid grid grid-cols-3 gap-2 py-3 px-4 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
+                                <div class="min-w-0 ml-2">
+                                    <div class="text-secondary">Subject</div>
+                                </div>
+                                <div>Teacher</div>
+                                <div>
+                                    <div class="flex items-center justify-end">
+                                        <div class="text-secondary">Grade</div>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (clas.classes.length > 0) {
+                                @for (subject of clas.classes; track $index) {
+                                    <div class="z-20 grid grid-cols-3 gap-2 px-3 py-4 md:px-8 cursor-pointer border-b">
+                                        <div class="min-w-0 ml-4">
+                                            <div>{{ subject.subject.name | translateJson | async }}</div>
+                                        </div>
+                                        <div></div>
+                                        <div>
+                                            <!-- Grade column -->
+                                            <div class="flex items-center justify-end">
+                                                <div class="text-green-800 font-semibold text-lg">{{ subject.subjectGrade?.grade}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            } @else {
+                                <div class="text-secondary py-3 px-6 md:px-8">No subjects registered</div>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            }
+        }
+    </div>
+
+    <!-- Divider -->
+
+
+</div>

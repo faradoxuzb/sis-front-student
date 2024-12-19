@@ -101,7 +101,7 @@ import { ProfileService } from './profile.service';
                 <mat-drawer-content class="flex flex-col">
                     <!-- Main -->
                     <div
-                        class="flex-auto bg-white px-6 pb-12 pt-9 dark:bg-transparent md:p-8 md:pb-12 lg:p-12"
+                        class="flex-auto px-6 pb-12 pt-9 dark:bg-transparent md:p-8 md:pb-12 lg:p-12"
                     >
                         <!-- Panel header -->
                         <div class="mb-3 flex items-center">
@@ -192,12 +192,12 @@ export default class ProfileComponent implements OnInit {
             title: 'Attendance',
             description: 'Student attendance appear calendar',
         },
-        {
+       /* {
             id: 'grades',
             icon: 'heroicons_outline:book-open',
             title: 'Grades',
             description: "Student' grades",
-        },
+        },*/
         {
             id: 'medicalInfo',
             icon: 'heroicons_outline:beaker',
