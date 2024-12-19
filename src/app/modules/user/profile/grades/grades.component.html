@@ -15,8 +15,8 @@
             }
         </div>
     </div>
-    <div class="grid grid-cols-1 gap-2 w-full mt-8">
-        <div class="container">
+    <div class="grid grid-cols-1 gap-2 w-full mt-8 overflow-x-scroll">
+        <div class="container bg-card">
             <table class="min-w-full border-collapse border border-gray-200 rounded-lg shadow-lg">
                 <thead>
                 <tr class="bg-gradient-to-r from-red-800 to-yellow-700 text-white text-sm uppercase tracking-wide">
@@ -47,41 +47,147 @@
                         <tr class="border-b hover:bg-gray-50 even:bg-gray-100"
                         >
                             <td class="py-3 px-4 font-semibold">{{ subject.subject.name | translateJson | async }}</td>
-                            <td class="py-3 px-4 text-center">
+                            <td class="py-3 px-4 text-center font-bold"
+                                [ngClass]="{
+                                'text-green-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A*',
+                                'text-green-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A',
+                                'text-green-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'B',
+                                'text-amber-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'C',
+                                'text-amber-500': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'D',
+                                'text-red-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'E',
+                                'text-red-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'F',
+                                'text-red-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'G',
+                                'text-red-900': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'U'
+
+
+                                }"
+                            >
                                 {{ subject.gradesByQuarterly[0]?.subjectGrade?.mark || '—' }}
                             </td>
                             <td class="py-3 px-4 text-center">
-                                {{ subject.gradesByQuarterly[0]?.subjectGrade?.grade || '—' }}
+                                {{ subject.gradesByQuarterly[0]?.subjectGrade?.grade ? subject.gradesByQuarterly[0]?.subjectGrade?.grade + '%' : '—' }}
                             </td>
-                            <td class="py-3 px-4 text-center">
+                            <td class="py-3 px-4 text-center font-bold"
+                                [ngClass]="{
+                                'text-green-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A*',
+                                'text-green-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A',
+                                'text-green-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'B',
+                                'text-amber-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'C',
+                                'text-amber-500': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'D',
+                                'text-red-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'E',
+                                'text-red-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'F',
+                                'text-red-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'G',
+                                'text-red-900': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'U'
+
+
+                                }"
+                            >
                                 {{ subject.gradesByQuarterly[1]?.subjectGrade?.mark || '—' }}
                             </td>
                             <td class="py-3 px-4 text-center">
-                                {{ subject.gradesByQuarterly[1]?.subjectGrade?.grade || '—' }}
+                                {{ subject.gradesByQuarterly[1]?.subjectGrade?.grade ? subject.gradesByQuarterly[1]?.subjectGrade?.grade + '%' : '—' }}
                             </td>
-                            <td class="py-3 px-4 text-center">
+                            <td class="py-3 px-4 text-center font-bold"
+                                [ngClass]="{
+                                'text-green-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A*',
+                                'text-green-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A',
+                                'text-green-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'B',
+                                'text-amber-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'C',
+                                'text-amber-500': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'D',
+                                'text-red-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'E',
+                                'text-red-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'F',
+                                'text-red-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'G',
+                                'text-red-900': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'U'
+
+
+                                }">
                                 {{ subject.gradesByQuarterly[2]?.subjectGrade?.mark || '—' }}
                             </td>
                             <td class="py-3 px-4 text-center">
-                                {{ subject.gradesByQuarterly[2]?.subjectGrade?.grade || '—' }}
+                                {{ subject.gradesByQuarterly[2]?.subjectGrade?.grade ? subject.gradesByQuarterly[2]?.subjectGrade?.grade + '%' : '—' }}
                             </td>
-                            <td class="py-3 px-4 text-center">
+                            <td class="py-3 px-4 text-center font-bold"
+                                [ngClass]="{
+                                'text-green-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A*',
+                                'text-green-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A',
+                                'text-green-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'B',
+                                'text-amber-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'C',
+                                'text-amber-500': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'D',
+                                'text-red-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'E',
+                                'text-red-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'F',
+                                'text-red-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'G',
+                                'text-red-900': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'U'
+
+
+                                }">
                                 {{ subject.gradesByQuarterly[3]?.subjectGrade?.mark || '—' }}
                             </td>
                             <td class="py-3 px-4 text-center">
-                                {{ subject.gradesByQuarterly[3]?.subjectGrade?.grade || '—' }}
+                                {{ subject.gradesByQuarterly[3]?.subjectGrade?.grade ? subject.gradesByQuarterly[3]?.subjectGrade?.grade + '%' : '—' }}
                             </td>
-                            <td class="py-3 px-4 text-center">
+                            <td class="py-3 px-4 text-center font-bold"
+                                [ngClass]="{
+                                'text-green-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A*',
+                                'text-green-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A',
+                                'text-green-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'B',
+                                'text-amber-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'C',
+                                'text-amber-500': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'D',
+                                'text-red-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'E',
+                                'text-red-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'F',
+                                'text-red-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'G',
+                                'text-red-900': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'U'
+
+
+                                }">
                                 {{ subject.gradesByQuarterly[4]?.subjectGrade?.mark || '—' }}
                             </td>
                             <td class="py-3 px-4 text-center">
-                                {{ subject.gradesByQuarterly[4]?.subjectGrade?.grade || '—' }}
+                                {{ subject.gradesByQuarterly[4]?.subjectGrade?.grade ? subject.gradesByQuarterly[4]?.subjectGrade?.grade + '%' : '—' }}
                             </td>
                         </tr>
                     }
 
                 </tbody>
             </table>
+        </div>
+        <div class="my-9 border-t"></div>
+        <div class="w-full">
+            <div class="text-2xl font-semibold">Performance Indicators</div>
+        </div>
+        <div class="container max-w-80" >
+            <!-- Performance indicators -->
+            <div class="grid grid-cols-1 gap-2 rounded-lg shadow-md overflow-hidden">
+                <div class="flex items-center justify-between bg-white dark:bg-card">
+                    <div class="flex flex-col w-full">
+                        <div>
+                            <div class="z-10 sticky top-0 grid grid-cols-2 gap-2 py-3 px-4 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5 bg-gradient-to-r from-red-800 to-yellow-700 text-white text-sm uppercase tracking-wide">
+                                <div class="min-w-0 ml-2">
+                                    Grade
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-end">
+                                        Mark
+                                    </div>
+                                </div>
+                            </div>
+                            @if (performanceIndicators.length > 0) {
+                                @for (indicator of performanceIndicators; track $index) {
+                                    <div class="z-20 grid grid-cols-2 gap-2 px-3 py-4 md:px-8 cursor-pointer border-b">
+                                        <div class="min-w-0 ml-4">
+                                            <div class="font-semibold" [ngClass]="indicator.class">{{ indicator.grade }}</div>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center justify-end">
+                                                <div class="text-green font-semibold">{{ indicator.mark }}%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

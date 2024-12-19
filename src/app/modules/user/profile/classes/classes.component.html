@@ -28,30 +28,30 @@
                         </div>
                         <div class="mt-3 border-t"></div>
                         <div>
-                            <div class="z-10 sticky top-0 grid grid grid-cols-3 gap-2 py-3 px-4 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
+                            <div class="z-10 sticky top-0 grid grid grid-cols-2 gap-2 py-3 px-4 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5">
                                 <div class="min-w-0 ml-2">
                                     <div class="text-secondary">Subject</div>
                                 </div>
                                 <div>Teacher</div>
-                                <div>
+                                <!--<div>
                                     <div class="flex items-center justify-end">
                                         <div class="text-secondary">Grade</div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                             @if (clas.classes.length > 0) {
                                 @for (subject of clas.classes; track $index) {
-                                    <div class="z-20 grid grid-cols-3 gap-2 px-3 py-4 md:px-8 cursor-pointer border-b">
+                                    <div class="z-20 grid grid-cols-2 gap-2 px-3 py-4 md:px-8 cursor-pointer border-b">
                                         <div class="min-w-0 ml-4">
                                             <div>{{ subject.subject.name | translateJson | async }}</div>
                                         </div>
                                         <div></div>
-                                        <div>
-                                            <!-- Grade column -->
+                                        <!--<div>
+                                            &lt;!&ndash; Grade column &ndash;&gt;
                                             <div class="flex items-center justify-end">
                                                 <div class="text-green-800 font-semibold text-lg">{{ subject.subjectGrade?.grade}}</div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 }
                             } @else {
