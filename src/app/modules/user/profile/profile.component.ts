@@ -192,12 +192,12 @@ export default class ProfileComponent implements OnInit {
             title: 'Attendance',
             description: 'Student attendance appear calendar',
         },
-       /* {
+        {
             id: 'grades',
             icon: 'heroicons_outline:book-open',
             title: 'Grades',
             description: "Student' grades",
-        },*/
+        },
         {
             id: 'medicalInfo',
             icon: 'heroicons_outline:beaker',

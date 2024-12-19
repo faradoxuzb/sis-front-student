@@ -1,0 +1,88 @@
+<div class="w-full max-w-4xl">
+
+    <!-- Section -->
+    <div class="w-full">
+        <div class="text-xl">Subjects and Quarterly Grades for group
+            @if (_profileService.profileInfo$ | async; as class) {
+                <span class="mb-4 text-lg font-bold text-primary-800">
+                    {{ class.currentGroup.groupName }}-
+                    {{
+                        class.currentGroup.classType
+                            | translateJson
+                            | async
+                    }}
+                </span>
+            }
+        </div>
+    </div>
+    <div class="grid grid-cols-1 gap-2 w-full mt-8">
+        <div class="container">
+            <table class="min-w-full border-collapse border border-gray-200 rounded-lg shadow-lg">
+                <thead>
+                <tr class="bg-gradient-to-r from-red-800 to-yellow-700 text-white text-sm uppercase tracking-wide">
+                    <th class="py-4 px-6 text-left rounded-tl-lg">Subject</th>
+                    <th colspan="2" class="py-4 px-6 text-center">1st Cycle</th>
+                    <th colspan="2" class="py-4 px-6 text-center">2nd Cycle</th>
+                    <th colspan="2" class="py-4 px-6 text-center">3rd Cycle</th>
+                    <th colspan="2" class="py-4 px-6 text-center">4th Cycle</th>
+                    <th colspan="2" class="py-4 px-6 text-center rounded-tr-lg">Year End</th>
+                </tr>
+                <tr class="bg-gray-100 text-gray-600 text-xs uppercase tracking-wide">
+                    <th class="py-3 px-6"></th>
+                    <th class="py-3 px-4 text-center">Mark</th>
+                    <th class="py-3 px-4 text-center">Grade</th>
+                    <th class="py-3 px-4 text-center">Mark</th>
+                    <th class="py-3 px-4 text-center">Grade</th>
+                    <th class="py-3 px-4 text-center">Mark</th>
+                    <th class="py-3 px-4 text-center">Grade</th>
+                    <th class="py-3 px-4 text-center">Mark</th>
+                    <th class="py-3 px-4 text-center">Grade</th>
+                    <th class="py-3 px-4 text-center">Mark</th>
+                    <th class="py-3 px-4 text-center">Grade</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Loop through subjects -->
+                    @for (subject of groupedData; track subject.id) {
+                        <tr class="border-b hover:bg-gray-50 even:bg-gray-100"
+                        >
+                            <td class="py-3 px-4 font-semibold">{{ subject.subject.name | translateJson | async }}</td>
+                            <td class="py-3 px-4 text-center">
+                                {{ subject.gradesByQuarterly[0]?.subjectGrade?.mark || '—' }}
+                            </td>
+                            <td class="py-3 px-4 text-center">
+                                {{ subject.gradesByQuarterly[0]?.subjectGrade?.grade || '—' }}
+                            </td>
+                            <td class="py-3 px-4 text-center">
+                                {{ subject.gradesByQuarterly[1]?.subjectGrade?.mark || '—' }}
+                            </td>
+                            <td class="py-3 px-4 text-center">
+                                {{ subject.gradesByQuarterly[1]?.subjectGrade?.grade || '—' }}
+                            </td>
+                            <td class="py-3 px-4 text-center">
+                                {{ subject.gradesByQuarterly[2]?.subjectGrade?.mark || '—' }}
+                            </td>
+                            <td class="py-3 px-4 text-center">
+                                {{ subject.gradesByQuarterly[2]?.subjectGrade?.grade || '—' }}
+                            </td>
+                            <td class="py-3 px-4 text-center">
+                                {{ subject.gradesByQuarterly[3]?.subjectGrade?.mark || '—' }}
+                            </td>
+                            <td class="py-3 px-4 text-center">
+                                {{ subject.gradesByQuarterly[3]?.subjectGrade?.grade || '—' }}
+                            </td>
+                            <td class="py-3 px-4 text-center">
+                                {{ subject.gradesByQuarterly[4]?.subjectGrade?.mark || '—' }}
+                            </td>
+                            <td class="py-3 px-4 text-center">
+                                {{ subject.gradesByQuarterly[4]?.subjectGrade?.grade || '—' }}
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
