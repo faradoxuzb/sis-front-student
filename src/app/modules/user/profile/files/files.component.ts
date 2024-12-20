@@ -14,25 +14,25 @@ import { ProfileService } from '../profile.service';
 @Component({
     selector: 'app-files',
     template: `
-        <table class="w-full">
-            <thead>
-                <tr>
-                    <td class="font-semibold">
-                        {{ 'File name' | transloco }}
-                    </td>
-                    <td class="font-semibold">
-                        {{ 'Type' | transloco }}
-                    </td>
-                    <td class="font-semibold">
-                        {{ 'Upload date' | transloco }}
-                    </td>
-                    <td class="font-semibold">
-                        {{ 'Action' | transloco }}
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                @if (_profileService.profileInfo$ | async; as profileInfo) {
+        @if (_profileService.profileInfo$ | async; as profileInfo) {
+            <table class="w-full">
+                <thead>
+                    <tr>
+                        <td class="font-semibold">
+                            {{ 'File name' | transloco }}
+                        </td>
+                        <td class="font-semibold">
+                            {{ 'Type' | transloco }}
+                        </td>
+                        <td class="font-semibold">
+                            {{ 'Upload date' | transloco }}
+                        </td>
+                        <td class="font-semibold">
+                            {{ 'Action' | transloco }}
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
                     @for (item of profileInfo.files; track $index) {
                         <tr>
                             <td>{{ item.name }}</td>
@@ -74,9 +74,9 @@ import { ProfileService } from '../profile.service';
                             </td>
                         </tr>
                     }
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        }
     `,
     styleUrls: ['./files.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

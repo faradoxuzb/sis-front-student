@@ -1,59 +1,181 @@
 <div class="w-full max-w-4xl">
-
     <!-- Section -->
-    <div class="w-full">
+    <!-- <div class="w-full">
         <div class="text-xl">Your contacts</div>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mt-8">
+    </div> -->
+    <div class="mt-8 grid w-full grid-cols-1 gap-6 sm:grid-cols-2">
         @if (_profileService.profileInfo$ | async; as profileInfo) {
             @for (
-                    guardian of profileInfo.guardians;
+                guardian of profileInfo.guardians;
                 track guardian.id;
                 let count = $count
-                ) {
-                <fuse-card class="flex flex-wrap items-center max-w-100 w-full p-8 pb-6 filter-info">
-                    <div class="flex items-center max-w-100 w-full">
+            ) {
+                <fuse-card
+                    class="filter-info flex w-full max-w-100 flex-wrap items-center p-8 pb-6"
+                >
+                    <div class="flex w-full max-w-100 items-center">
                         <img
-                            class="w-16 h-16 mr-6 rounded-full"
-                            src="/images/avatars/male-04.jpg"
-                            alt="Card cover image">
+                            class="mr-6 h-16 w-16 rounded-full"
+                            src="/images/noPhoto.png"
+                            alt="Card cover image"
+                        />
                         <div class="flex flex-col">
-                            <div class="text-2xl font-semibold leading-tight">{{ guardian.guardian | appFullName }}</div>
-                            <div class="text-md leading-tight text-primary capitalize">{{ guardian.type | transloco }}</div>
-                            <div class="text-md text-secondary mt-2">{{ guardian.guardian.email }}</div>
+                            <div class="text-2xl font-semibold leading-tight">
+                                {{ guardian.guardian | appFullName }}
+                            </div>
+                            <div
+                                class="text-md capitalize leading-tight text-primary"
+                            >
+                                {{ guardian.type | transloco }}
+                            </div>
+                            <div class="text-secondary mt-2 text-md">
+                                {{ guardian.guardian.email }}
+                            </div>
                         </div>
                     </div>
-                    <hr class="w-full border-t my-6">
-                    <div class="flex flex-col">
+                    <hr class="my-6 w-full border-t" />
+                    <div class="flex flex-col gap-4">
                         <div class="flex items-center">
                             <mat-icon
-                                class="icon-size-5 mr-3"
-                                [svgIcon]="'heroicons_solid:cake'"></mat-icon>
-                            <span class="leading-none">{{ 'Birthdate' | transloco }}:  {{ guardian.guardian.birth_date }}</span>
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="
+                                    'heroicons_solid:clipboard-document-check'
+                                "
+                            ></mat-icon>
+                            <span class="leading-none"
+                                >{{ 'Contract number' | transloco }}:
+                                {{ guardian.contract_number }}</span
+                            >
                         </div>
-                        <div class="flex items-center mt-4">
+                        <div class="flex items-center">
                             <mat-icon
-                                class="icon-size-5 mr-3"
-                                [svgIcon]="'heroicons_solid:globe-europe-africa'"></mat-icon>
-                            <span class="leading-none">{{ 'Citizenship' | transloco }}:  {{ guardian.guardian.citizenship.name | translateJson | async }}</span>
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="'heroicons_solid:document-text'"
+                            ></mat-icon>
+                            <span class="leading-none"
+                                >{{ 'Pinfl' | transloco }}:
+                                {{ guardian.guardian.pnfl_number }}</span
+                            >
                         </div>
-                        <div class="flex items-center mt-4">
+                        <div class="flex items-center">
                             <mat-icon
-                                class="icon-size-5 mr-3"
-                                [svgIcon]="'heroicons_solid:document-text'"></mat-icon>
-                            <span class="leading-none">{{ 'Pinfl' | transloco }}: {{ guardian.guardian.pnfl_number }}</span>
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="'heroicons_solid:document-text'"
+                            ></mat-icon>
+                            <span class="leading-none"
+                                >{{ 'Passport series/number' | transloco }}:
+                                {{ guardian.guardian | appIdentity }}</span
+                            >
                         </div>
-                        <div class="flex items-center mt-4">
+                        <div class="flex items-center">
                             <mat-icon
-                                class="icon-size-5 mr-3"
-                                [svgIcon]="'heroicons_solid:document-text'"></mat-icon>
-                            <span class="leading-none">{{ 'Passport series/number' | transloco }}: {{ guardian.guardian | appIdentity }}</span>
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="
+                                    'heroicons_solid:globe-europe-africa'
+                                "
+                            ></mat-icon>
+                            <span class="leading-none"
+                                >{{ 'Citizenship' | transloco }}:
+                                {{
+                                    guardian.guardian.citizenship.name
+                                        | translateJson
+                                        | async
+                                }}</span
+                            >
                         </div>
-                        <div class="flex items-center mt-4">
+                        <div class="flex items-center">
                             <mat-icon
-                                class="icon-size-5 mr-3"
-                                [svgIcon]="'heroicons_solid:globe-europe-africa'"></mat-icon>
-                            <span class="leading-none">{{ 'Birth place' | transloco }}:  {{ guardian.guardian.address }}</span>
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="
+                                    'heroicons_solid:globe-europe-africa'
+                                "
+                            ></mat-icon>
+                            <span class="leading-none"
+                                >{{ 'Birth place' | transloco }}:
+                                {{ guardian.guardian.address }}</span
+                            >
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="
+                                    'heroicons_solid:globe-europe-africa'
+                                "
+                            ></mat-icon>
+                            <span class="leading-none"
+                                >{{ 'Residential address' | transloco }}:
+                                {{ guardian.guardian.actual_address }}</span
+                            >
+                        </div>
+
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="'heroicons_solid:envelope'"
+                            ></mat-icon>
+                            <span class="leading-none"
+                                >{{ 'Email' | transloco }}:
+                                <a
+                                    class="mt-2 inline-block text-blue-500 underline"
+                                    href="mailto:{{
+                                        guardian.guardian.user.email
+                                    }}"
+                                >
+                                    {{ guardian.guardian.user.email }}
+                                </a>
+                            </span>
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="
+                                    'heroicons_solid:device-phone-mobile'
+                                "
+                            ></mat-icon>
+                            <span class="leading-none"
+                                >{{ 'Phone number' | transloco }}
+                                {{ guardian.guardian.phone | appPhone }}
+                            </span>
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="'heroicons_solid:phone'"
+                            ></mat-icon>
+                            <span class="leading-none"
+                                >{{ 'Additional number' | transloco }}
+                                {{ guardian.guardian.extra_phone | appPhone }}
+                            </span>
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="'heroicons_solid:building-office-2'"
+                            ></mat-icon>
+                            <span class="leading-none"
+                                >{{ 'Workplace' | transloco }}
+                                <!-- {{ guardian.guardian.extra_phone | appPhone }} -->
+                            </span>
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="'heroicons_solid:briefcase'"
+                            ></mat-icon>
+                            <span class="leading-none"
+                                >{{ 'Position' | transloco }}
+                                <!-- {{ guardian.guardian.extra_phone | appPhone }} -->
+                            </span>
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="'heroicons_solid:cake'"
+                            ></mat-icon>
+                            <span class="leading-none"
+                                >{{ 'Birthdate' | transloco }}:
+                                {{ guardian.guardian.birth_date }}</span
+                            >
                         </div>
                     </div>
                 </fuse-card>
@@ -62,6 +184,4 @@
     </div>
 
     <!-- Divider -->
-
-
 </div>
