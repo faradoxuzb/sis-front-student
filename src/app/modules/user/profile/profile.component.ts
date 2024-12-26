@@ -230,17 +230,10 @@ export default class ProfileComponent implements OnInit {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     ngOnInit() {
-        this._profileService.id =
-            +this._activatedRoute.snapshot.paramMap.get('id');
-        if (this._profileService.id) {
-            this.link = `children/${this._profileService.id}`;
-        }
-        this._profileService.getProfileInfo(+this._profileService.id);
-        const url = this._router.url.split('/').at(-1);
-
-        if (url !== 'profile' && isNaN(+url)) {
-            this.selectedPanel = url;
-        }
+        this._activatedRoute.paramMap.subscribe((res) => {
+            this.selectedPanel = 'bio';
+            this.getChildInfo();
+        });
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -257,6 +250,21 @@ export default class ProfileComponent implements OnInit {
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });
+    }
+
+    getChildInfo() {
+        this._profileService.id =
+            +this._activatedRoute.snapshot.paramMap.get('id');
+        if (this._profileService.id) {
+            this.link = `children/${this._profileService.id}`;
+        }
+        this._profileService.getProfileInfo(+this._profileService.id);
+        const url = this._router.url.split('/').at(-1);
+
+        if (url !== 'profile' && isNaN(+url)) {
+            this.selectedPanel = url;
+            this._changeDetectorRef.markForCheck();
+        }
     }
 
     goToPanel(panel: string): void {

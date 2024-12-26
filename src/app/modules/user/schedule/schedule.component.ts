@@ -1,11 +1,11 @@
 import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Constants } from 'app/config/constants';
 import { FullNamePipe } from 'app/modules/shared/Pipes/full-name.pipe';
 import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe';
 import { ProfileService } from '../profile/profile.service';
-import { ActivatedRoute } from '@angular/router';
 
 // template: ``,
 @Component({
@@ -19,7 +19,7 @@ import { ActivatedRoute } from '@angular/router';
         TranslocoModule,
         TranslateJsonPipe,
         FullNamePipe,
-        NgClass
+        NgClass,
     ],
 })
 export default class ScheduleComponent implements OnInit {
@@ -61,6 +61,7 @@ export default class ScheduleComponent implements OnInit {
     protected $transloco = inject(TranslocoModule);
     protected $profileService = inject(ProfileService);
     protected $activatedRoute = inject(ActivatedRoute);
+    protected $router = inject(Router);
 
     maxShowClassNumber = Constants.DEFAULT_CLASS_NUMBERS;
 
@@ -70,6 +71,12 @@ export default class ScheduleComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.getChildInfo();
+        this.$activatedRoute.paramMap.subscribe((res) => {
+            this.getChildInfo();
+        });
+    }
+    getChildInfo() {
         const id = this.$activatedRoute.snapshot.paramMap.get('id');
         this.$profileService.getSchedule(+id).subscribe((lessons) => {
             if (lessons.length > 0) {

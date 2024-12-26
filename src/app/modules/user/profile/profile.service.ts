@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { BaseService } from 'app/core/services/baseHttp.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ProfileInfo } from './profileInfo';
-import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -15,7 +15,6 @@ export class ProfileService {
     public id: number;
     public _classes = new BehaviorSubject<any>(null);
 
-
     constructor() {}
 
     public get profileInfo$(): Observable<any> {
@@ -24,19 +23,17 @@ export class ProfileService {
 
     getSchedule(id?: number) {
         let link = `students/lesson-schedule`;
-        if (this.id) {
-            link = `students/lesson-schedule/${this.id}`;
+        if (id) {
+            link = `students/lesson-schedule/${id}`;
         }
-     return this._baseHttpService.get<any>(link);
+        return this._baseHttpService.get<any>(link);
     }
     getSubjects() {
         let link = `students/classes-schedule`;
         if (this.id) {
             link = `students/classes-schedule/${this.id}`;
         }
-        return this._baseHttpService.get<any>(
-            link
-        );
+        return this._baseHttpService.get<any>(link);
     }
 
     getProfileInfo(id?: number) {
