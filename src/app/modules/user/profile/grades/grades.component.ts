@@ -1,8 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
-import { ComingSoonComponent } from '../../../shared/components/coming-soon/coming-soon.component';
-import { ProfileService } from '../profile.service';
 import { AsyncPipe, NgClass } from '@angular/common';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+    inject,
+} from '@angular/core';
+import { TranslocoModule } from '@ngneat/transloco';
 import { TranslateJsonPipe } from '../../../shared/Pipes/translate-json.pipe';
+import { ProfileService } from '../profile.service';
 
 @Component({
     selector: 'app-grades',
@@ -10,7 +16,7 @@ import { TranslateJsonPipe } from '../../../shared/Pipes/translate-json.pipe';
     styleUrls: ['./grades.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [ComingSoonComponent, AsyncPipe, TranslateJsonPipe, NgClass],
+    imports: [AsyncPipe, TranslateJsonPipe, NgClass, TranslocoModule],
 })
 export default class GradesComponent implements OnInit {
     constructor() {}
@@ -34,35 +40,34 @@ export default class GradesComponent implements OnInit {
         {
             grade: 'C',
             mark: '60-69',
-            class: 'text-amber-600'
+            class: 'text-amber-600',
         },
         {
             grade: 'D',
             mark: '50-59',
-            class: 'text-amber-500'
+            class: 'text-amber-500',
         },
         {
             grade: 'E',
             mark: '40-49',
-            class: 'text-red-600'
+            class: 'text-red-600',
         },
         {
             grade: 'F',
             mark: '30-39',
-            class: 'text-red-700'
+            class: 'text-red-700',
         },
         {
             grade: 'G',
             mark: '20-29',
-            class: 'text-red-800'
+            class: 'text-red-800',
         },
         {
             grade: 'U',
             mark: '0-19',
-            class: 'text-red-900'
-        }
-
-    ]
+            class: 'text-red-900',
+        },
+    ];
 
     _profileService = inject(ProfileService);
     cd = inject(ChangeDetectorRef);

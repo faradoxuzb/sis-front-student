@@ -1,7 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    inject,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { BaseService } from 'app/core/services/baseHttp.service';
+import { UserService } from 'app/core/user/user.service';
 import { isEqualDate } from 'app/core/utils/util';
 import { DayStatusDirective } from './day-status.directive';
 import { MonthNamePipe } from './month-name.pipe';
@@ -22,7 +28,10 @@ export interface Dates {
     selector: 'app-attendance',
     template: `
         <div class="w-full">
-            <div class="flex w-full justify-end gap-10 font-medium">
+            <p class="my-4 text-[22px] font-semibold">
+                {{ 'Attendance' | transloco }}
+            </p>
+            <div class="mb-5 flex w-full justify-end gap-10 font-medium">
                 <div class="flex items-center gap-2">
                     <div class="h-6 w-6 rounded-[8px] bg-red-600"></div>
                     <p>{{ 'Absent' | transloco }}</p>
@@ -74,7 +83,7 @@ export interface Dates {
     styleUrls: ['./attendance.component.scss'],
     standalone: true,
     imports: [MonthNamePipe, TranslocoModule, DayStatusDirective],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class AttendanceComponent {
     data: {
@@ -84,14 +93,15 @@ export default class AttendanceComponent {
 
     $baseHttp = inject(BaseService);
     $router = inject(Router);
-    $cdr = inject(ChangeDetectorRef)
+    $cdr = inject(ChangeDetectorRef);
+    $user = inject(UserService);
     dates: Dates[] = [];
 
     constructor() {
-        const id = this.$router.url.split('/')[2];
+        const studentId = this.$user.chooseStudentId();
         let url = 'students/activities';
-        if (!isNaN(+id)) {
-            url = url + '/' + id;
+        if (studentId) {
+            url = url + '/' + studentId;
         }
         this.$baseHttp.get<Dates[]>(url).subscribe((res) => {
             this.dates = res;

@@ -5,12 +5,16 @@ import {
     inject,
     OnInit,
 } from '@angular/core';
+import { Router } from '@angular/router';
+import { FuseCardComponent } from '@fuse/components/card';
 import { TranslocoModule } from '@ngneat/transloco';
+import { NavigationService } from 'app/core/navigation/navigation.service';
 import { UserService } from 'app/core/user/user.service';
 import { FullNamePipe } from 'app/modules/shared/Pipes/full-name.pipe';
 import { IdentityPipe } from 'app/modules/shared/Pipes/identity.pipe';
 import { PhonePipe } from 'app/modules/shared/Pipes/phone.pipe';
 import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe';
+import { ProfileService } from '../profile/profile.service';
 
 @Component({
     selector: 'app-parentProfile',
@@ -116,6 +120,33 @@ import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe'
                         {{ parent.extra_phone | appPhone }}
                     </p>
                 </div>
+                <hr class="my-3 h-[2px] w-full bg-[#c8c8c8]" />
+                <p class="mb-3 text-[20px] font-semibold">
+                    {{ 'My childs' | transloco }}
+                </p>
+                <div class="flex gap-3">
+                    @for (item of parent.students; track $index) {
+                        <fuse-card
+                            class="filter-info flex w-full max-w-100 cursor-pointer flex-wrap items-center p-8 pb-6"
+                            (click)="changeRouting(item)"
+                        >
+                            <div class="flex w-full max-w-100 items-center">
+                                <img
+                                    class="mr-6 h-16 w-16 rounded-full"
+                                    src="/images/noPhoto.png"
+                                    alt="Card cover image"
+                                />
+                                <div class="flex flex-col">
+                                    <div
+                                        class="text-2xl font-semibold leading-tight"
+                                    >
+                                        {{ item | appFullName }}
+                                    </div>
+                                </div>
+                            </div>
+                        </fuse-card>
+                    }
+                </div>
                 <!-- Actions -->
             </div>
         }
@@ -130,10 +161,25 @@ import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe'
         IdentityPipe,
         PhonePipe,
         TranslateJsonPipe,
+        FuseCardComponent,
+        FullNamePipe,
     ],
 })
 export default class ParentProfileComponent implements OnInit {
     constructor() {}
     protected $userService = inject(UserService);
+    protected $navigationService = inject(NavigationService);
+    protected $router = inject(Router);
+    protected $profileService = inject(ProfileService);
+    changeRouting(item) {
+        localStorage.setItem('studentId', item.id);
+        this.$userService.chooseStudentId.set(item.id);
+        this.$navigationService.get().subscribe((res) => {
+            this.$navigationService.navigation$ = res;
+            this.$profileService.getProfileInfo();
+            this.$router.navigate(['profile/bio']);
+        });
+    }
+
     ngOnInit() {}
 }

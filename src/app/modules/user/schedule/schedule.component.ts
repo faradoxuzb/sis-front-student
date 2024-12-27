@@ -72,13 +72,9 @@ export default class ScheduleComponent implements OnInit {
 
     ngOnInit(): void {
         this.getChildInfo();
-        this.$activatedRoute.paramMap.subscribe((res) => {
-            this.getChildInfo();
-        });
     }
     getChildInfo() {
-        const id = this.$activatedRoute.snapshot.paramMap.get('id');
-        this.$profileService.getSchedule(+id).subscribe((lessons) => {
+        this.$profileService.getSchedule().subscribe((lessons) => {
             if (lessons.length > 0) {
                 this.schedule = structuredClone(this.SCHEDULE_TEMPLATE);
                 lessons.forEach((lesson) => {

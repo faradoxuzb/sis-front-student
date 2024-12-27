@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { User } from 'app/core/user/user.types';
-import { BehaviorSubject, map, Observable, of, ReplaySubject, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, ReplaySubject, tap } from 'rxjs';
 import { Parent } from '../../modules/shared/models/parent.model';
 import { BaseService } from '../services/baseHttp.service';
 import { allResponseUser } from './user.interface';
-
 @Injectable({ providedIn: 'root' })
 export class UserService {
     private _httpClient = inject(HttpClient);
@@ -14,8 +13,7 @@ export class UserService {
         null
     );
     private _baseHttpService = inject(BaseService);
-    public firstTimeGet = true;
-    public userRole: string;
+    public chooseStudentId = signal<number | null>(0);
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors

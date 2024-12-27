@@ -1,8 +1,7 @@
 <div class="w-full max-w-4xl">
-    <!-- Section -->
-    <!-- <div class="w-full">
-        <div class="text-xl">Your contacts</div>
-    </div> -->
+    <p class="my-4 text-[22px] font-semibold">
+        {{ 'Contact informations' | transloco }}
+    </p>
     <div class="mt-8 grid w-full grid-cols-1 gap-6 sm:grid-cols-2">
         @if (_profileService.profileInfo$ | async; as profileInfo) {
             @for (

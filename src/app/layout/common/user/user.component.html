@@ -25,26 +25,31 @@
         <span class="flex flex-col leading-none">
             <span>Signed in as</span>
             <span class="mt-1.5 text-md font-medium">{{ user?.email }}</span>
-            <span class="mt-1.5 text-md text-green-800 font-semibold capitalize">{{ user?.roles[0]?.name }}</span>
+            <span
+                class="mt-1.5 text-md font-semibold capitalize text-green-800"
+                >{{ user?.roles[0]?.name }}</span
+            >
         </span>
     </button>
     <mat-divider class="my-2"></mat-divider>
-    <button mat-menu-item
-    [routerLink]="['/profile']"
-    >
-        <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
-        <span>Profile</span>
-    </button>
+    @if (children) {
+        <button mat-menu-item (click)="gotoGuardianProfile()">
+            <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+            <span>Profile</span>
+        </button>
+    }
     <!-- <button mat-menu-item>
         <mat-icon [svgIcon]="'heroicons_outline:cog-8-tooth'"></mat-icon>
         <span>Settings</span>
-    </button>
-    <button mat-menu-item [matMenuTriggerFor]="userStatus">
-        <mat-icon
-            [svgIcon]="'heroicons_outline:ellipsis-horizontal-circle'"
-        ></mat-icon>
-        <span>Status</span>
     </button> -->
+    @if (children) {
+        <button mat-menu-item [matMenuTriggerFor]="userStatus">
+            <mat-icon
+                [svgIcon]="'heroicons_outline:ellipsis-horizontal-circle'"
+            ></mat-icon>
+            <span>{{ 'My children' | transloco }}</span>
+        </button>
+    }
     <mat-divider class="my-2"></mat-divider>
     <button mat-menu-item (click)="signOut()">
         <mat-icon
@@ -55,20 +60,19 @@
 </mat-menu>
 
 <mat-menu class="user-status-menu" #userStatus="matMenu">
-    <button mat-menu-item (click)="updateUserStatus('online')">
-        <span class="mr-3 inline-flex h-4 w-4 rounded-full bg-green-500"></span>
-        <span>Online</span>
-    </button>
-    <button mat-menu-item (click)="updateUserStatus('away')">
-        <span class="mr-3 inline-flex h-4 w-4 rounded-full bg-amber-500"></span>
-        <span>Away</span>
-    </button>
-    <button mat-menu-item (click)="updateUserStatus('busy')">
-        <span class="mr-3 inline-flex h-4 w-4 rounded-full bg-red-500"></span>
-        <span>Busy</span>
-    </button>
-    <button mat-menu-item (click)="updateUserStatus('not-visible')">
-        <span class="mr-3 inline-flex h-4 w-4 rounded-full bg-gray-400"></span>
-        <span>Invisible</span>
-    </button>
+    @for (item of children; track $index) {
+        <button mat-menu-item (click)="changeUser(item)">
+            <span
+                class="mr-3 inline-flex min-h-4 min-w-4 rounded-full"
+                [ngClass]="
+                    item.id == _userService.chooseStudentId()
+                        ? 'bg-green-500'
+                        : ''
+                "
+            >
+            </span>
+
+            <span>{{ item | appFullName }}</span>
+        </button>
+    }
 </mat-menu>

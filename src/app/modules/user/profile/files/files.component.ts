@@ -14,42 +14,49 @@ import { ProfileService } from '../profile.service';
 @Component({
     selector: 'app-files',
     template: `
-        @if (_profileService.profileInfo$ | async; as profileInfo) {
-            <table class="w-full">
-                <thead>
-                    <tr>
-                        <td class="font-semibold">
-                            {{ 'File name' | transloco }}
-                        </td>
-                        <td class="font-semibold">
-                            {{ 'Type' | transloco }}
-                        </td>
-                        <td class="font-semibold">
-                            {{ 'Upload date' | transloco }}
-                        </td>
-                        <td class="font-semibold">
-                            {{ 'Action' | transloco }}
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (item of profileInfo.files; track $index) {
+        <div class="w-full">
+            <p class="my-4 text-[22px] font-semibold">
+                {{ 'Files' | transloco }}
+            </p>
+            @if (_profileService.profileInfo$ | async; as profileInfo) {
+                <table class="w-full">
+                    <thead>
                         <tr>
-                            <td>{{ item.name }}</td>
-                            <td>
-                                <button class="typeAllStyles">
-                                    {{ item.key | transloco }}
-                                </button>
+                            <td class="font-semibold">
+                                {{ 'File name' | transloco }}
                             </td>
-                            <td>2024-11-15</td>
-                            <td class="cursor-pointer">
-                                <a [href]="item.presigned_url" target="_blank">
-                                    <mat-icon
-                                        svgIcon="heroicons_outline:eye"
-                                        class="icon-size-5"
-                                    ></mat-icon>
-                                </a>
-                                <!-- <div class="">
+                            <td class="font-semibold">
+                                {{ 'Type' | transloco }}
+                            </td>
+                            <td class="font-semibold">
+                                {{ 'Upload date' | transloco }}
+                            </td>
+                            <td class="font-semibold">
+                                {{ 'Action' | transloco }}
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of profileInfo.files; track $index) {
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>
+                                    <button class="typeAllStyles">
+                                        {{ item.key | transloco }}
+                                    </button>
+                                </td>
+                                <td>2024-11-15</td>
+                                <td class="cursor-pointer">
+                                    <a
+                                        [href]="item.presigned_url"
+                                        target="_blank"
+                                    >
+                                        <mat-icon
+                                            svgIcon="heroicons_outline:eye"
+                                            class="icon-size-5"
+                                        ></mat-icon>
+                                    </a>
+                                    <!-- <div class="">
                                     <button
                                         mat-icon-button
                                         [matMenuTriggerFor]="summaryMenu"
@@ -71,12 +78,13 @@ import { ProfileService } from '../profile.service';
                                         </button>
                                     </mat-menu>
                                 </div> -->
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
     `,
     styleUrls: ['./files.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

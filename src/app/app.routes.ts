@@ -117,12 +117,12 @@ export const appRoutes: Route[] = [
         children: [
             {
                 path: 'schedule',
+                canActivate: [CheckUserRole],
                 loadComponent: () =>
                     import('app/modules/user/schedule/schedule.component'),
             },
             {
                 path: 'profile',
-                canActivate: [CheckUserRole],
                 loadChildren: () =>
                     import('app/modules/user/profile/profile.routing'),
             },
@@ -134,12 +134,12 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'children/:id',
+                path: 'children',
                 loadChildren: () =>
                     import('app/modules/user/profile/profile.routing'),
             },
             {
-                path: 'children-schedule/:id',
+                path: 'children-schedule',
                 loadComponent: () =>
                     import('app/modules/user/schedule/schedule.component'),
             },
