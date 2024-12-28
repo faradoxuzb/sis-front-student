@@ -1,152 +1,308 @@
 <div class="w-full max-w-4xl">
+    <p class="my-4 text-[22px] font-semibold">
+        {{ 'Grades' | transloco }}
+    </p>
 
     <!-- Section -->
     <div class="w-full">
-        <div class="text-xl">Subjects and Quarterly Grades for group
+        <div class="text-xl">
+            Subjects and Quarterly Grades for group
             @if (_profileService.profileInfo$ | async; as class) {
                 <span class="mb-4 text-lg font-bold text-primary-800">
                     {{ class.currentGroup.groupName }}-
-                    {{
-                        class.currentGroup.classType
-                            | translateJson
-                            | async
-                    }}
+                    {{ class.currentGroup.classType | translateJson | async }}
                 </span>
             }
         </div>
     </div>
-    <div class="grid grid-cols-1 gap-2 w-full mt-8 overflow-x-scroll">
+    <div class="mt-8 grid w-full grid-cols-1 gap-2 overflow-x-scroll">
         <div class="container bg-card">
-            <table class="min-w-full border-collapse border border-gray-200 rounded-lg shadow-lg">
+            <table
+                class="min-w-full border-collapse rounded-lg border border-gray-200 shadow-lg"
+            >
                 <thead>
-                <tr class="bg-gradient-to-r from-red-800 to-yellow-700 text-white text-sm uppercase tracking-wide">
-                    <th class="py-4 px-6 text-left rounded-tl-lg">Subject</th>
-                    <th colspan="2" class="py-4 px-6 text-center">1st Cycle</th>
-                    <th colspan="2" class="py-4 px-6 text-center">2nd Cycle</th>
-                    <th colspan="2" class="py-4 px-6 text-center">3rd Cycle</th>
-                    <th colspan="2" class="py-4 px-6 text-center">4th Cycle</th>
-                    <th colspan="2" class="py-4 px-6 text-center rounded-tr-lg">Year End</th>
-                </tr>
-                <tr class="bg-gray-100 text-gray-600 text-xs uppercase tracking-wide">
-                    <th class="py-3 px-6"></th>
-                    <th class="py-3 px-4 text-center">Mark</th>
-                    <th class="py-3 px-4 text-center">Grade</th>
-                    <th class="py-3 px-4 text-center">Mark</th>
-                    <th class="py-3 px-4 text-center">Grade</th>
-                    <th class="py-3 px-4 text-center">Mark</th>
-                    <th class="py-3 px-4 text-center">Grade</th>
-                    <th class="py-3 px-4 text-center">Mark</th>
-                    <th class="py-3 px-4 text-center">Grade</th>
-                    <th class="py-3 px-4 text-center">Mark</th>
-                    <th class="py-3 px-4 text-center">Grade</th>
-                </tr>
+                    <tr
+                        class="bg-gradient-to-r from-red-800 to-yellow-700 text-sm uppercase tracking-wide text-white"
+                    >
+                        <th class="rounded-tl-lg px-6 py-4 text-left">
+                            Subject
+                        </th>
+                        <th colspan="2" class="px-6 py-4 text-center">
+                            1st Cycle
+                        </th>
+                        <th colspan="2" class="px-6 py-4 text-center">
+                            2nd Cycle
+                        </th>
+                        <th colspan="2" class="px-6 py-4 text-center">
+                            3rd Cycle
+                        </th>
+                        <th colspan="2" class="px-6 py-4 text-center">
+                            4th Cycle
+                        </th>
+                        <th
+                            colspan="2"
+                            class="rounded-tr-lg px-6 py-4 text-center"
+                        >
+                            Year End
+                        </th>
+                    </tr>
+                    <tr
+                        class="bg-gray-100 text-xs uppercase tracking-wide text-gray-600"
+                    >
+                        <th class="px-6 py-3"></th>
+                        <th class="px-4 py-3 text-center">Mark</th>
+                        <th class="px-4 py-3 text-center">Grade</th>
+                        <th class="px-4 py-3 text-center">Mark</th>
+                        <th class="px-4 py-3 text-center">Grade</th>
+                        <th class="px-4 py-3 text-center">Mark</th>
+                        <th class="px-4 py-3 text-center">Grade</th>
+                        <th class="px-4 py-3 text-center">Mark</th>
+                        <th class="px-4 py-3 text-center">Grade</th>
+                        <th class="px-4 py-3 text-center">Mark</th>
+                        <th class="px-4 py-3 text-center">Grade</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <!-- Loop through subjects -->
+                    <!-- Loop through subjects -->
                     @for (subject of groupedData; track subject.id) {
-                        <tr class="border-b hover:bg-gray-50 even:bg-gray-100"
-                        >
-                            <td class="py-3 px-4 font-semibold">{{ subject.subject.name | translateJson | async }}</td>
-                            <td class="py-3 px-4 text-center font-bold"
+                        <tr class="border-b even:bg-gray-100 hover:bg-gray-50">
+                            <td class="px-4 py-3 font-semibold">
+                                {{
+                                    subject.subject.name | translateJson | async
+                                }}
+                            </td>
+                            <td
+                                class="px-4 py-3 text-center font-bold"
                                 [ngClass]="{
-                                'text-green-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A*',
-                                'text-green-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A',
-                                'text-green-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'B',
-                                'text-amber-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'C',
-                                'text-amber-500': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'D',
-                                'text-red-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'E',
-                                'text-red-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'F',
-                                'text-red-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'G',
-                                'text-red-900': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'U'
-
-
+                                    'text-green-800':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'A*',
+                                    'text-green-700':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'A',
+                                    'text-green-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'B',
+                                    'text-amber-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'C',
+                                    'text-amber-500':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'D',
+                                    'text-red-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'E',
+                                    'text-red-700':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'F',
+                                    'text-red-800':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'G',
+                                    'text-red-900':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'U',
                                 }"
                             >
-                                {{ subject.gradesByQuarterly[0]?.subjectGrade?.mark || '—' }}
+                                {{
+                                    subject.gradesByQuarterly[0]?.subjectGrade
+                                        ?.mark || '—'
+                                }}
                             </td>
-                            <td class="py-3 px-4 text-center">
-                                {{ subject.gradesByQuarterly[0]?.subjectGrade?.grade ? subject.gradesByQuarterly[0]?.subjectGrade?.grade + '%' : '—' }}
+                            <td class="px-4 py-3 text-center">
+                                {{
+                                    subject.gradesByQuarterly[0]?.subjectGrade
+                                        ?.grade
+                                        ? subject.gradesByQuarterly[0]
+                                              ?.subjectGrade?.grade + '%'
+                                        : '—'
+                                }}
                             </td>
-                            <td class="py-3 px-4 text-center font-bold"
+                            <td
+                                class="px-4 py-3 text-center font-bold"
                                 [ngClass]="{
-                                'text-green-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A*',
-                                'text-green-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A',
-                                'text-green-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'B',
-                                'text-amber-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'C',
-                                'text-amber-500': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'D',
-                                'text-red-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'E',
-                                'text-red-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'F',
-                                'text-red-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'G',
-                                'text-red-900': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'U'
-
-
+                                    'text-green-800':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'A*',
+                                    'text-green-700':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'A',
+                                    'text-green-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'B',
+                                    'text-amber-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'C',
+                                    'text-amber-500':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'D',
+                                    'text-red-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'E',
+                                    'text-red-700':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'F',
+                                    'text-red-800':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'G',
+                                    'text-red-900':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'U',
                                 }"
                             >
-                                {{ subject.gradesByQuarterly[1]?.subjectGrade?.mark || '—' }}
+                                {{
+                                    subject.gradesByQuarterly[1]?.subjectGrade
+                                        ?.mark || '—'
+                                }}
                             </td>
-                            <td class="py-3 px-4 text-center">
-                                {{ subject.gradesByQuarterly[1]?.subjectGrade?.grade ? subject.gradesByQuarterly[1]?.subjectGrade?.grade + '%' : '—' }}
+                            <td class="px-4 py-3 text-center">
+                                {{
+                                    subject.gradesByQuarterly[1]?.subjectGrade
+                                        ?.grade
+                                        ? subject.gradesByQuarterly[1]
+                                              ?.subjectGrade?.grade + '%'
+                                        : '—'
+                                }}
                             </td>
-                            <td class="py-3 px-4 text-center font-bold"
+                            <td
+                                class="px-4 py-3 text-center font-bold"
                                 [ngClass]="{
-                                'text-green-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A*',
-                                'text-green-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A',
-                                'text-green-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'B',
-                                'text-amber-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'C',
-                                'text-amber-500': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'D',
-                                'text-red-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'E',
-                                'text-red-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'F',
-                                'text-red-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'G',
-                                'text-red-900': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'U'
-
-
-                                }">
-                                {{ subject.gradesByQuarterly[2]?.subjectGrade?.mark || '—' }}
+                                    'text-green-800':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'A*',
+                                    'text-green-700':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'A',
+                                    'text-green-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'B',
+                                    'text-amber-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'C',
+                                    'text-amber-500':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'D',
+                                    'text-red-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'E',
+                                    'text-red-700':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'F',
+                                    'text-red-800':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'G',
+                                    'text-red-900':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'U',
+                                }"
+                            >
+                                {{
+                                    subject.gradesByQuarterly[2]?.subjectGrade
+                                        ?.mark || '—'
+                                }}
                             </td>
-                            <td class="py-3 px-4 text-center">
-                                {{ subject.gradesByQuarterly[2]?.subjectGrade?.grade ? subject.gradesByQuarterly[2]?.subjectGrade?.grade + '%' : '—' }}
+                            <td class="px-4 py-3 text-center">
+                                {{
+                                    subject.gradesByQuarterly[2]?.subjectGrade
+                                        ?.grade
+                                        ? subject.gradesByQuarterly[2]
+                                              ?.subjectGrade?.grade + '%'
+                                        : '—'
+                                }}
                             </td>
-                            <td class="py-3 px-4 text-center font-bold"
+                            <td
+                                class="px-4 py-3 text-center font-bold"
                                 [ngClass]="{
-                                'text-green-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A*',
-                                'text-green-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A',
-                                'text-green-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'B',
-                                'text-amber-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'C',
-                                'text-amber-500': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'D',
-                                'text-red-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'E',
-                                'text-red-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'F',
-                                'text-red-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'G',
-                                'text-red-900': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'U'
-
-
-                                }">
-                                {{ subject.gradesByQuarterly[3]?.subjectGrade?.mark || '—' }}
+                                    'text-green-800':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'A*',
+                                    'text-green-700':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'A',
+                                    'text-green-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'B',
+                                    'text-amber-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'C',
+                                    'text-amber-500':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'D',
+                                    'text-red-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'E',
+                                    'text-red-700':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'F',
+                                    'text-red-800':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'G',
+                                    'text-red-900':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'U',
+                                }"
+                            >
+                                {{
+                                    subject.gradesByQuarterly[3]?.subjectGrade
+                                        ?.mark || '—'
+                                }}
                             </td>
-                            <td class="py-3 px-4 text-center">
-                                {{ subject.gradesByQuarterly[3]?.subjectGrade?.grade ? subject.gradesByQuarterly[3]?.subjectGrade?.grade + '%' : '—' }}
+                            <td class="px-4 py-3 text-center">
+                                {{
+                                    subject.gradesByQuarterly[3]?.subjectGrade
+                                        ?.grade
+                                        ? subject.gradesByQuarterly[3]
+                                              ?.subjectGrade?.grade + '%'
+                                        : '—'
+                                }}
                             </td>
-                            <td class="py-3 px-4 text-center font-bold"
+                            <td
+                                class="px-4 py-3 text-center font-bold"
                                 [ngClass]="{
-                                'text-green-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A*',
-                                'text-green-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'A',
-                                'text-green-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'B',
-                                'text-amber-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'C',
-                                'text-amber-500': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'D',
-                                'text-red-600': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'E',
-                                'text-red-700': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'F',
-                                'text-red-800': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'G',
-                                'text-red-900': subject.gradesByQuarterly[0]?.subjectGrade?.mark === 'U'
-
-
-                                }">
-                                {{ subject.gradesByQuarterly[4]?.subjectGrade?.mark || '—' }}
+                                    'text-green-800':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'A*',
+                                    'text-green-700':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'A',
+                                    'text-green-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'B',
+                                    'text-amber-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'C',
+                                    'text-amber-500':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'D',
+                                    'text-red-600':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'E',
+                                    'text-red-700':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'F',
+                                    'text-red-800':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'G',
+                                    'text-red-900':
+                                        subject.gradesByQuarterly[0]
+                                            ?.subjectGrade?.mark === 'U',
+                                }"
+                            >
+                                {{
+                                    subject.gradesByQuarterly[4]?.subjectGrade
+                                        ?.mark || '—'
+                                }}
                             </td>
-                            <td class="py-3 px-4 text-center">
-                                {{ subject.gradesByQuarterly[4]?.subjectGrade?.grade ? subject.gradesByQuarterly[4]?.subjectGrade?.grade + '%' : '—' }}
+                            <td class="px-4 py-3 text-center">
+                                {{
+                                    subject.gradesByQuarterly[4]?.subjectGrade
+                                        ?.grade
+                                        ? subject.gradesByQuarterly[4]
+                                              ?.subjectGrade?.grade + '%'
+                                        : '—'
+                                }}
                             </td>
                         </tr>
                     }
-
                 </tbody>
             </table>
         </div>
@@ -154,16 +310,20 @@
         <div class="w-full">
             <div class="text-2xl font-semibold">Performance Indicators</div>
         </div>
-        <div class="container max-w-80" >
+        <div class="container max-w-80">
             <!-- Performance indicators -->
-            <div class="grid grid-cols-1 gap-2 rounded-lg shadow-md overflow-hidden">
-                <div class="flex items-center justify-between bg-white dark:bg-card">
-                    <div class="flex flex-col w-full">
+            <div
+                class="grid grid-cols-1 gap-2 overflow-hidden rounded-lg shadow-md"
+            >
+                <div
+                    class="flex items-center justify-between bg-white dark:bg-card"
+                >
+                    <div class="flex w-full flex-col">
                         <div>
-                            <div class="z-10 sticky top-0 grid grid-cols-2 gap-2 py-3 px-4 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5 bg-gradient-to-r from-red-800 to-yellow-700 text-white text-sm uppercase tracking-wide">
-                                <div class="min-w-0 ml-2">
-                                    Grade
-                                </div>
+                            <div
+                                class="text-secondary sticky top-0 z-10 grid grid-cols-2 gap-2 bg-gray-50 bg-gradient-to-r from-red-800 to-yellow-700 px-4 py-3 text-md text-sm font-semibold uppercase tracking-wide text-white shadow dark:bg-black dark:bg-opacity-5 md:px-8"
+                            >
+                                <div class="ml-2 min-w-0">Grade</div>
                                 <div>
                                     <div class="flex items-center justify-end">
                                         Mark
@@ -171,14 +331,30 @@
                                 </div>
                             </div>
                             @if (performanceIndicators.length > 0) {
-                                @for (indicator of performanceIndicators; track $index) {
-                                    <div class="z-20 grid grid-cols-2 gap-2 px-3 py-4 md:px-8 cursor-pointer border-b">
-                                        <div class="min-w-0 ml-4">
-                                            <div class="font-semibold" [ngClass]="indicator.class">{{ indicator.grade }}</div>
+                                @for (
+                                    indicator of performanceIndicators;
+                                    track $index
+                                ) {
+                                    <div
+                                        class="z-20 grid cursor-pointer grid-cols-2 gap-2 border-b px-3 py-4 md:px-8"
+                                    >
+                                        <div class="ml-4 min-w-0">
+                                            <div
+                                                class="font-semibold"
+                                                [ngClass]="indicator.class"
+                                            >
+                                                {{ indicator.grade }}
+                                            </div>
                                         </div>
                                         <div>
-                                            <div class="flex items-center justify-end">
-                                                <div class="text-green font-semibold">{{ indicator.mark }}%</div>
+                                            <div
+                                                class="flex items-center justify-end"
+                                            >
+                                                <div
+                                                    class="text-green font-semibold"
+                                                >
+                                                    {{ indicator.mark }}%
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -190,5 +366,4 @@
             </div>
         </div>
     </div>
-
 </div>

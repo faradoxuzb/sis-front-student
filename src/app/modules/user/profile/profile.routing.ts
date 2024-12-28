@@ -3,7 +3,7 @@ export default [
         path: '',
         loadComponent: () => import('./profile.component'),
         children: [
-            { path: '', loadComponent: () => import('./bio/bio.component') },
+            { path: 'bio', loadComponent: () => import('./bio/bio.component') },
             {
                 path: 'contacts',
                 loadComponent: () => import('./contacts/contacts.component'),
@@ -30,7 +30,8 @@ export default [
             },
             {
                 path: 'attendance',
-                loadComponent: () => import('./attendance/attendance.component'),
+                loadComponent: () =>
+                    import('./attendance/attendance.component'),
             },
             {
                 path: 'grades',
@@ -38,7 +39,8 @@ export default [
             },
             {
                 path: 'medicalInfo',
-                loadComponent: () => import('./medicalInfo/medicalInfo.component'),
+                loadComponent: () =>
+                    import('./medicalInfo/medicalInfo.component'),
             },
         ],
     },

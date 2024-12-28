@@ -1,5 +1,5 @@
 import { BooleanInput } from '@angular/cdk/coercion';
-import { NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -14,8 +14,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterModule } from '@angular/router';
+import { TranslocoModule } from '@ngneat/transloco';
+import { NavigationService } from 'app/core/navigation/navigation.service';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
+import { Student } from 'app/modules/shared/models/parent.model';
+import { FullNamePipe } from 'app/modules/shared/Pipes/full-name.pipe';
+import { ProfileService } from 'app/modules/user/profile/profile.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -31,7 +36,10 @@ import { Subject, takeUntil } from 'rxjs';
         MatIconModule,
         NgClass,
         MatDividerModule,
-        RouterModule
+        RouterModule,
+        FullNamePipe,
+        AsyncPipe,
+        TranslocoModule,
     ],
 })
 export class UserComponent implements OnInit, OnDestroy {
@@ -43,14 +51,16 @@ export class UserComponent implements OnInit, OnDestroy {
     user: User;
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-
+    children: Student[];
     /**
      * Constructor
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
-        private _userService: UserService
+        public _userService: UserService,
+        public _navigationService: NavigationService,
+        public _profileService: ProfileService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -69,6 +79,11 @@ export class UserComponent implements OnInit, OnDestroy {
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });
+        this._userService.parent$.subscribe((res) => {
+            if (res) {
+                this.children = res.students;
+            }
+        });
     }
 
     /**
@@ -109,5 +124,16 @@ export class UserComponent implements OnInit, OnDestroy {
      */
     signOut(): void {
         this._router.navigate(['/sign-out']);
+    }
+
+    gotoGuardianProfile() {
+        localStorage.removeItem('studentId');
+        this._navigationService.get().subscribe();
+        this._router.navigate(['parentProfile']);
+    }
+    changeUser(item: Student) {
+        localStorage.setItem('studentId', '' + item.id);
+        this._userService.chooseStudentId.set(item.id);
+        this._profileService.getProfileInfo();
     }
 }

@@ -22,7 +22,9 @@ export class NavigationService {
     get navigation$(): Observable<Navigation> {
         return this._navigation.asObservable();
     }
-
+    set navigation$(navigation: Navigation) {
+        this._navigation.next(navigation);
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -33,52 +35,33 @@ export class NavigationService {
     get(): Observable<Navigation> {
         return this._httpClient.get<Navigation>('api/common/navigation').pipe(
             tap((navigation) => {
+                const userId = +localStorage.getItem('studentId');
+                this._userService.chooseStudentId.set(userId);
                 this._userService.user$.subscribe((res) => {
                     const role = res.roles[0].name;
                     if (role == Constants.Roles.Parent) {
                         this._userService.getParent().subscribe((res) => {
-                            navigation.default = [
-                                {
-                                    id: 'Parent Profile',
-                                    title: 'Parent Profile',
-                                    type: 'basic',
-                                    icon: 'heroicons_outline:identification',
-                                    link: '/parentProfile',
-                                },
-                                {
-                                    id: 'children',
-                                    title: "Children's profile",
-                                    type: 'group',
-                                    children: [],
-                                },
-                                {
-                                    id: 'children',
-                                    title: "Children's schedule",
-                                    type: 'group',
-                                    children: [],
-                                },
-                            ];
-                            if (res.students.length > 0) {
-                                res.students.forEach((student) => {
-                                    navigation.default[1].children.push({
-                                        id: 'children/' + student.id,
-                                        title: student.first_name+' '+student.last_name,
+                            let navigations = { ...navigation };
+                            let studentIdFromST =
+                                localStorage.getItem('studentId');
+                            const studentId = res.students.find(
+                                (el) => el.id == +studentIdFromST
+                            )?.id;
+                            this._userService.chooseStudentId.set(studentId);
+                            if (studentId) {
+                                this._navigation.next(navigation);
+                            } else {
+                                navigations.default = [
+                                    {
+                                        id: 'parentProfile',
+                                        title: 'Parent Profile',
                                         type: 'basic',
                                         icon: 'heroicons_outline:user',
-                                        link: '/children/' + student.id,
-                                    });
-                                });
-                                res.students.forEach((student) => {
-                                    navigation.default[2].children.push({
-                                        id: 'children-schedule/' + student.id,
-                                        title: student.first_name+' '+student.last_name,
-                                        type: 'basic',
-                                        icon: 'heroicons_outline:academic-cap',
-                                        link: '/children-schedule/' + student.id,
-                                    });
-                                });
+                                        link: '/parentProfile',
+                                    },
+                                ];
+                                this._navigation.next(navigations);
                             }
-                            this._navigation.next(navigation);
                         });
                     } else {
                         this._navigation.next(navigation);

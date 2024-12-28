@@ -14,6 +14,9 @@ import { ProfileService } from '../profile.service';
     selector: 'app-bio',
     template: `
         <div class="overflow-auto" style="  ">
+            <p class="my-4 text-[22px] font-semibold">
+                {{ 'Bio' | transloco }}
+            </p>
             <table class="w-full">
                 @if (profileService.profileInfo$ | async; as profileInfo) {
                     <tbody>

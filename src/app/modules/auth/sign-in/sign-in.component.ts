@@ -73,6 +73,8 @@ export class AuthSignInComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
+        localStorage.removeItem('studentId');
+        this._userService.chooseStudentId.set(null);
         // Create the form
         this.signInForm = this._formBuilder.group({
             email: ['', [Validators.required]],
