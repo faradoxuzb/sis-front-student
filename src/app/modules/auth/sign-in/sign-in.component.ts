@@ -75,7 +75,7 @@ export class AuthSignInComponent implements OnInit {
     ngOnInit(): void {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            email: ['', [Validators.required, Validators.email]],
+            email: ['', [Validators.required]],
             password: ['', Validators.required],
             rememberMe: [''],
         });
@@ -104,10 +104,15 @@ export class AuthSignInComponent implements OnInit {
         this._authService.signIn(this.signInForm.value).subscribe((res) => {
             if (res) {
                 this._userService.get().subscribe((res) => {
+
+                    let initialRedirectUrl = '/signed-in-redirect';
+                    if (res.user.roles.some((role) => role.name === 'guardian')) {
+                        initialRedirectUrl = '/signed-in-redirect-guardian';
+                    }
                     const redirectURL =
                         this._activatedRoute.snapshot.queryParamMap.get(
                             'redirectURL'
-                        ) || '/signed-in-redirect';
+                        ) || initialRedirectUrl;
 
                     // Navigate to the redirect url
                     this._router.navigateByUrl(redirectURL);
