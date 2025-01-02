@@ -14,7 +14,9 @@ export class PaymentService {
             .get<Payment>(`student/students/${id}/student-contracts`)
             .pipe(map((el) => el.data))
             .subscribe((res) => {
-                this.contracts.set(res);
+                if (res.length !== 0) {
+                    this.contracts.set(res);
+                }
             });
     }
 }

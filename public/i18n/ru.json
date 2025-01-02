@@ -79,5 +79,11 @@
     "No lesson": "Нет урока",
     "Education year": "Год образования",
     "Signing Date": "Дата подписания",
-    "Rejected": "Отклоненный"
+    "Rejected": "Отклоненный",
+    "Data not found": "Данные не найдены",
+    "Rejected Date": "Дата отклонения",
+    "SUM": "СУМ",
+    "CANCELED": "ОТМЕНЕНО",
+    "DONE": "СДЕЛАННЫЙ",
+    "Price": "Цена"
 }

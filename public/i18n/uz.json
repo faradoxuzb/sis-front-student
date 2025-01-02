@@ -79,5 +79,11 @@
     "No lesson": "Dars yo'q",
     "Education year": "O'quv yili",
     "Signing Date": "Imzolangan sana",
-    "Rejected": "Rad etilgan"
+    "Rejected": "Rad etilgan",
+    "Data not found": "Ma'lumot topilmadi",
+    "Rejected Date": "Bekor qilingan sana",
+    "SUM": "SO'M",
+    "CANCELED": "BEKOR QILINGAN",
+    "DONE": "MUVAFFAQIYATLI",
+    "Price": "Narxi"
 }

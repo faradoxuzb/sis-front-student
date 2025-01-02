@@ -124,8 +124,59 @@ import { ProfileService } from '../profile/profile.service';
                 <p class="mb-3 text-[20px] font-semibold">
                     {{ 'My childs' | transloco }}
                 </p>
-                <div class="flex gap-3">
+                <div class="flex flex-col gap-3 sm:flex-row">
                     @for (item of parent.students; track $index) {
+                        <!-- <div
+                            class="bg-card flex flex-auto flex-col items-center overflow-hidden rounded-2xl shadow"
+                        >
+                            <div
+                                class="flex w-full flex-auto flex-col p-8 text-center"
+                            >
+                                <div
+                                    class="mx-auto h-32 w-32 overflow-hidden rounded-full"
+                                >
+                                    <img
+                                        class="h-full w-full object-cover"
+                                        [src]="member.avatar"
+                                    />
+                                    <img
+                                        class="mr-6 h-16 w-16 rounded-full"
+                                        src="/images/noPhoto.png"
+                                        alt="Card cover image"
+                                    />
+                                </div>
+                                <div class="mt-6 font-medium">
+                                    {{ item | appFullName }}
+                                </div>
+                                <div class="text-secondary">
+                                    member.title change qilish kerak
+                                </div>
+                            </div>
+                            <div
+                                class="flex w-full items-center divide-x border-t"
+                            >
+                                <a
+                                    class="flex flex-auto items-center justify-center py-4 hover:bg-hover"
+                                    [href]="'mailto:' + member.email"
+                                >
+                                    <mat-icon
+                                        class="text-hint icon-size-5"
+                                        [svgIcon]="'heroicons_solid:envelope'"
+                                    ></mat-icon>
+                                    <span class="ml-2">Email</span>
+                                </a>
+                                <a
+                                    class="flex flex-auto items-center justify-center py-4 hover:bg-hover"
+                                    [href]="'tel:' + member.phone"
+                                >
+                                    <mat-icon
+                                        class="text-hint icon-size-5"
+                                        [svgIcon]="'heroicons_solid:phone'"
+                                    ></mat-icon>
+                                    <span class="ml-2">Call</span>
+                                </a>
+                            </div>
+                        </div> -->
                         <fuse-card
                             class="filter-info flex w-full max-w-100 cursor-pointer flex-wrap items-center p-8 pb-6"
                             (click)="changeRouting(item)"
@@ -138,7 +189,7 @@ import { ProfileService } from '../profile/profile.service';
                                 />
                                 <div class="flex flex-col">
                                     <div
-                                        class="text-2xl font-semibold leading-tight"
+                                        class="text-xl font-semibold leading-tight sm:text-2xl"
                                     >
                                         {{ item | appFullName }}
                                     </div>
@@ -147,7 +198,6 @@ import { ProfileService } from '../profile/profile.service';
                         </fuse-card>
                     }
                 </div>
-                <!-- Actions -->
             </div>
         }
     `,
