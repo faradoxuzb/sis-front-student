@@ -128,12 +128,16 @@ export class UserComponent implements OnInit, OnDestroy {
 
     gotoGuardianProfile() {
         localStorage.removeItem('studentId');
-        this._navigationService.get().subscribe();
-        this._router.navigate(['parentProfile']);
+        this._navigationService.get().subscribe((res) => {
+            this._router.navigate(['parentProfile']);
+        });
     }
     changeUser(item: Student) {
         localStorage.setItem('studentId', '' + item.id);
         this._userService.chooseStudentId.set(item.id);
-        this._profileService.getProfileInfo();
+        this._navigationService.get().subscribe((res) => {
+            this._profileService.getProfileInfo();
+            this._router.navigate(['profile/bio']);
+        });
     }
 }

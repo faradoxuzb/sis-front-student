@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseService } from 'app/core/services/baseHttp.service';
 import { UserService } from 'app/core/user/user.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { ProfileInfo } from './profileInfo';
 
 @Injectable({
@@ -47,8 +47,20 @@ export class ProfileService {
         if (id) {
             link = `students/profile/${id}`;
         }
-        this._baseHttpService.get<ProfileInfo>(link).subscribe((res) => {
-            this._profileInfo.next(res);
-        });
+        this._baseHttpService
+            .get<ProfileInfo>(link)
+            .pipe(
+                map((el) => {
+                    el.files = el.files.map((el) => {
+                        const type = el.name.split('.')[1].toUpperCase();
+                        el.type = type;
+                        return el;
+                    });
+                    return el;
+                })
+            )
+            .subscribe((res) => {
+                this._profileInfo.next(res);
+            });
     }
 }
