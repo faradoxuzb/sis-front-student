@@ -124,32 +124,43 @@ import { ProfileService } from '../profile/profile.service';
                 <p class="mb-3 text-[20px] font-semibold">
                     {{ 'My childs' | transloco }}
                 </p>
-                <div class="flex flex-col gap-3 sm:flex-row">
+                <div
+                    class="grid w-full min-w-0 grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                >
                     @for (item of parent.students; track $index) {
-                        <!-- <div
+                        <div
                             class="bg-card flex flex-auto flex-col items-center overflow-hidden rounded-2xl shadow"
                         >
                             <div
                                 class="flex w-full flex-auto flex-col p-8 text-center"
+                                (click)="changeRouting(item)"
                             >
                                 <div
                                     class="mx-auto h-32 w-32 overflow-hidden rounded-full"
                                 >
-                                    <img
-                                        class="h-full w-full object-cover"
-                                        [src]="member.avatar"
-                                    />
-                                    <img
-                                        class="mr-6 h-16 w-16 rounded-full"
-                                        src="/images/noPhoto.png"
-                                        alt="Card cover image"
-                                    />
+                                    @if (item.photo) {
+                                        <img
+                                            class="h-full w-full object-cover"
+                                            [src]="item.photo.presigned_url"
+                                        />
+                                    } @else {
+                                        <img
+                                            class="mr-6 rounded-full"
+                                            src="/images/noPhoto.png"
+                                            alt="Card cover image"
+                                        />
+                                    }
                                 </div>
                                 <div class="mt-6 font-medium">
                                     {{ item | appFullName }}
                                 </div>
                                 <div class="text-secondary">
-                                    member.title change qilish kerak
+                                    {{ item.currentGroup.groupName }} -
+                                    {{
+                                        item.currentGroup.classType
+                                            | translateJson
+                                            | async
+                                    }}
                                 </div>
                             </div>
                             <div
@@ -157,7 +168,7 @@ import { ProfileService } from '../profile/profile.service';
                             >
                                 <a
                                     class="flex flex-auto items-center justify-center py-4 hover:bg-hover"
-                                    [href]="'mailto:' + member.email"
+                                    [href]="'mailto:' + item.email"
                                 >
                                     <mat-icon
                                         class="text-hint icon-size-5"
@@ -167,7 +178,7 @@ import { ProfileService } from '../profile/profile.service';
                                 </a>
                                 <a
                                     class="flex flex-auto items-center justify-center py-4 hover:bg-hover"
-                                    [href]="'tel:' + member.phone"
+                                    [href]="'tel:' + item.phone"
                                 >
                                     <mat-icon
                                         class="text-hint icon-size-5"
@@ -176,26 +187,7 @@ import { ProfileService } from '../profile/profile.service';
                                     <span class="ml-2">Call</span>
                                 </a>
                             </div>
-                        </div> -->
-                        <fuse-card
-                            class="filter-info flex w-full max-w-100 cursor-pointer flex-wrap items-center p-8 pb-6"
-                            (click)="changeRouting(item)"
-                        >
-                            <div class="flex w-full max-w-100 items-center">
-                                <img
-                                    class="mr-6 h-16 w-16 rounded-full"
-                                    src="/images/noPhoto.png"
-                                    alt="Card cover image"
-                                />
-                                <div class="flex flex-col">
-                                    <div
-                                        class="text-xl font-semibold leading-tight sm:text-2xl"
-                                    >
-                                        {{ item | appFullName }}
-                                    </div>
-                                </div>
-                            </div>
-                        </fuse-card>
+                        </div>
                     }
                 </div>
             </div>
