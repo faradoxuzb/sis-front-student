@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class FuseNavigationService {
@@ -8,6 +9,7 @@ export class FuseNavigationService {
         string,
         any
     >();
+    public isMenuOpen$ = new BehaviorSubject<boolean>(false);
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

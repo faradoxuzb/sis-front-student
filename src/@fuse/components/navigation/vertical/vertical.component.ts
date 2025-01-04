@@ -236,7 +236,7 @@ export class FuseVerticalNavigationComponent
     /**
      * On mouseleave
      *
-     * @private
+     * @privateg
      */
     @HostListener('mouseleave')
     private _onMouseleave(): void {
@@ -341,6 +341,11 @@ export class FuseVerticalNavigationComponent
      * On init
      */
     ngOnInit(): void {
+        this._fuseNavigationService.isMenuOpen$.subscribe((res) => {
+            if (res) {
+                this.open();
+            }
+        });
         // Make sure the name input is not an empty string
         if (this.name === '') {
             this.name = this._fuseUtilsService.randomId();
@@ -357,16 +362,20 @@ export class FuseVerticalNavigationComponent
             )
             .subscribe(() => {
                 // If the mode is 'over' and the navigation is opened...
-                if (this.mode === 'over' && this.opened) {
-                    // Close the navigation
-                    this.close();
-                }
+                this._fuseNavigationService.isMenuOpen$.subscribe((res) => {
+                    if (!res) {
+                        if (this.mode === 'over' && this.opened) {
+                            // Close the navigation
+                            this.close();
+                        }
 
-                // If the mode is 'side' and the aside is active...
-                if (this.mode === 'side' && this.activeAsideItemId) {
-                    // Close the aside
-                    this.closeAside();
-                }
+                        // If the mode is 'side' and the aside is active...
+                        if (this.mode === 'side' && this.activeAsideItemId) {
+                            // Close the aside
+                            this.closeAside();
+                        }
+                    }
+                });
             });
     }
 

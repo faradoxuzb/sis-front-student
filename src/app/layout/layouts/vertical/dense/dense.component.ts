@@ -1,3 +1,4 @@
+import { NgClass, NgStyle } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,7 +20,6 @@ import { SearchComponent } from 'app/layout/common/search/search.component';
 import { ShortcutsComponent } from 'app/layout/common/shortcuts/shortcuts.component';
 import { UserComponent } from 'app/layout/common/user/user.component';
 import { Subject, takeUntil } from 'rxjs';
-import { NgClass, NgStyle } from '@angular/common';
 
 @Component({
     selector: 'dense-layout',
@@ -125,7 +125,6 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
             this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(
                 name
             );
-
         if (navigation) {
             // Toggle the opened status
             navigation.toggle();
