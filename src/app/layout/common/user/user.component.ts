@@ -137,7 +137,11 @@ export class UserComponent implements OnInit, OnDestroy {
         this._userService.chooseStudentId.set(item.id);
         this._navigationService.get().subscribe((res) => {
             this._profileService.getProfileInfo();
-            this._router.navigate(['profile/bio']);
+            this._router.navigate(['profile/bio'], {
+                queryParams: {
+                    studentId: item.id,
+                },
+            });
         });
     }
 }

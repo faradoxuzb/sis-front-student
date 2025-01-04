@@ -5,9 +5,12 @@ import {
     OnInit,
     inject,
 } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { FuseNavigationService } from '@fuse/components/navigation';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Constants } from 'app/config/constants';
 import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe';
+import { filter } from 'rxjs';
 import { ProfileService } from '../profile.service';
 
 @Component({
@@ -250,8 +253,24 @@ export default class BioComponent implements OnInit {
     readonly STUDENT_LANGUAGES = Constants.STUDENT_LANGUAGES;
 
     protected profileService = inject(ProfileService);
+    protected $fuseNavigationService = inject(FuseNavigationService);
+    protected _router = inject(Router);
+    private $activatedRoute = inject(ActivatedRoute);
 
     constructor() {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.$activatedRoute.queryParams.subscribe((res) => {
+            if (res?.studentId) {
+                setTimeout(() => {
+                    this.$fuseNavigationService.isMenuOpen$.next(true);
+                });
+                this._router.events
+                    .pipe(filter((event) => event instanceof NavigationEnd))
+                    .subscribe(() => {
+                        this.$fuseNavigationService.isMenuOpen$.next(false);
+                    });
+            }
+        });
+    }
 }

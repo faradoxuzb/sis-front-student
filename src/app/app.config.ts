@@ -1,5 +1,5 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { APP_INITIALIZER, ApplicationConfig, inject, InjectionToken } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, inject } from '@angular/core';
 import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -15,27 +15,25 @@ import { appRoutes } from 'app/app.routes';
 import { provideAuth } from 'app/core/auth/auth.provider';
 import { provideIcons } from 'app/core/icons/icons.provider';
 import { mockApiServices } from 'app/mock-api';
-import { firstValueFrom } from 'rxjs';
-import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
-import { authInterceptor } from './core/auth/auth.interceptor';
 import { environment } from 'environments/environment';
-import { DITokens } from './core/utils/di.tokens';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { firstValueFrom } from 'rxjs';
+import { authInterceptor } from './core/auth/auth.interceptor';
+import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
+import { DITokens } from './core/utils/di.tokens';
 export const appConfig: ApplicationConfig = {
     providers: [
         {
-            provide:DITokens.API_BASE_URL,
-            useValue:environment.API_BASE_URL
+            provide: DITokens.API_BASE_URL,
+            useValue: environment.API_BASE_URL,
         },
         provideEnvironmentNgxMask(),
         provideAnimations(),
-        provideHttpClient(
-            withInterceptors([authInterceptor])
-        ),
+        provideHttpClient(withInterceptors([authInterceptor])),
         provideRouter(
             appRoutes,
             withPreloading(PreloadAllModules),
-            withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })
+            withInMemoryScrolling({ scrollPositionRestoration: 'top' })
         ),
 
         // Material Date Adapter
@@ -72,7 +70,7 @@ export const appConfig: ApplicationConfig = {
                     },
                     {
                         id: 'ru',
-                        label: "Русский",
+                        label: 'Русский',
                     },
                 ],
                 defaultLang: localStorage.getItem('lang') ?? 'uz',

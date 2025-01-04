@@ -5,8 +5,10 @@ import {
     inject,
     OnInit,
 } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { FuseCardComponent } from '@fuse/components/card';
+import { FuseNavigationService } from '@fuse/components/navigation';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { UserService } from 'app/core/user/user.service';
@@ -133,7 +135,6 @@ import { ProfileService } from '../profile/profile.service';
                         >
                             <div
                                 class="flex w-full flex-auto flex-col p-8 text-center"
-                                (click)="changeRouting(item)"
                             >
                                 <div
                                     class="mx-auto h-32 w-32 overflow-hidden rounded-full"
@@ -164,9 +165,9 @@ import { ProfileService } from '../profile/profile.service';
                                 </div>
                             </div>
                             <div
-                                class="flex w-full items-center divide-x border-t"
+                                class="flex w-full items-center divide-x border-t p-3"
                             >
-                                <a
+                                <!-- <a
                                     class="flex flex-auto items-center justify-center py-4 hover:bg-hover"
                                     [href]="'mailto:' + item.email"
                                 >
@@ -185,6 +186,14 @@ import { ProfileService } from '../profile/profile.service';
                                         [svgIcon]="'heroicons_solid:phone'"
                                     ></mat-icon>
                                     <span class="ml-2">Call</span>
+                                </a> -->
+                                <a
+                                    (click)="changeRouting(item)"
+                                    class="w-full bg-[#4f47e6]"
+                                    mat-flat-button
+                                    [color]="'primary'"
+                                >
+                                    {{ 'See full information' | transloco }}
                                 </a>
                             </div>
                         </div>
@@ -205,6 +214,7 @@ import { ProfileService } from '../profile/profile.service';
         TranslateJsonPipe,
         FuseCardComponent,
         FullNamePipe,
+        MatButtonModule,
     ],
 })
 export default class ParentProfileComponent implements OnInit {
@@ -213,13 +223,18 @@ export default class ParentProfileComponent implements OnInit {
     protected $navigationService = inject(NavigationService);
     protected $router = inject(Router);
     protected $profileService = inject(ProfileService);
+    protected $fuseNavigationService = inject(FuseNavigationService);
     changeRouting(item) {
         localStorage.setItem('studentId', item.id);
         this.$userService.chooseStudentId.set(item.id);
         this.$navigationService.get().subscribe((res) => {
             this.$navigationService.navigation$ = res;
             this.$profileService.getProfileInfo();
-            this.$router.navigate(['profile/bio']);
+            this.$router.navigate(['profile/bio'], {
+                queryParams: {
+                    studentId: item.id,
+                },
+            });
         });
     }
 

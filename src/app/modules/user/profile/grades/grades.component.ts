@@ -100,7 +100,6 @@ export default class GradesComponent implements OnInit {
             });
             const groupedSubjectsArray = Object.values(groupedSubjects);
             this.groupedData = groupedSubjectsArray;
-            console.log(this.groupedData);
             this.cd.detectChanges();
         });
     }
