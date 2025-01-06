@@ -1,8 +1,16 @@
-import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
+import {
+    AsyncPipe,
+    Location,
+    NgClass,
+    NgTemplateOutlet,
+} from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { Constants } from 'app/config/constants';
+import { UserService } from 'app/core/user/user.service';
 import { FullNamePipe } from 'app/modules/shared/Pipes/full-name.pipe';
 import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe';
 import { ProfileService } from '../profile/profile.service';
@@ -20,6 +28,8 @@ import { ProfileService } from '../profile/profile.service';
         TranslateJsonPipe,
         FullNamePipe,
         NgClass,
+        MatButtonModule,
+        MatIconModule,
     ],
 })
 export default class ScheduleComponent implements OnInit {
@@ -61,9 +71,12 @@ export default class ScheduleComponent implements OnInit {
     protected $transloco = inject(TranslocoModule);
     protected $profileService = inject(ProfileService);
     protected $activatedRoute = inject(ActivatedRoute);
+    private $userService = inject(UserService);
     protected $router = inject(Router);
+    private $location = inject(Location);
 
     maxShowClassNumber = Constants.DEFAULT_CLASS_NUMBERS;
+    isParentSee: boolean = false;
 
     constructor() {
         // this.initSchedule();
@@ -71,6 +84,11 @@ export default class ScheduleComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.$userService.parent$.subscribe((res) => {
+            if (res) {
+                this.isParentSee = true;
+            }
+        });
         this.getChildInfo();
     }
     getChildInfo() {
@@ -88,5 +106,8 @@ export default class ScheduleComponent implements OnInit {
                 });
             }
         });
+    }
+    backToMenu() {
+        this.$location.back();
     }
 }

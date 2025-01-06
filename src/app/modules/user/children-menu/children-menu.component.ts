@@ -1,3 +1,4 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -6,6 +7,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { UserService } from 'app/core/user/user.service';
 import { Student } from 'app/modules/shared/models/parent.model';
 import { FullNamePipe } from 'app/modules/shared/Pipes/full-name.pipe';
+import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe';
 
 @Component({
     selector: 'app-children-menu',
@@ -18,8 +20,17 @@ import { FullNamePipe } from 'app/modules/shared/Pipes/full-name.pipe';
                     ></div>
                 </div>
             }
-            <p class="my-4 text-[22px] font-semibold">
+            <p class="my-4 text-[16px] font-semibold sm:text-[22px]">
                 {{ nameOfChild | appFullName }}
+                <br />
+                <span class="">
+                    ({{ nameOfChild.currentGroup.groupName }} -
+                    {{
+                        nameOfChild.currentGroup.classType
+                            | translateJson
+                            | async
+                    }})
+                </span>
             </p>
             <div class="grid grid-cols-2 flex-wrap sm:flex">
                 @for (item of panels; track $index) {
@@ -43,7 +54,10 @@ import { FullNamePipe } from 'app/modules/shared/Pipes/full-name.pipe';
                         <div
                             class="flex flex-auto flex-col justify-center text-center text-sm font-medium"
                         >
-                            <div class="truncate" [matTooltip]="item.title">
+                            <div
+                                class="truncate"
+                                [matTooltip]="item.title | transloco"
+                            >
                                 {{ item.title | transloco }}
                             </div>
                         </div>
@@ -54,7 +68,14 @@ import { FullNamePipe } from 'app/modules/shared/Pipes/full-name.pipe';
     `,
     styleUrls: ['./children-menu.component.scss'],
     standalone: true,
-    imports: [MatIconModule, TranslocoModule, MatTooltipModule, FullNamePipe],
+    imports: [
+        MatIconModule,
+        TranslocoModule,
+        MatTooltipModule,
+        FullNamePipe,
+        TranslateJsonPipe,
+        AsyncPipe,
+    ],
 })
 export default class ChildrenMenuComponent implements OnInit {
     constructor(
@@ -63,6 +84,12 @@ export default class ChildrenMenuComponent implements OnInit {
     ) {}
 
     panels = [
+        {
+            id: 'schedule',
+            icon: 'heroicons_outline:academic-cap',
+            title: 'Schedule',
+            description: 'Schedule',
+        },
         {
             id: 'bio',
             icon: 'heroicons_outline:user-circle',
@@ -130,6 +157,10 @@ export default class ChildrenMenuComponent implements OnInit {
         });
     }
     navigate(item: any) {
+        if (item.id == 'schedule') {
+            this._router.navigate([item.id]);
+            return;
+        }
         this._router.navigate(['profile/' + item.id]);
     }
 }
