@@ -1,4 +1,4 @@
-import { Roles } from "./user.types";
+import { Roles } from './user.types';
 
 export interface allResponseUser {
     success: boolean;
@@ -9,6 +9,7 @@ export interface allResponseUser {
         email: string;
         avatar: string;
         status?: string;
-        roles:Roles[];
+        is_password_reset: boolean;
+        roles: Roles[];
     };
 }

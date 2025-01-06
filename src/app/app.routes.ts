@@ -45,13 +45,6 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'reset-password',
-                loadChildren: () =>
-                    import(
-                        'app/modules/auth/reset-password/reset-password.routes'
-                    ),
-            },
-            {
                 path: 'sign-in',
                 loadChildren: () =>
                     import('app/modules/auth/sign-in/sign-in.routes'),
@@ -78,6 +71,13 @@ export const appRoutes: Route[] = [
                 path: 'sign-out',
                 loadChildren: () =>
                     import('app/modules/auth/sign-out/sign-out.routes'),
+            },
+            {
+                path: 'reset-password',
+                loadChildren: () =>
+                    import(
+                        'app/modules/auth/reset-password/reset-password.routes'
+                    ),
             },
             {
                 path: 'unlock-session',
@@ -142,6 +142,13 @@ export const appRoutes: Route[] = [
                 path: 'children-schedule',
                 loadComponent: () =>
                     import('app/modules/user/schedule/schedule.component'),
+            },
+            {
+                path: 'children-menu',
+                loadComponent: () =>
+                    import(
+                        'app/modules/user/children-menu/children-menu.component'
+                    ),
             },
         ],
     },

@@ -9,6 +9,7 @@ export interface LoginModel {
             access_token: string;
             refresh_token: string;
         };
+        is_password_reset: boolean;
         name: string;
         email: string;
         avatar: string;

@@ -19,6 +19,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { TranslocoModule } from '@ngneat/transloco';
 import { AuthService } from 'app/core/auth/auth.service';
+import { LoginModel } from 'app/core/auth/LoginModel';
 import { UserService } from 'app/core/user/user.service';
 
 @Component({
@@ -103,33 +104,43 @@ export class AuthSignInComponent implements OnInit {
         this.showAlert = false;
 
         // Sign in
-        this._authService.signIn(this.signInForm.value).subscribe((res) => {
-            if (res) {
-                this._userService.get().subscribe((res) => {
-                    const redirectURL =
-                        this._activatedRoute.snapshot.queryParamMap.get(
-                            'redirectURL'
-                        ) || '/signed-in-redirect';
+        this._authService
+            .signIn(this.signInForm.value)
+            .subscribe((res: LoginModel) => {
+                if (res) {
+                    if (res.user.is_password_reset) {
+                        this._router.navigate(['reset-password'], {
+                            queryParams: {
+                                status: 'mustReset',
+                            },
+                        });
+                    } else {
+                        this._userService.get().subscribe((res) => {
+                            const redirectURL =
+                                this._activatedRoute.snapshot.queryParamMap.get(
+                                    'redirectURL'
+                                ) || '/signed-in-redirect';
 
-                    // Navigate to the redirect url
-                    this._router.navigateByUrl(redirectURL);
-                });
-            } else {
-                // Re-enable the form
-                this.signInForm.enable();
+                            // Navigate to the redirect url
+                            this._router.navigateByUrl(redirectURL);
+                        });
+                    }
+                } else {
+                    // Re-enable the form
+                    this.signInForm.enable();
 
-                // Reset the form
-                this.signInNgForm.resetForm();
+                    // Reset the form
+                    this.signInNgForm.resetForm();
 
-                // Set the alert
-                this.alert = {
-                    type: 'error',
-                    message: 'Wrong email or password',
-                };
+                    // Set the alert
+                    this.alert = {
+                        type: 'error',
+                        message: 'Wrong email or password',
+                    };
 
-                // Show the alert
-                this.showAlert = true;
-            }
-        });
+                    // Show the alert
+                    this.showAlert = true;
+                }
+            });
     }
 }
