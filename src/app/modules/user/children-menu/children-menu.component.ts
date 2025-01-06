@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { UserService } from 'app/core/user/user.service';
 import { Student } from 'app/modules/shared/models/parent.model';
@@ -80,7 +80,8 @@ import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe'
 export default class ChildrenMenuComponent implements OnInit {
     constructor(
         private _userService: UserService,
-        private _router: Router
+        private _router: Router,
+        private _activatedRouter: ActivatedRoute
     ) {}
 
     panels = [
@@ -147,13 +148,15 @@ export default class ChildrenMenuComponent implements OnInit {
     ];
     nameOfChild: Student;
     ngOnInit() {
-        this._userService.parent$.subscribe((res) => {
-            if (res) {
-                const chidrenId = localStorage.getItem('studentId');
-                this.nameOfChild = res.students?.find(
-                    (el) => el.id == +chidrenId
-                );
-            }
+        this._activatedRouter.queryParams.subscribe((res) => {
+            this._userService.parent$.subscribe((res) => {
+                if (res) {
+                    const chidrenId = localStorage.getItem('studentId');
+                    this.nameOfChild = res.students?.find(
+                        (el) => el.id == +chidrenId
+                    );
+                }
+            });
         });
     }
     navigate(item: any) {

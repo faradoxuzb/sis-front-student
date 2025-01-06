@@ -228,7 +228,11 @@ export default class ParentProfileComponent implements OnInit {
         localStorage.setItem('studentId', item.id);
         this.$userService.chooseStudentId.set(item.id);
         this.$profileService.getProfileInfo();
-        this.$router.navigate(['children-menu']);
+        this.$router.navigate(['children-menu'], {
+            queryParams: {
+                data: item.id,
+            },
+        });
     }
 
     ngOnInit() {}
