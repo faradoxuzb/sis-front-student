@@ -12,10 +12,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { FuseValidators } from '@fuse/validators';
+import { TranslocoModule } from '@ngneat/transloco';
 import { AuthService } from 'app/core/auth/auth.service';
 import { finalize } from 'rxjs';
 
@@ -35,6 +36,7 @@ import { finalize } from 'rxjs';
         MatIconModule,
         MatProgressSpinnerModule,
         RouterLink,
+        TranslocoModule,
     ],
 })
 export class AuthResetPasswordComponent implements OnInit {
@@ -46,13 +48,16 @@ export class AuthResetPasswordComponent implements OnInit {
     };
     resetPasswordForm: UntypedFormGroup;
     showAlert: boolean = false;
+    isMustReset = false;
 
     /**
      * Constructor
      */
     constructor(
         private _authService: AuthService,
-        private _formBuilder: UntypedFormBuilder
+        private _activatedRouter: ActivatedRoute,
+        private _formBuilder: UntypedFormBuilder,
+        private _router: Router
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -63,16 +68,20 @@ export class AuthResetPasswordComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
+        this.isMustReset =
+            this._activatedRouter.snapshot.queryParamMap.get('status') ==
+            'mustReset';
         // Create the form
         this.resetPasswordForm = this._formBuilder.group(
             {
-                password: ['', Validators.required],
-                passwordConfirm: ['', Validators.required],
+                old_password: ['', Validators.required],
+                new_password: ['', Validators.required],
+                new_password_confirmation: ['', Validators.required],
             },
             {
                 validators: FuseValidators.mustMatch(
-                    'password',
-                    'passwordConfirm'
+                    'new_password',
+                    'new_password_confirmation'
                 ),
             }
         );
@@ -99,7 +108,7 @@ export class AuthResetPasswordComponent implements OnInit {
 
         // Send the request to the server
         this._authService
-            .resetPassword(this.resetPasswordForm.get('password').value)
+            .resetPassword(this.resetPasswordForm.getRawValue())
             .pipe(
                 finalize(() => {
                     // Re-enable the form
@@ -119,6 +128,11 @@ export class AuthResetPasswordComponent implements OnInit {
                         type: 'success',
                         message: 'Your password has been reset.',
                     };
+                    this._authService.signOut().subscribe((res) => {
+                        if (res) {
+                            this._router.navigate(['sign-in']);
+                        }
+                    });
                 },
                 (response) => {
                     // Set the alert

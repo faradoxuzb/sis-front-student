@@ -1,4 +1,6 @@
-export interface Parent{
+import { MultiLanguageField } from './multi-language-field.model';
+
+export interface Parent {
     id: number;
     first_name: string;
     last_name: string;
@@ -23,6 +25,10 @@ export interface Student {
     middle_name: string;
     birth_date: string;
     gender: string;
+    currentGroup: {
+        groupName: string;
+        classType: MultiLanguageField;
+    };
 }
 export interface Citizenship {
     id: number;

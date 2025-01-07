@@ -46,8 +46,12 @@ export class AuthService {
      *
      * @param password
      */
-    resetPassword(password: string): Observable<any> {
-        return this._httpClient.post('api/auth/reset-password', password);
+    resetPassword(body: {
+        old_password: string;
+        new_password: string;
+        new_password_confirmation: string;
+    }): Observable<any> {
+        return this._baseHttpService.post('auth/change-password', body);
     }
 
     /**

@@ -49,8 +49,14 @@
             ></mat-icon>
             <span>{{ 'My children' | transloco }}</span>
         </button>
+        <mat-divider class="my-2"></mat-divider>
     }
-    <mat-divider class="my-2"></mat-divider>
+    <button mat-menu-item routerLink="reset-password">
+        <mat-icon
+            [svgIcon]="'heroicons_outline:arrow-path-rounded-square'"
+        ></mat-icon>
+        <span>Change Password</span>
+    </button>
     <button mat-menu-item (click)="signOut()">
         <mat-icon
             [svgIcon]="'heroicons_outline:arrow-right-on-rectangle'"

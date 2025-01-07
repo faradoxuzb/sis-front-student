@@ -227,14 +227,11 @@ export default class ParentProfileComponent implements OnInit {
     changeRouting(item) {
         localStorage.setItem('studentId', item.id);
         this.$userService.chooseStudentId.set(item.id);
-        this.$navigationService.get().subscribe((res) => {
-            this.$navigationService.navigation$ = res;
-            this.$profileService.getProfileInfo();
-            this.$router.navigate(['profile/bio'], {
-                queryParams: {
-                    studentId: item.id,
-                },
-            });
+        this.$profileService.getProfileInfo();
+        this.$router.navigate(['children-menu'], {
+            queryParams: {
+                data: item.id,
+            },
         });
     }
 

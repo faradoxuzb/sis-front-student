@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'app/core/user/user.types';
 import { BehaviorSubject, map, Observable, ReplaySubject, tap } from 'rxjs';
 import { Parent } from '../../modules/shared/models/parent.model';
@@ -12,6 +13,7 @@ export class UserService {
     private _parent: BehaviorSubject<Parent> = new BehaviorSubject<Parent>(
         null
     );
+    private _router = inject(Router);
     private _baseHttpService = inject(BaseService);
     public chooseStudentId = signal<number | null>(0);
 
@@ -53,6 +55,13 @@ export class UserService {
         return this._baseHttpService.get<allResponseUser>('auth/me').pipe(
             tap((user) => {
                 this._user.next(user.user);
+                if (user.user.is_password_reset) {
+                    this._router.navigate(['reset-password'], {
+                        queryParams: {
+                            status: 'mustReset',
+                        },
+                    });
+                }
             })
         );
     }
