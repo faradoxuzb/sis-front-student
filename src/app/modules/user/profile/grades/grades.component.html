@@ -6,13 +6,13 @@
     <!-- Section -->
     <div class="w-full">
         <div class="text-xl">
-            Subjects and Quarterly Grades for group
             @if (_profileService.profileInfo$ | async; as class) {
                 <span class="mb-4 text-lg font-bold text-primary-800">
                     {{ class.currentGroup.groupName }}-
                     {{ class.currentGroup.classType | translateJson | async }}
                 </span>
             }
+            {{ 'Subjects and Quarterly Grades for group' | transloco }}
         </div>
     </div>
     <div class="mt-8 grid w-full grid-cols-1 gap-2 overflow-x-scroll">
@@ -25,41 +25,61 @@
                         class="bg-gradient-to-r from-red-800 to-yellow-700 text-sm uppercase tracking-wide text-white"
                     >
                         <th class="rounded-tl-lg px-6 py-4 text-left">
-                            Subject
+                            {{ 'Subject' | transloco }}
                         </th>
                         <th colspan="2" class="px-6 py-4 text-center">
-                            1st Cycle
+                            {{ '1st Cycle' | transloco }}
                         </th>
                         <th colspan="2" class="px-6 py-4 text-center">
-                            2nd Cycle
+                            {{ '2nd Cycle' | transloco }}
                         </th>
                         <th colspan="2" class="px-6 py-4 text-center">
-                            3rd Cycle
+                            {{ '3rd Cycle' | transloco }}
                         </th>
                         <th colspan="2" class="px-6 py-4 text-center">
-                            4th Cycle
+                            {{ '4th Cycle' | transloco }}
                         </th>
                         <th
                             colspan="2"
                             class="rounded-tr-lg px-6 py-4 text-center"
                         >
-                            Year End
+                            {{ 'Year End' | transloco }}
                         </th>
                     </tr>
                     <tr
                         class="bg-gray-100 text-xs uppercase tracking-wide text-gray-600"
                     >
                         <th class="px-6 py-3"></th>
-                        <th class="px-4 py-3 text-center">Mark</th>
-                        <th class="px-4 py-3 text-center">Grade</th>
-                        <th class="px-4 py-3 text-center">Mark</th>
-                        <th class="px-4 py-3 text-center">Grade</th>
-                        <th class="px-4 py-3 text-center">Mark</th>
-                        <th class="px-4 py-3 text-center">Grade</th>
-                        <th class="px-4 py-3 text-center">Mark</th>
-                        <th class="px-4 py-3 text-center">Grade</th>
-                        <th class="px-4 py-3 text-center">Mark</th>
-                        <th class="px-4 py-3 text-center">Grade</th>
+                        <th class="px-4 py-3 text-center">
+                            {{ 'Mark' | transloco }}
+                        </th>
+                        <th class="px-4 py-3 text-center">
+                            {{ 'Grade' | transloco }}
+                        </th>
+                        <th class="px-4 py-3 text-center">
+                            {{ 'Mark' | transloco }}
+                        </th>
+                        <th class="px-4 py-3 text-center">
+                            {{ 'Grade' | transloco }}
+                        </th>
+                        <th class="px-4 py-3 text-center">
+                            {{ 'Mark' | transloco }}
+                        </th>
+                        <th class="px-4 py-3 text-center">
+                            {{ 'Grade' | transloco }}
+                        </th>
+                        <th class="px-4 py-3 text-center">
+                            {{ 'Mark' | transloco }}
+                        </th>
+                        <th class="px-4 py-3 text-center">
+                            {{ 'Grade' | transloco }}
+                        </th>
+                        <th class="px-4 py-3 text-center">
+                            {{ 'Mark' | transloco }}
+                        </th>
+                        <th class="px-4 py-3 text-center">
+                            {{ 'Grade' | transloco }}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -308,7 +328,9 @@
         </div>
         <div class="my-9 border-t"></div>
         <div class="w-full">
-            <div class="text-2xl font-semibold">Performance Indicators</div>
+            <div class="text-2xl font-semibold">
+                {{ 'Performance Indicators' | transloco }}
+            </div>
         </div>
         <div class="container max-w-80">
             <!-- Performance indicators -->
@@ -323,10 +345,12 @@
                             <div
                                 class="text-secondary sticky top-0 z-10 grid grid-cols-2 gap-2 bg-gray-50 bg-gradient-to-r from-red-800 to-yellow-700 px-4 py-3 text-md text-sm font-semibold uppercase tracking-wide text-white shadow dark:bg-black dark:bg-opacity-5 md:px-8"
                             >
-                                <div class="ml-2 min-w-0">Grade</div>
+                                <div class="ml-2 min-w-0">
+                                    {{ 'Grade' | transloco }}
+                                </div>
                                 <div>
                                     <div class="flex items-center justify-end">
-                                        Mark
+                                        {{ 'Mark' | transloco }}
                                     </div>
                                 </div>
                             </div>

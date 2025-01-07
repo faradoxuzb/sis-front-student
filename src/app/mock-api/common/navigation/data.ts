@@ -14,7 +14,7 @@ export const parentNavigation: FuseNavigationItem[] = [
 export const defaultNavigation: FuseNavigationItem[] = [
     {
         id: 'schedule',
-        title: 'Timetable',
+        title: 'Schedule',
         type: 'basic',
         icon: 'heroicons_outline:academic-cap',
         link: '/schedule',

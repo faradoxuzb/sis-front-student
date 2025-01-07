@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { TranslocoModule } from '@ngneat/transloco';
 import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe';
@@ -148,7 +148,13 @@ import { ProfileService } from '../profile.service';
     styleUrls: ['./classes.component.scss'],
     templateUrl: './classes.component.html',
     standalone: true,
-    imports: [AsyncPipe, TranslateJsonPipe, JsonPipe, TranslocoModule],
+    imports: [
+        AsyncPipe,
+        TranslateJsonPipe,
+        JsonPipe,
+        TranslocoModule,
+        DatePipe,
+    ],
 })
 export default class ClassesComponent implements OnInit {
     constructor() {}

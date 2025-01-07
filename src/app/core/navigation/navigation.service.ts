@@ -41,16 +41,27 @@ export class NavigationService {
                     const role = res.roles[0].name;
                     if (role == Constants.Roles.Parent) {
                         this._userService.getParent().subscribe((res) => {
-                            navigation.default = [
-                                {
-                                    id: 'parentProfile',
-                                    title: 'Parent Profile',
-                                    type: 'basic',
-                                    icon: 'heroicons_outline:user',
-                                    link: '/parentProfile',
-                                },
-                            ];
-                            this._navigation.next(navigation);
+                            let navigations = { ...navigation };
+                            let studentIdFromST =
+                                localStorage.getItem('studentId');
+                            const studentId = res.students.find(
+                                (el) => el.id == +studentIdFromST
+                            )?.id;
+                            this._userService.chooseStudentId.set(studentId);
+                            if (studentId) {
+                                this._navigation.next(navigation);
+                            } else {
+                                navigations.default = [
+                                    {
+                                        id: 'parentProfile',
+                                        title: 'Parent Profile',
+                                        type: 'basic',
+                                        icon: 'heroicons_outline:user',
+                                        link: '/parentProfile',
+                                    },
+                                ];
+                                this._navigation.next(navigations);
+                            }
                         });
                     } else {
                         this._navigation.next(navigation);

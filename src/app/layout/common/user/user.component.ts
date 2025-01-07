@@ -135,11 +135,13 @@ export class UserComponent implements OnInit, OnDestroy {
     changeUser(item: Student) {
         localStorage.setItem('studentId', '' + item.id);
         this._userService.chooseStudentId.set(item.id);
-        this._profileService.getProfileInfo();
-        this._router.navigate(['children-menu'], {
-            queryParams: {
-                data: item.id,
-            },
+        this._navigationService.get().subscribe((res) => {
+            this._profileService.getProfileInfo();
+            this._router.navigate(['children-menu'], {
+                queryParams: {
+                    data: item.id,
+                },
+            });
         });
     }
 }

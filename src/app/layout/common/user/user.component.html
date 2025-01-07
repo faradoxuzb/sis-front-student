@@ -23,7 +23,7 @@
 <mat-menu [xPosition]="'before'" #userActions="matMenu">
     <button mat-menu-item>
         <span class="flex flex-col leading-none">
-            <span>Signed in as</span>
+            <span>{{ 'Signed in as' | transloco }}</span>
             <span class="mt-1.5 text-md font-medium">{{ user?.email }}</span>
             <span
                 class="mt-1.5 text-md font-semibold capitalize text-green-800"
@@ -35,7 +35,7 @@
     @if (children) {
         <button mat-menu-item (click)="gotoGuardianProfile()">
             <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
-            <span>Profile</span>
+            <span>{{ 'Profile' | transloco }}</span>
         </button>
     }
     <!-- <button mat-menu-item>
@@ -55,13 +55,13 @@
         <mat-icon
             [svgIcon]="'heroicons_outline:arrow-path-rounded-square'"
         ></mat-icon>
-        <span>Change Password</span>
+        <span>{{ 'Change password' | transloco }}</span>
     </button>
     <button mat-menu-item (click)="signOut()">
         <mat-icon
             [svgIcon]="'heroicons_outline:arrow-right-on-rectangle'"
         ></mat-icon>
-        <span>Sign out</span>
+        <span>{{ 'Sign out' | transloco }}</span>
     </button>
 </mat-menu>
 
