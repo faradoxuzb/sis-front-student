@@ -55,7 +55,7 @@ import { ProfileService } from '../profile/profile.service';
 
                     <p>
                         <span class="font-bold">{{ 'Sex' | transloco }}:</span>
-                        {{ parent.gender }}
+                        {{ parent.gender | transloco }}
                     </p>
                     <p>
                         <span class="font-bold"
@@ -124,7 +124,7 @@ import { ProfileService } from '../profile/profile.service';
                 </div>
                 <hr class="my-3 h-[2px] w-full bg-[#c8c8c8]" />
                 <p class="mb-3 text-[20px] font-semibold">
-                    {{ 'My childs' | transloco }}
+                    {{ 'My children' | transloco }}
                 </p>
                 <div
                     class="grid w-full min-w-0 grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
@@ -227,13 +227,15 @@ export default class ParentProfileComponent implements OnInit {
     changeRouting(item) {
         localStorage.setItem('studentId', item.id);
         this.$userService.chooseStudentId.set(item.id);
-        this.$profileService.getProfileInfo();
-        this.$router.navigate(['children-menu'], {
-            queryParams: {
-                data: item.id,
-            },
+        this.$navigationService.get().subscribe((res) => {
+            this.$navigationService.navigation$ = res;
+            this.$profileService.getProfileInfo();
+            this.$router.navigate(['children-menu'], {
+                queryParams: {
+                    data: item.id,
+                },
+            });
         });
     }
-
     ngOnInit() {}
 }

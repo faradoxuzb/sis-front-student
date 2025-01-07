@@ -173,7 +173,10 @@
                             ></mat-icon>
                             <span class="leading-none"
                                 >{{ 'Birthdate' | transloco }}:
-                                {{ guardian.guardian.birth_date }}</span
+                                {{
+                                    guardian.guardian.birth_date
+                                        | date: 'dd.MM.yyyy'
+                                }}</span
                             >
                         </div>
                     </div>

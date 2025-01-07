@@ -1,10 +1,10 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    inject,
     OnInit,
+    inject,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslocoModule } from '@ngneat/transloco';
@@ -13,8 +13,8 @@ import { FullNamePipe } from 'app/modules/shared/Pipes/full-name.pipe';
 import { IdentityPipe } from 'app/modules/shared/Pipes/identity.pipe';
 import { PhonePipe } from 'app/modules/shared/Pipes/phone.pipe';
 import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe';
-import { ProfileService } from '../profile.service';
 import { FuseCardComponent } from '../../../../../@fuse/components/card';
+import { ProfileService } from '../profile.service';
 
 @Component({
     selector: 'app-contacts',
@@ -179,6 +179,7 @@ import { FuseCardComponent } from '../../../../../@fuse/components/card';
         FullNamePipe,
         MatIconModule,
         FuseCardComponent,
+        DatePipe,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
