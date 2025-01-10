@@ -21,7 +21,7 @@ export interface MyDay {
 }
 export interface Dates {
     date: Date;
-    status: 'absent' | 'late' | 'absent';
+    status: 'absent' | 'late' | 'present';
 }
 
 @Component({
@@ -35,14 +35,20 @@ export interface Dates {
                 <div class="flex items-center gap-2">
                     <div class="h-6 w-6 rounded-[8px] bg-red-600"></div>
                     <p>{{ 'Absent' | transloco }}</p>
+                    -
+                    <p>{{ absent }}</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <div class="h-6 w-6 rounded-[8px] bg-red-400"></div>
+                    <div class="h-6 w-6 rounded-[8px] bg-[#FFBF00]"></div>
                     <p>{{ 'Late' | transloco }}</p>
+                    -
+                    <p>{{ late }}</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <div class="h-6 w-6 rounded-[8px] bg-[#ede7ff]"></div>
+                    <div class="h-6 w-6 rounded-[8px] bg-green-400"></div>
                     <p>{{ 'Present' | transloco }}</p>
+                    -
+                    <p>{{ present }}</p>
                 </div>
             </div>
             <div
@@ -90,7 +96,9 @@ export default class AttendanceComponent {
         month: number;
         data: { date: number; fullDate: Date; isCurrentMonth: boolean }[];
     }[] = [];
-
+    absent = 0;
+    late = 0;
+    present = 0;
     $baseHttp = inject(BaseService);
     $router = inject(Router);
     $cdr = inject(ChangeDetectorRef);
@@ -104,6 +112,17 @@ export default class AttendanceComponent {
             url = url + '/' + studentId;
         }
         this.$baseHttp.get<Dates[]>(url).subscribe((res) => {
+            for (let x of res) {
+                if (x.status == 'absent') {
+                    this.absent += 0;
+                }
+                if (x.status == 'late') {
+                    this.late += 0;
+                }
+                if (x.status == 'present') {
+                    this.present += 0;
+                }
+            }
             this.dates = res;
             const startCalendarDate = new Date(2024, 8, 1);
             this.makeCalendar(startCalendarDate);
