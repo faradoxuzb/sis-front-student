@@ -119,5 +119,7 @@
     "New password (Confirm)": "Новый пароль (Подтвердить)",
     "New password confirmation is required": "Требуется подтверждение нового пароля",
     "New password and new confirm password must match": "Новый пароль и новый пароль подтверждения должны совпадать.",
-    "Download": "Скачать"
+    "Download": "Скачать",
+    "day": "день",
+    "Overview": "Обзор"
 }
