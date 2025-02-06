@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseService } from 'app/core/services/baseHttp.service';
 import { UserService } from 'app/core/user/user.service';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, ReplaySubject } from 'rxjs';
 import { ProfileInfo } from './profileInfo';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { ProfileInfo } from './profileInfo';
 })
 export class ProfileService {
     private _baseHttpService = inject(BaseService);
-    private _profileInfo = new BehaviorSubject<ProfileInfo>(null);
+    private _profileInfo = new ReplaySubject<ProfileInfo>(1);
     public _files = new BehaviorSubject<any>(null);
     public _activatedRoute = inject(ActivatedRoute);
     private _userService = inject(UserService);

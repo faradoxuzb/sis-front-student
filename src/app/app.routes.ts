@@ -5,6 +5,7 @@ import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { CheckUserRole } from './core/auth/guards/checkRole.guard';
 import { GetUserGuard } from './core/auth/guards/user.guard';
+import { guardianProfileResolver } from './core/user/guardian-profile.resolver';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -113,7 +114,7 @@ export const appRoutes: Route[] = [
         canActivateChild: [AuthGuard, GetUserGuard],
         component: LayoutComponent,
         resolve: {
-            initialData: initialDataResolver,
+            initialData: initialDataResolver
         },
         children: [
             {
@@ -133,6 +134,9 @@ export const appRoutes: Route[] = [
                     import(
                         'app/modules/user/parentProfile/parentProfile.component'
                     ),
+                resolve: {
+                    parentData: guardianProfileResolver
+                }
             },
             {
                 path: 'children',

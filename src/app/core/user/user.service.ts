@@ -10,9 +10,7 @@ import { allResponseUser } from './user.interface';
 export class UserService {
     private _httpClient = inject(HttpClient);
     private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
-    private _parent: BehaviorSubject<Parent> = new BehaviorSubject<Parent>(
-        null
-    );
+    private _parent: ReplaySubject<Parent> = new ReplaySubject<Parent>(1);
     private _router = inject(Router);
     private _baseHttpService = inject(BaseService);
     public chooseStudentId = signal<number | null>(0);

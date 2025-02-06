@@ -13,7 +13,7 @@ import { ProfileService } from './profile.service';
 @Component({
     selector: 'app-profile',
     template: `
-        <div class="w-full p-4">
+        <!--<div class="w-full p-4">
             @if (showBack()) {
                 <button mat-icon-button color="primary" (click)="backToMenu()">
                     <mat-icon
@@ -22,8 +22,9 @@ import { ProfileService } from './profile.service';
                     ></mat-icon>
                 </button>
             }
-            <router-outlet></router-outlet>
-        </div>
+
+        </div>-->
+        <router-outlet></router-outlet>
     `,
     styleUrls: ['./profile.component.css'],
     standalone: true,

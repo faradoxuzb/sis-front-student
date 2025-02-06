@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { inject, Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, take } from 'rxjs';
+import { filter, startWith, take } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class FuseSplashScreenService {
@@ -16,9 +16,11 @@ export class FuseSplashScreenService {
         this._router.events
             .pipe(
                 filter((event) => event instanceof NavigationEnd),
-                take(1)
+                take(1),
+                startWith(this._router)
             )
             .subscribe(() => {
+                console.log('SplashScreenService');
                 this.hide();
             });
     }

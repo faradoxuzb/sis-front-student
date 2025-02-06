@@ -1,3 +1,5 @@
+import { studentProfileResolver } from '../../../core/user/guardian-profile.resolver';
+
 export default [
     {
         path: '',

@@ -1,0 +1,84 @@
+`
+<div class="flex min-w-0 flex-auto flex-col">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="mx-auto flex w-full max-w-screen-xl flex-col px-6 sm:px-8">
+            <div class="my-8 flex min-w-0 flex-auto flex-col sm:my-12 sm:flex-row sm:items-center">
+                <!-- Avatar and name -->
+                <div class="flex min-w-0 flex-auto items-center">
+                    <div class="h-16 w-16 flex-0 overflow-hidden rounded-full">
+                        <img class="h-full w-full object-cover" src="images/avatars/brian-hughes.jpg" />
+                    </div>
+                    <div class="ml-4 flex min-w-0 flex-col">
+                        <ng-container *transloco="let t">
+                            <div class="truncate text-2xl font-semibold leading-7 tracking-tight md:text-5xl md:leading-snug">{{ t('parent-profile.dashboard.welcome') }},  {{ parent.first_name }}!</div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:home'"
+                            ></mat-icon>
+                            <div
+                                class="text-secondary ml-1.5 truncate leading-6"
+                            >
+                                {{ parent.address }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="mt-6 flex items-center space-x-3 sm:ml-2 sm:mt-0">
+                    <button mat-flat-button [color]="'primary'">
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:cog-8-tooth'"></mat-icon>
+                        <span class="ml-2">Profile</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Project selector -->
+            <div class="bg-default relative flex cursor-pointer self-start overflow-hidden rounded-t-xl border border-b-0 pb-1 pl-5 pr-4 pt-2" matRipple>
+                <div class="flex items-center">
+                    <div class="overflow-hidden">
+                        <div class="truncate font-medium leading-6">
+                            {{ 'My children' | transloco }}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center pl-2">
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_mini:chevron-down'"
+                        ></mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="-mt-px flex-auto border-t pt-4 sm:pt-6">
+        <div class="mx-auto w-full max-w-screen-xl">
+            <div class="grid w-full min-w-0 grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+                @for (item of parent.students; track item.id) {
+                    <fuse-card
+                        class="filter-info flex w-full max-w-100 items-center p-4"
+                    >
+                        <img
+                            class="mr-6 h-16 w-16 rounded-full"
+                            [src]="item.photo?.presigned_url || '/images/noPhoto.png'"
+                            alt="Student cover image"
+                        />
+                        <div class="flex flex-col">
+                            <div class="text-md md:text-lg font-semibold leading-tight">
+                                {{ item | appFullName }}
+                            </div>
+                            <div class="text-md leading-tight text-primary">
+                                {{ item.currentGroup.groupName }} - {{ item.currentGroup.classType | translateJson | async }}
+                            </div>
+                            <div class="text-secondary hover:text-primary mt-2 text-md cursor-pointer underline"  (click)="changeRouting(item)">
+                                {{ item.email }}
+                            </div>
+                        </div>
+                    </fuse-card>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+`

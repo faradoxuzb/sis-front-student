@@ -62,7 +62,7 @@
     "Grades": "Baholar",
     "Medical info": "Tibbiy ma'lumot",
     "Absent": "Kelmagan",
-    "Present": "O'z vaqtida kelgan",
+    "Present": "O'z vaqtida",
     "Late": "Kech qolgan",
     "January": "Yanvar",
     "February": "Fevral",
@@ -121,5 +121,10 @@
     "New password and new confirm password must match": "Yangi parol va yangi parolni tasdiqlash bir hil bo'lishi kerak",
     "Download": "Yuklash",
     "day": "kuni",
-    "Overview": "Umumiy"
+    "Overview": "Umumiy",
+    "parent-profile": {
+        "dashboard": {
+            "welcome": "Xush kelibsiz"
+        }
+    }
 }
