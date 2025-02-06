@@ -118,5 +118,8 @@
     "New password is required": "Yangi parolni kiritish majburiy",
     "New password (Confirm)": "Yangi parolni tasdiqlang",
     "New password confirmation is required": "Yangi parolni tasdiqlash majburiy",
-    "New password and new confirm password must match": "Yangi parol va yangi parolni tasdiqlash bir hil bo'lishi kerak"
+    "New password and new confirm password must match": "Yangi parol va yangi parolni tasdiqlash bir hil bo'lishi kerak",
+    "Download": "Yuklash",
+    "day": "kuni",
+    "Overview": "Umumiy"
 }

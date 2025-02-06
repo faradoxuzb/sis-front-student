@@ -114,13 +114,13 @@ export default class AttendanceComponent {
         this.$baseHttp.get<Dates[]>(url).subscribe((res) => {
             for (let x of res) {
                 if (x.status == 'absent') {
-                    this.absent += 0;
+                    this.absent += 1;
                 }
                 if (x.status == 'late') {
-                    this.late += 0;
+                    this.late += 1;
                 }
                 if (x.status == 'present') {
-                    this.present += 0;
+                    this.present += 1;
                 }
             }
             this.dates = res;

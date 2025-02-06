@@ -13,6 +13,13 @@ export const parentNavigation: FuseNavigationItem[] = [
 
 export const defaultNavigation: FuseNavigationItem[] = [
     {
+        id: 'overview',
+        title: 'Overview',
+        type: 'basic',
+        icon: 'heroicons_outline:server-stack',
+        link: 'profile/overview',
+    },
+    {
         id: 'schedule',
         title: 'Schedule',
         type: 'basic',

@@ -1,11 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, input, OnInit } from '@angular/core';
 import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
     selector: 'app-no-data',
     template: `
-        <div class="flex h-full w-full items-center justify-center">
-            <div class="h-80 w-80 sm:h-120 sm:w-120">
+        <div
+            class="flex h-full w-full flex-col items-center justify-center gap-2"
+        >
+            <p
+                class="mt-3 text-center text-[20px] font-semibold sm:text-[30px]"
+            >
+                {{ 'Data not found' | transloco }}
+            </p>
+            <div class="h-80 w-80" [ngClass]="class()">
                 <svg
                     width="100%"
                     height="100%"
@@ -166,19 +174,15 @@ import { TranslocoModule } from '@ngneat/transloco';
                         </clipPath>
                     </defs>
                 </svg>
-                <p
-                    class="mt-3 text-center text-[20px] font-semibold sm:text-[30px]"
-                >
-                    {{ 'Data not found' | transloco }}
-                </p>
             </div>
         </div>
     `,
     styleUrls: ['./no-data.component.scss'],
     standalone: true,
-    imports: [TranslocoModule],
+    imports: [TranslocoModule, NgClass],
 })
 export class NoDataComponent implements OnInit {
+    class = input<string>('sm:h-120 sm:w-120');
     constructor() {}
 
     ngOnInit() {}

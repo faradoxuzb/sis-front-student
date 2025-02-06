@@ -5,6 +5,10 @@ export default [
         children: [
             { path: 'bio', loadComponent: () => import('./bio/bio.component') },
             {
+                path: 'overview',
+                loadComponent: () => import('./overview/overview.component'),
+            },
+            {
                 path: 'contacts',
                 loadComponent: () => import('./contacts/contacts.component'),
             },

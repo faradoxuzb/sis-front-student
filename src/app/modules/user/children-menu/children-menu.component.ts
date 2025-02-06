@@ -86,6 +86,12 @@ export default class ChildrenMenuComponent implements OnInit {
 
     panels = [
         {
+            id: 'overview',
+            icon: 'heroicons_outline:server-stack',
+            title: 'Overview',
+            description: 'overview',
+        },
+        {
             id: 'schedule',
             icon: 'heroicons_outline:academic-cap',
             title: 'Schedule',

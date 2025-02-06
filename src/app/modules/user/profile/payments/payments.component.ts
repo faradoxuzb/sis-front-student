@@ -131,6 +131,26 @@ import { FormatCurrencyPipe } from './formatCurrency.pipe';
                                 </td>
                             </ng-container>
 
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    {{ 'Action' | transloco }}
+                                </th>
+                                <td mat-cell *matCellDef="let contract">
+                                    @if (contract?.contract?.presigned_url) {
+                                        <a
+                                            class="text-blue-500 underline"
+                                            [href]="
+                                                contract?.contract.presigned_url
+                                            "
+                                        >
+                                            {{ 'Download' | transloco }}
+                                        </a>
+                                    } @else {
+                                        <p class="text-center">-</p>
+                                    }
+                                </td>
+                            </ng-container>
+
                             <tr
                                 mat-header-row
                                 *matHeaderRowDef="contractsColumn"
@@ -180,6 +200,7 @@ export default class PaymentsComponent implements AfterViewInit {
         'signing_date',
         'rejected_date',
         'status',
+        'action',
     ];
 
     @ViewChild('recentTransactionsTable', { read: MatSort })
