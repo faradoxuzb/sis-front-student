@@ -44,7 +44,9 @@
                 <div class="mx-8 hidden h-8 border-l-2 lg:flex"></div>
 
                 <!-- Stats -->
-                <div class="mb-4 mt-6 flex items-center space-x-6 lg:m-0">
+                <div
+                    class="mb-4 mt-6 grid grid-cols-2 items-center gap-2 md:grid-cols-4 md:gap-4 lg:m-0"
+                >
                     @for (
                         item of overviewAttendance() | keyvalue;
                         track $index
@@ -267,7 +269,7 @@
                         } @else {
                             <div class="flex w-full justify-center">
                                 <app-no-data
-                                    class="text-[12px] sm:h-[200px] sm:w-[200px] sm:text-[16px]"
+                                    class="text-[16px] sm:h-[200px] sm:w-[200px]"
                                 ></app-no-data>
                             </div>
                         }
