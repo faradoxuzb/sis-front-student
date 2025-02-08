@@ -121,5 +121,11 @@
     "New password and new confirm password must match": "Новый пароль и новый пароль подтверждения должны совпадать.",
     "Download": "Скачать",
     "day": "день",
-    "Overview": "Обзор"
+    "Overview": "Обзор",
+    "About me": "Обо мне",
+    "absents": "отсутствует",
+    "lates": "поздно",
+    "presents": "представляет",
+    "missed": "пропущенный",
+    "See complete bio": "Посмотреть полную биографию"
 }

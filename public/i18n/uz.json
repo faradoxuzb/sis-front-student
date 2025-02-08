@@ -126,5 +126,11 @@
         "dashboard": {
             "welcome": "Xush kelibsiz"
         }
-    }
+    },
+    "About me": "Men haqimda",
+    "absents": "Kelmagan",
+    "lates": "Kech qolgan",
+    "presents": "Darsda bo'lgan",
+    "missed": "Yo'qlama qilinmagan",
+    "See complete bio": "Umumiy biografiyani ko'rish"
 }

@@ -8,9 +8,7 @@ import { TranslocoModule } from '@ngneat/transloco';
         <div
             class="flex h-full w-full flex-col items-center justify-center gap-2"
         >
-            <p
-                class="mt-3 text-center text-[20px] font-semibold sm:text-[30px]"
-            >
+            <p class="mt-3 text-center font-semibold">
                 {{ 'Data not found' | transloco }}
             </p>
             <div class="h-80 w-80" [ngClass]="class()">
@@ -182,7 +180,7 @@ import { TranslocoModule } from '@ngneat/transloco';
     imports: [TranslocoModule, NgClass],
 })
 export class NoDataComponent implements OnInit {
-    class = input<string>('sm:h-120 sm:w-120');
+    class = input<string>('sm:h-120 sm:w-120 text-[20px] sm:text-[30px]');
     constructor() {}
 
     ngOnInit() {}

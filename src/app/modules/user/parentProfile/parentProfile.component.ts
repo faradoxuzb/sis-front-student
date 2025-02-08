@@ -6,6 +6,8 @@ import {
     OnInit,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatRipple } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseCardComponent } from '@fuse/components/card';
 import { FuseNavigationService } from '@fuse/components/navigation';
@@ -17,8 +19,6 @@ import { IdentityPipe } from 'app/modules/shared/Pipes/identity.pipe';
 import { PhonePipe } from 'app/modules/shared/Pipes/phone.pipe';
 import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe';
 import { ProfileService } from '../profile/profile.service';
-import { MatIconModule } from '@angular/material/icon';
-import { MatRipple } from '@angular/material/core';
 
 @Component({
     selector: 'app-parentProfile',
@@ -48,14 +48,16 @@ export default class ParentProfileComponent implements OnInit {
     protected $profileService = inject(ProfileService);
     protected $fuseNavigationService = inject(FuseNavigationService);
     private route = inject(ActivatedRoute);
+
     parent = this.route.snapshot.data.parentData;
+
     changeRouting(item) {
         localStorage.setItem('studentId', item.id);
         this.$userService.chooseStudentId.set(item.id);
         this.$navigationService.get().subscribe((res) => {
             this.$navigationService.navigation$ = res;
             this.$profileService.getProfileInfo();
-            this.$router.navigate(['children-menu'], {
+            this.$router.navigate(['/profile/overview'], {
                 queryParams: {
                     data: item.id,
                 },

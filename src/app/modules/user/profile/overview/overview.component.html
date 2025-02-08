@@ -1,272 +1,155 @@
-<!--@if ($profileService.profileInfo$ | async; as profileInfo) {
-    <div class="w-full">
-        <div
-            class="mb-3 w-full rounded-[8px] bg-white p-2 shadow-xl sm:p-4"
-        >
-            <div class="flex w-full items-center gap-3 md:w-[800px]">
-                <img
-                    src="/images/noPhoto.png"
-                    class="h-20 w-20 rounded-full"
-                    alt=""
-                />
-                <div class="grid w-full grid-cols-1 sm:grid-cols-2">
-                    <div class="flex flex-col gap-2">
-                        <p class="font-medium uppercase">
-                            {{ profileInfo | appFullName }}
-                        </p>
-                        <p>
-                            {{ 'Student ID' | transloco }}:
-                            <span>
-                                        {{ profileInfo.id }}
-                                    </span>
-                        </p>
-                        <p class="w-full">
-                            {{ profileInfo.user.phone }}
-                        </p>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <p class="text-primary-600">
-                            {{ profileInfo.currentGroup.groupName }}-
-                            {{
-                                profileInfo.currentGroup.classType
-                                    | translateJson
-                                    | async
-                            }}
-                        </p>
-                        <p class="w-full">
-                            {{ profileInfo.user.email }}
-                        </p>
-                        <p>
-                            {{ profileInfo.address }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div
-            class="flex w-full flex-col gap-4 rounded-[8px] bg-white p-4 shadow-xl"
-        >
-            <p class="text-[18px] font-semibold">
-                {{ 'At a glance' | transloco }}
-            </p>
-            <div class="grid w-full grid-cols-1 gap-2 sm:grid-cols-4">
-                @for (item of attendances; track $index) {
-                    <div class="flex w-full">
-                        <div
-                            [ngClass]="
-                                        item.bgColor + ' ' + item.borderColor
-                                    "
-                            class="flex w-20 items-center justify-center border text-white"
-                        >
-                            <p class="text-[22px] font-bold">
-                                {{ item.count }}
-                            </p>
-                        </div>
-                        <div
-                            class="flex w-full items-center border px-2 sm:w-fit"
-                            [ngClass]="item.borderColor"
-                        >
-                            <p class="font-medium">
-                                {{ item.type | transloco }}
-                                {{ 'day' | transloco }}
-                            </p>
-                        </div>
-                    </div>
-                }
-            </div>
-            <div class="flex items-center gap-3">
-                <p class="text-[18px] font-semibold">
-                    {{ 'Schedule' | transloco }}
-                </p>
-                <div class="flex items-center">
-                    <mat-icon
-                        (click)="changeDate(1)"
-                        class="cursor-pointer hover:text-blue-300"
-                    >chevron_left</mat-icon
-                    >
-                    <mat-form-field>
-                        <input
-                            matInput
-                            [(ngModel)]="date"
-                            [matDatepicker]="picker"
-                            (dateChange)="changeDate()"
-                        />
-                        <mat-datepicker-toggle
-                            matIconSuffix
-                            [for]="picker"
-                        ></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                    <mat-icon
-                        (click)="changeDate(2)"
-                        class="cursor-pointer hover:text-blue-300"
-                    >chevron_right</mat-icon
-                    >
-                </div>
-            </div>
-            <div class="w-full">
-                @if (schedules()?.length !== 0) {
-                    <table class="rounded-[10px] border">
-                        <tbody>
-                            @for (
-                                    item of schedules;
-                                track $index;
-                                let e = $even
-                                ) {
-                                <tr
-                                    class=""
-                                    [ngClass]="{ 'bg-[#f5f5f5]': e }"
-                                >
-                                    <td class="text-gray-500">
-                                        {{
-                                            item.dailyLesson.start_time
-                                        }}
-                                        -
-                                        {{ item.dailyLesson.end_time }}
-                                    </td>
-                                    <td
-                                        class="text-[20px] text-gray-500"
-                                    >
-                                        {{ item.grade }}
-                                    </td>
-                                    <td class="font-bold">
-                                        {{
-                                            item.subject.name
-                                                | translateJson
-                                                | async
-                                        }}
-                                    </td>
-                                    <td class="">
-                                        {{
-                                            item.dailyLesson.teacher
-                                                .full_name
-                                        }}
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                } @else {
-                    <app-no-data
-                        class="sm:h-[200px] sm:w-[200px]"
-                    ></app-no-data>
-                }
-            </div>
-        </div>
-    </div>
-}-->
 @if ($profileService.profileInfo$ | async; as profileInfo) {
-<div class="flex min-w-0 flex-auto flex-col">
-    <!-- Header -->
-    <div class="bg-card flex flex-col shadow">
-        <!-- Cover image -->
-        <div>
-            <img
-                class="h-40 object-cover lg:h-80"
-                src="images/pages/profile/cover.jpg"
-                alt="Cover image"
-            />
-        </div>
-
-        <!-- User info -->
-        <div
-            class="bg-card mx-auto flex w-full max-w-5xl flex-0 flex-col items-center px-5 md:px-8 lg:h-18 lg:flex-row z-10"
-        >
-            <!-- Avatar -->
-            <div class="-mt-26 rounded-full lg:-mt-22">
+    <div class="flex min-w-0 flex-auto flex-col">
+        <!-- Header -->
+        <div class="bg-card flex flex-col shadow">
+            <!-- Cover image -->
+            <div>
                 <img
-                    class="ring-bg-card h-32 w-32 rounded-full ring-4"
-                    src="/images/noPhoto.png"
-                    alt="User avatar"
+                    class="h-40 object-cover lg:h-80"
+                    src="images/pages/profile/cover.jpg"
+                    alt="Cover image"
                 />
             </div>
 
-            <!-- Details -->
+            <!-- User info -->
             <div
-                class="mt-4 flex flex-col items-center lg:ml-8 lg:mt-0 lg:items-start"
+                class="bg-card z-10 mx-auto flex w-full max-w-5xl flex-0 flex-col items-center px-5 md:px-8 lg:h-18 lg:flex-row"
             >
-                <div class="text-lg font-bold leading-none">{{ profileInfo | appFullName }}</div>
-                <div class="text-secondary">{{ profileInfo.currentGroup.groupName }}-{{ profileInfo.currentGroup.classType | translateJson | async }}</div>
-            </div>
-
-            <!-- Separator -->
-            <div class="mx-8 hidden h-8 border-l-2 lg:flex"></div>
-
-            <!-- Stats -->
-            <div class="mb-4 mt-6 flex items-center space-x-6 lg:m-0">
-                @for (item of attendances; track $index) {
-                    <div class="flex flex-col items-center">
-                        <span class="font-extrabold text-gray-800">{{ item.count }}</span>
-                        <span class="text-sm font-medium uppercase" [ngClass]="{'text-red-600': item.type === 'Absent', 'text-amber-600': item.type === 'Late', 'text-green-600': item.type === 'Present'}">{{ item.type | transloco }}</span>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
-
-    <!-- Main -->
-    <div
-        class="mx-auto flex w-full max-w-5xl flex-auto justify-center p-4 sm:p-8"
-    >
-        <!-- Column -->
-        <div class="w-72 mr-8 hidden flex-col items-start lg:flex">
-            <!-- About me -->
-            <fuse-card class="flex w-full max-w-80 flex-col p-8">
-                <div class="text-2xl font-semibold leading-tight">About Me</div>
-                <div class="mt-2">
-                    Student ID: {{ profileInfo.registration_number }}
+                <!-- Avatar -->
+                <div class="-mt-26 rounded-full lg:-mt-22">
+                    <img
+                        class="ring-bg-card h-32 w-32 rounded-full ring-4"
+                        src="/images/noPhoto.png"
+                        alt="User avatar"
+                    />
                 </div>
-                <hr class="my-3 w-full border-t" />
-                <div class="flex flex-col">
-                    <div class="flex items-center">
-                        <mat-icon
-                            class="mr-3 icon-size-5"
-                            [svgIcon]="'heroicons_solid:map-pin'"
-                        ></mat-icon>
-                        <span class="leading-none">{{ profileInfo.branch.name}}</span>
-                    </div>
-                    <div class="mt-4 flex items-center">
-                        <mat-icon
-                            class="mr-3 icon-size-5"
-                            [svgIcon]="'heroicons_solid:briefcase'"
-                        ></mat-icon>
-                        <span class="leading-none"
-                        >{{ profileInfo.currentGroup.groupName }}-{{ profileInfo.currentGroup.classType | translateJson | async }}</span
-                        >
-                    </div>
-                    <div class="mt-4 flex items-center">
-                        <mat-icon
-                            class="mr-3 icon-size-5"
-                            [svgIcon]="'heroicons_solid:cake'"
-                        ></mat-icon>
-                        <span class="leading-none">{{ profileInfo.birth_date | date }}</span>
-                    </div>
-                </div>
-                <a
-                    class="mt-8 px-6"
-                    mat-flat-button
-                    [color]="'primary'"
-                    [routerLink]="['./']"
+
+                <!-- Details -->
+                <div
+                    class="mt-4 flex flex-col items-center lg:ml-8 lg:mt-0 lg:items-start"
                 >
-                    See complete bio
-                </a>
-            </fuse-card>
+                    <div class="text-lg font-bold leading-none">
+                        {{ profileInfo | appFullName }}
+                    </div>
+                    <div class="text-secondary">
+                        {{ profileInfo.currentGroup.groupName }}-{{
+                            profileInfo.currentGroup.classType
+                                | translateJson
+                                | async
+                        }}
+                    </div>
+                </div>
 
+                <!-- Separator -->
+                <div class="mx-8 hidden h-8 border-l-2 lg:flex"></div>
+
+                <!-- Stats -->
+                <div class="mb-4 mt-6 flex items-center space-x-6 lg:m-0">
+                    @for (
+                        item of overviewAttendance() | keyvalue;
+                        track $index
+                    ) {
+                        <div class="flex flex-col items-center">
+                            <span class="font-extrabold text-gray-800">{{
+                                item.value
+                            }}</span>
+                            <span
+                                class="text-sm font-medium uppercase"
+                                [ngClass]="{
+                                    'text-red-600': item.key === 'absents',
+                                    'text-amber-600': item.key === 'lates',
+                                    'text-green-600': item.key === 'presents',
+                                    'text-orange-600': item.key === 'missed',
+                                }"
+                                >{{ item.key | transloco }}</span
+                            >
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
 
-        <!-- Column -->
-        <div class="flex flex-col items-center lg:items-start flex-auto">
-            <!-- Create Post -->
-            <fuse-card class="flex w-full max-w-140 flex-col">
-                <div class="mx-4 my-4 mt-6  flex items-center justify-between ">
-                    <p class="text-[18px] font-semibold"> {{ 'Schedule' | transloco }}</p>
+        <!-- Main -->
+        <div
+            class="mx-auto flex w-full max-w-5xl flex-auto flex-col justify-center p-4 sm:p-8 md:flex-row"
+        >
+            <!-- Column -->
+            <div
+                class="mr-0 w-full flex-col items-center md:mr-8 md:w-120 md:items-start lg:flex"
+            >
+                <!-- About me -->
+                <fuse-card class="flex w-full max-w-80 flex-col p-8">
+                    <div class="text-2xl font-semibold leading-tight">
+                        {{ 'About Me' | transloco }}
+                    </div>
+                    <div class="mt-2">
+                        {{ 'Student ID' | transloco }}:
+                        {{ profileInfo.registration_number }}
+                    </div>
+                    <hr class="my-3 w-full border-t" />
+                    <div class="flex flex-col">
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="'heroicons_solid:map-pin'"
+                            ></mat-icon>
+                            <span class="leading-none">{{
+                                profileInfo.branch.name
+                            }}</span>
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <mat-icon
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="'heroicons_solid:briefcase'"
+                            ></mat-icon>
+                            <span class="leading-none"
+                                >{{ profileInfo.currentGroup.groupName }}-{{
+                                    profileInfo.currentGroup.classType
+                                        | translateJson
+                                        | async
+                                }}</span
+                            >
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <mat-icon
+                                class="mr-3 icon-size-5"
+                                [svgIcon]="'heroicons_solid:cake'"
+                            ></mat-icon>
+                            <span class="leading-none">{{
+                                profileInfo.birth_date | date
+                            }}</span>
+                        </div>
+                    </div>
+                    <a
+                        class="mt-8 px-6"
+                        mat-flat-button
+                        [color]="'primary'"
+                        [routerLink]="['/profile/bio']"
+                    >
+                        {{ 'See complete bio' | transloco }}
+                    </a>
+                </fuse-card>
+            </div>
+
+            <!-- Column -->
+            <div class="flex w-full flex-auto flex-col lg:items-start">
+                <!-- Create Post -->
+                <div
+                    class="my-4 mt-6 flex w-full items-center justify-between md:mx-4"
+                >
+                    <p class="text-[18px] font-semibold">
+                        {{ 'Schedule' | transloco }}
+                    </p>
                     <div class="flex items-center">
                         <mat-icon
                             (click)="changeDate(1)"
                             class="cursor-pointer hover:text-blue-300"
-                        >chevron_left</mat-icon
+                            >chevron_left</mat-icon
                         >
-                        <mat-form-field subscriptSizing="dynamic" class="fuse-mat-dense medium-form-field">
+                        <mat-form-field
+                            subscriptSizing="dynamic"
+                            class="fuse-mat-dense medium-form-field"
+                        >
                             <input
                                 matInput
                                 [(ngModel)]="date"
@@ -282,49 +165,125 @@
                         <mat-icon
                             (click)="changeDate(2)"
                             class="cursor-pointer hover:text-blue-300"
-                        >chevron_right</mat-icon
+                            >chevron_right</mat-icon
                         >
                     </div>
                 </div>
-                <div class="mx-4 mb-6 prose prose-sm">
+                <div class="mb-6 w-full md:prose md:prose-sm md:mx-4">
                     @if (schedules | async; as schedules) {
-                        @if (schedules.length !== 0) {
-                            <table>
+                        @if (schedules.lessons.length !== 0) {
+                            <table class="hidden sm:block">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'Time' | transloco }}</th>
+                                        <th>
+                                            {{ 'Subject name' | transloco }}
+                                        </th>
+                                        <th>
+                                            {{ 'Teacher name' | transloco }}
+                                        </th>
+                                        <th>{{ 'Grade' | transloco }}</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
-                                    @for (item of schedules; track $index;) {
+                                    @for (
+                                        item of schedules.lessons;
+                                        track $index
+                                    ) {
                                         <tr>
-                                            <td class="text-gray-500 w-[95px]">{{ item.dailyLesson.start_time }}-{{ item.dailyLesson.end_time }}</td>
-                                            <td class="text-gray-500 font-semibold" >{{ item.grade }}</td>
-                                            <td class="font-bold">{{ item.subject.name | translateJson | async }}</td>
-                                            <td class=" hidden sm:table-cell">{{ item.dailyLesson.teacher.full_name }}</td>
+                                            <td
+                                                data-label="Begin Time"
+                                                class="font-medium"
+                                            >
+                                                {{ item.start_time }}-{{
+                                                    item.end_time
+                                                }}
+                                            </td>
+                                            <td
+                                                data-label="Subject"
+                                                class="font-semibold"
+                                            >
+                                                {{
+                                                    item.subject.name
+                                                        | translateJson
+                                                        | async
+                                                }}
+                                            </td>
+                                            <td
+                                                data-label="Name"
+                                                class="font-medium"
+                                            >
+                                                {{ item.teacher.full_name }}
+                                            </td>
+                                            <td
+                                                data-label="Grade"
+                                                class="font-semibold"
+                                                [ngClass]="
+                                                    item.attendance?.grade
+                                                        | grade
+                                                "
+                                            >
+                                                {{ item.attendance?.grade }}
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>
                             </table>
+                            <div class="flex w-full flex-col gap-3 sm:hidden">
+                                @for (item of schedules.lessons; track $index) {
+                                    <div class="card w-full">
+                                        <h3>{{ item.teacher.full_name }}</h3>
+                                        <p>
+                                            <span class="font-semibold">
+                                                {{ 'Subject name' }}:
+                                            </span>
+                                            {{
+                                                item.subject.name
+                                                    | translateJson
+                                                    | async
+                                            }}
+                                        </p>
+                                        <p>
+                                            <span class="font-semibold">
+                                                {{ 'Time' }}
+                                                :
+                                            </span>
+                                            {{ item.start_time }}-{{
+                                                item.end_time
+                                            }}
+                                        </p>
+                                        <p
+                                            class="grade"
+                                            [ngClass]="
+                                                item.attendance?.grade | grade
+                                            "
+                                        >
+                                            {{ 'Grade' | transloco }}:
+                                            {{ item.attendance?.grade }}
+                                        </p>
+                                    </div>
+                                }
+                            </div>
                         } @else {
-                            <app-no-data class="sm:h-[200px] sm:w-[200px]" ></app-no-data>
+                            <div class="flex w-full justify-center">
+                                <app-no-data
+                                    class="text-[12px] sm:h-[200px] sm:w-[200px] sm:text-[16px]"
+                                ></app-no-data>
+                            </div>
                         }
                     } @else {
-                        <div class=" text-center text-md font-semibold tracking-tight">
-                            <ngx-skeleton-loader [theme]="{'height': '25px'}" count="5" appearance="line" />
+                        <div
+                            class="text-center text-md font-semibold tracking-tight"
+                        >
+                            <ngx-skeleton-loader
+                                [theme]="{ height: '25px' }"
+                                count="5"
+                                appearance="line"
+                            />
                         </div>
                     }
-                    <!--<table>
-                        <tbody>
-                            @for (item of schedules | async; track $index;) {
-                                <tr>
-                                    <td class="text-gray-500 ">{{ item.dailyLesson.start_time }}-{{ item.dailyLesson.end_time }}</td>
-                                    <td class="text-gray-500 font-semibold" >{{ item.grade }}</td>
-                                    <td class="font-bold">{{ item.subject.name | translateJson | async }}</td>
-                                    <td class=" hidden sm:table-cell">{{ item.dailyLesson.teacher.full_name }}</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>-->
                 </div>
-
-            </fuse-card>
+            </div>
         </div>
     </div>
-</div>
 }

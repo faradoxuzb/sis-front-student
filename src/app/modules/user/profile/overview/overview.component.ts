@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
+import { AsyncPipe, DatePipe, KeyValuePipe, NgClass } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -16,25 +16,25 @@ import {
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { BaseService } from 'app/core/services/baseHttp.service';
 import { UserService } from 'app/core/user/user.service';
 import { FullNamePipe } from 'app/modules/shared/Pipes/full-name.pipe';
 import { TranslateJsonPipe } from 'app/modules/shared/Pipes/translate-json.pipe';
 import { NoDataComponent } from 'app/modules/shared/components/no-data/no-data.component';
-import { Dates } from '../attendance/attendance.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { Observable, map } from 'rxjs';
+import { FuseCardComponent } from '../../../../../@fuse/components/card';
 import { ProfileService } from '../profile.service';
 import { CUSTOM_DATE_FORMATS, CustomDateAdapter } from './customDateFormat';
-import { Schedule } from './module';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { map, Observable } from 'rxjs';
-import { FuseCardComponent } from '../../../../../@fuse/components/card';
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-
+import { GradePipe } from './grade.pipe';
+import { DailySchedule, OverviewAttendance } from './module';
 
 @Component({
     selector: 'app-overview',
     templateUrl: './overview.component.html',
+    styleUrls: ['./overview.component.scss'],
     standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
@@ -55,7 +55,9 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
         NoDataComponent,
         FuseCardComponent,
         RouterLink,
-        NgxSkeletonLoaderModule
+        NgxSkeletonLoaderModule,
+        GradePipe,
+        KeyValuePipe,
     ],
     providers: [
         { provide: DateAdapter, useClass: CustomDateAdapter },
@@ -64,60 +66,35 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 })
 export default class OverviewComponent {
     public $profileService = inject(ProfileService);
+
     private $cdr = inject(ChangeDetectorRef);
+
     private route = inject(ActivatedRoute);
+
     profileInfo = this.route.snapshot.data.profileInfo;
+
     date = signal<Date>(new Date());
-    schedules: Observable<any[]>;
+
+    overviewAttendance = signal<OverviewAttendance>(null);
+
+    schedules: Observable<DailySchedule>;
+
     $user = inject(UserService);
-    absent: number = 0;
-    late: number = 0;
-    present: number = 0;
+
     constructor(private _baseHttpService: BaseService) {
-        console.log(this.route.snapshot);
         this.changeDate();
         const studentId = this.$user.chooseStudentId();
-        let url = 'students/activities';
+        let link = 'students/overviews/yearly-lessons';
         if (studentId) {
-            url = url + '/' + studentId;
+            link = link + '/' + studentId;
         }
-        this._baseHttpService.get<Dates[]>(url).subscribe((res) => {
-            for (let x of res) {
-                if (x.status == 'absent') {
-                    this.absent += 1;
-                }
-                if (x.status == 'late') {
-                    this.late += 1;
-                }
-                if (x.status == 'present') {
-                    this.present += 1;
-                }
-            }
-            this.attendances = [
-                {
-                    type: 'Absent',
-                    borderColor: 'border-red-600',
-                    bgColor: 'bg-red-600',
-                    count: this.absent,
-                },
-                {
-                    type: 'Late',
-                    borderColor: 'border-[#FFBF00]',
-                    bgColor: 'bg-[#FFBF00]',
-                    count: this.late,
-                },
-                {
-                    type: 'Present',
-                    borderColor: 'border-green-400',
-                    bgColor: 'bg-green-400',
-                    count: this.present,
-                },
-            ];
-            this.$cdr.markForCheck();
+        this._baseHttpService.get<OverviewAttendance>(link).subscribe((res) => {
+            this.overviewAttendance.set(res);
         });
     }
-    attendances = [];
+
     changeDate(index?: number) {
+        this.schedules = null;
         if (index == 1) {
             this.date().setDate(this.date().getDate() - 1);
         } else if (index == 2) {
@@ -132,22 +109,21 @@ export default class OverviewComponent {
         );
 
         const studentId = this.$user.chooseStudentId();
-        let url = 'students/daily-lessons';
+        let url = 'students/overviews/daily-lessons';
         if (studentId) {
             url = url + '/' + studentId + '?date=' + dateFormat;
         } else {
             url = url + '?date=' + dateFormat;
         }
 
-        this.schedules = this._baseHttpService.get<any[]>(url).pipe(
+        this.schedules = this._baseHttpService.get<DailySchedule>(url).pipe(
             map((res) => {
                 //removve seconds from time
-                res.forEach((element) => {
-                    element.dailyLesson.start_time = element.dailyLesson.start_time.slice(0, 5);
-                    element.dailyLesson.end_time = element.dailyLesson.end_time.slice(0, 5);
+                res.lessons.forEach((element) => {
+                    element.start_time = element.start_time.slice(0, 5);
+                    element.end_time = element.end_time.slice(0, 5);
                 });
                 return res;
-
             })
         );
 

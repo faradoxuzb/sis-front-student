@@ -1,40 +1,39 @@
-export interface Schedule {
-    current_page: number;
-    data: schoolInfo[];
-    first_page_url: string;
-    from: number;
-    last_page: number;
-    last_page_url: string;
-    links: Link[];
-    next_page_url: null;
-    path: string;
-    per_page: number;
-    prev_page_url: null;
-    to: number;
-    total: number;
+import { MultiLanguageField } from 'app/modules/shared/models/multi-language-field.model';
+
+export interface DailySchedule {
+    lessons: Lesson[];
 }
 
-export interface schoolInfo {
+export interface Lesson {
     id: number;
-    educationYear: EducationYear;
-    student: Student;
-    contract_number: string;
-    signing_date: null;
-    rejection_date: null;
+    subject: Subject;
+    start_time: string;
+    end_time: string;
+    class_number: number;
+    teacher: Teacher;
+    attendance: Attendance;
 }
 
-export interface EducationYear {
+export interface Attendance {
     id: number;
-    name: string;
+    status: string;
+    mark: number;
+    note: string;
+    grade: string;
 }
 
-export interface Student {
+export interface Subject {
     id: number;
-    fullName: string;
+    name: MultiLanguageField;
+}
+export interface Teacher {
+    id: number;
+    full_name: string;
 }
 
-export interface Link {
-    url: null | string;
-    label: string;
-    active: boolean;
+export interface OverviewAttendance {
+    absents: number;
+    lates: number;
+    presents: number;
+    missed: number;
 }
