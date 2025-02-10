@@ -4,7 +4,7 @@ export interface User {
     email: string;
     avatar: string;
     status?: string;
-    roles:Roles[];
+    roles: Roles[];
 }
 
 export interface Roles {

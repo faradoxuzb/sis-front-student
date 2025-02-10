@@ -1,5 +1,11 @@
 {
     "welcome-back": "Welcome back",
     "Project": "Project",
-    "Analytics": "Analytics"
+    "Analytics": "Analytics",
+    "present": "Present",
+    "absent": "Absent",
+    "late": "Late",
+    "excused": "Excused",
+    "unexcused": "Unexcused",
+    "sick": "Sick"
 }

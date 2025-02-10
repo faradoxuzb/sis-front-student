@@ -132,5 +132,11 @@
     "lates": "Kech qolgan",
     "presents": "Darsda bo'lgan",
     "missed": "Yo'qlama qilinmagan",
-    "See complete bio": "Umumiy biografiyani ko'rish"
+    "See complete bio": "Umumiy biografiyani ko'rish",
+    "present": "Bor",
+    "absent": "Yo'q",
+    "late": "Kechikkan",
+    "excused": "Sababli",
+    "unexcused": "Sababsiz",
+    "sick": "Kasal"
 }

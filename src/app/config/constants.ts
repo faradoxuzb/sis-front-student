@@ -2,9 +2,9 @@ import { MultiLanguageField } from 'app/modules/shared/models/multi-language-fie
 
 export class Constants {
     public static Roles = {
-        Student: "student",
-        Parent: "guardian",
-    }
+        Student: 'student',
+        Parent: 'guardian',
+    };
     public static readonly LOCAL_STORAGE_KEYS = {
         access_token: 'access_token',
         refresh_token: 'refresh_token',
@@ -38,6 +38,16 @@ export class Constants {
         tg: 'Tajik',
         tk: 'Turkmen',
     };
+
+    public static readonly ATTENDANCE_STATUS_COLORS = {
+        present: 'text-green-600 ',
+        absent: 'text-red-600',
+        late: 'text-orange-600',
+        excused: 'text-blue-600',
+        unexcused: 'text-purple-600',
+        sick: 'text-yellow-600',
+    };
+
     public static readonly GENDERS = {
         male: 'Male',
         female: 'Female',
