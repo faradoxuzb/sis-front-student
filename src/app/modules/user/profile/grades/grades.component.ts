@@ -5,10 +5,14 @@ import {
     Component,
     OnInit,
     inject,
+    signal,
 } from '@angular/core';
 import { TranslocoModule } from '@ngneat/transloco';
+import { Observable } from 'rxjs';
 import { TranslateJsonPipe } from '../../../shared/Pipes/translate-json.pipe';
 import { ProfileService } from '../profile.service';
+import { GradeByStudent } from './grade-by-student.model';
+import { QuarterComponent } from './quarter/quarter.component';
 
 @Component({
     selector: 'app-grades',
@@ -16,11 +20,22 @@ import { ProfileService } from '../profile.service';
     styleUrls: ['./grades.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [AsyncPipe, TranslateJsonPipe, NgClass, TranslocoModule],
+    imports: [
+        AsyncPipe,
+        TranslateJsonPipe,
+        NgClass,
+        TranslocoModule,
+        TranslocoModule,
+        QuarterComponent,
+    ],
 })
 export default class GradesComponent implements OnInit {
+    data$: Observable<GradeByStudent>;
+
     constructor() {}
+
     groupedData: any;
+
     performanceIndicators = [
         {
             grade: 'A*',
@@ -70,7 +85,10 @@ export default class GradesComponent implements OnInit {
     ];
 
     _profileService = inject(ProfileService);
+
     cd = inject(ChangeDetectorRef);
+
+    active = signal<string>('grades');
 
     ngOnInit() {
         this._profileService.getSubjects().subscribe((res) => {

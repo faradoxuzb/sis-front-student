@@ -24,7 +24,9 @@ import { ProfileService } from './profile.service';
             }
 
         </div>-->
-        <router-outlet></router-outlet>
+        <div class="w-full p-2 sm:p-4">
+            <router-outlet></router-outlet>
+        </div>
     `,
     styleUrls: ['./profile.component.css'],
     standalone: true,

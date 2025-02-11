@@ -16,7 +16,6 @@ export class ProfileService {
     private _userService = inject(UserService);
     public id: number;
     public _classes = new BehaviorSubject<any>(null);
-
     constructor() {}
 
     public get profileInfo$(): Observable<any> {
@@ -51,6 +50,9 @@ export class ProfileService {
             .get<ProfileInfo>(link)
             .pipe(
                 map((el) => {
+                    if (!id) {
+                        this._userService.userId.set(el.id);
+                    }
                     el.files = el.files.map((el) => {
                         const type = el.name.split('.')[1].toUpperCase();
                         el.type = type;
