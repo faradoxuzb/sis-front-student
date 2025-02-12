@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseService } from 'app/core/services/baseHttp.service';
 import { UserService } from 'app/core/user/user.service';
-import { BehaviorSubject, map, Observable, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, map, Observable, ReplaySubject, tap } from 'rxjs';
 import { ProfileInfo } from './profileInfo';
 
 @Injectable({
@@ -38,9 +38,23 @@ export class ProfileService {
         }
         return this._baseHttpService.get<any>(link);
     }
+    loadProfileInfo() {
+        const id = this._userService.chooseStudentId();
+        let link = `students/profile`;
+        if (id) {
+            link = `students/profile/${id}`;
+        }
+        return this._baseHttpService.get<ProfileInfo>(id ? `students/profile/${id}` : 'students/profile').pipe(
+            tap((res) => {
+                if (!id) {
+                    this._userService.userId.set(res.id);
+                }
+                this._profileInfo.next(res);
+            })
+        );
+    }
 
     getProfileInfo() {
-        this._profileInfo.next(null);
         const id = this._userService.chooseStudentId();
         let link = `students/profile`;
         if (id) {

@@ -13,7 +13,7 @@
 
             <!-- User info -->
             <div
-                class="bg-card z-10 mx-auto flex w-full max-w-5xl flex-0 flex-col items-center px-5 md:px-8 lg:h-18 lg:flex-row"
+                class="bg-card z-10 mx-auto flex w-full max-w-5xl flex-0 flex-col items-center px-5 md:px-4 lg:h-18 lg:flex-row"
             >
                 <!-- Avatar -->
                 <div class="-mt-26 rounded-full lg:-mt-22">
@@ -41,31 +41,32 @@
                 </div>
 
                 <!-- Separator -->
-                <div class="mx-8 hidden h-8 border-l-2 lg:flex"></div>
+                <div class="mx-4 hidden h-8 border-l-2 lg:flex"></div>
 
                 <!-- Stats -->
-                <div
-                    class="mb-4 mt-6 grid grid-cols-2 items-center gap-2 md:grid-cols-4 md:gap-4 lg:m-0"
-                >
+                <div class="mb-4 mt-6 sm:flex sm:items-center sm:space-x-6 lg:m-0 grid grid-cols-2 gap-2">
                     @for (
-                        item of overviewAttendance() | keyvalue;
+                            item of overviewAttendance() | keyvalue;
                         track $index
-                    ) {
-                        <div class="flex flex-col items-center">
+                        ) {
+                        @if(item.key !== 'student_id') {
+                            <div class="flex flex-col items-center">
                             <span class="font-extrabold text-gray-800">{{
-                                item.value
-                            }}</span>
-                            <span
-                                class="text-sm font-medium uppercase"
-                                [ngClass]="{
-                                    'text-red-600': item.key === 'absents',
-                                    'text-amber-600': item.key === 'lates',
-                                    'text-green-600': item.key === 'presents',
+                                    item.value
+                                }}</span>
+                                <span
+                                    class="text-sm font-medium uppercase text-center"
+                                    [ngClass]="{
+                                    'text-red-600': item.key === 'absent',
+                                    'text-amber-600': item.key === 'late',
+                                    'text-green-600': item.key === 'attended',
                                     'text-orange-600': item.key === 'missed',
                                 }"
                                 >{{ item.key | transloco }}</span
-                            >
-                        </div>
+                                >
+                            </div>
+                        }
+
                     }
                 </div>
             </div>
@@ -76,9 +77,7 @@
             class="mx-auto flex w-full max-w-5xl flex-auto flex-col justify-center p-4 sm:p-8 md:flex-row"
         >
             <!-- Column -->
-            <div
-                class="mr-0 w-full flex-col items-center md:mr-8 md:w-120 md:items-start lg:flex"
-            >
+            <div class="w-72 mr-4 hidden flex-col items-start lg:flex">
                 <!-- About me -->
                 <fuse-card class="flex w-full max-w-80 flex-col p-8">
                     <div class="text-2xl font-semibold leading-tight">
@@ -134,7 +133,122 @@
             </div>
 
             <!-- Column -->
-            <div class="flex w-full flex-auto flex-col lg:items-start">
+            <div class="flex-col items-center lg:items-start flex-auto hidden sm:flex">
+                <!-- Create Post -->
+                <fuse-card class="flex w-full max-w-160 flex-col">
+                    <div class="mx-4 my-4 mt-6  flex items-center justify-between ">
+                        <p class="text-[18px] font-semibold">
+                            {{ 'Schedule' | transloco }}
+                        </p>
+                        <div class="flex items-center space-x-1">
+                            <mat-icon
+                                (click)="changeDate(-1)"
+                                class="cursor-pointer hover:text-blue-300"
+                            >chevron_left</mat-icon
+                            >
+
+                            <span class="font-medium">{{ datePickerControl.toJSDate() | date: 'yyyy-MM-dd' }}</span>
+                            <!--<mat-form-field
+                                subscriptSizing="dynamic"
+                                class="fuse-mat-dense medium-form-field"
+                            >
+                                <input
+                                    matInput
+                                    [formControl]="datePickerControl"
+                                    [matDatepicker]="picker"
+                                />
+                                <mat-datepicker-toggle
+                                    matIconSuffix
+                                    [for]="picker"
+                                ></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>-->
+                            <mat-icon
+                                (click)="changeDate(1)"
+                                class="cursor-pointer hover:text-blue-300"
+                            >chevron_right</mat-icon
+                            >
+                        </div>
+                    </div>
+                    <div class="mx-4 w-full sm:w-auto mb-6 prose prose-sm">
+                        @if (schedules | async; as schedules) {
+                            @if (schedules.lessons.length !== 0) {
+                                <table>
+                                    <tbody>
+                                        @for (
+                                                item of schedules.lessons;
+                                            track $index
+                                            ) {
+                                            <tr>
+                                                <td
+                                                    data-label="Begin Time"
+                                                    class="font-medium w-[100px]"
+                                                >
+                                                    {{ item.start_time }}-{{
+                                                        item.end_time
+                                                    }}
+                                                </td>
+                                                <td
+                                                    data-label="Subject"
+                                                    class="font-medium"
+                                                >
+                                                   <span [routerLink]="['/profile/grades']" [queryParams]="{subjectId: item.subject.id}" class="cursor-pointer hover:underline text-red-500"> {{
+                                                        item.subject.name
+                                                            | translateJson
+                                                            | async
+                                                    }}
+                                                       </span>
+                                                </td>
+                                                <td
+                                                    data-label="Grade"
+                                                    class="font-semibold"
+                                                    [ngClass]="
+                                                        item.attendance?.grade
+                                                            | grade
+                                                    "
+                                                >
+                                                    {{ item.attendance?.grade }}
+                                                </td>
+                                                <td
+                                                    data-label="Name"
+                                                    class="font-medium"
+                                                >
+                                                    {{ item.teacher.full_name }}
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            } @else {
+                                <div class="flex w-full justify-center">
+                                    <app-no-data
+                                        class="text-[16px] sm:h-[200px] sm:w-[200px]"
+                                    ></app-no-data>
+                                </div>
+                            }
+                        } @else {
+                            <div
+                                class="text-center text-md font-semibold tracking-tight"
+                            >
+                                <ngx-skeleton-loader
+                                    [theme]="{ height: '25px' }"
+                                    count="5"
+                                    appearance="line"
+                                />
+                            </div>
+                        }
+                    </div>
+                    <a
+                        class="ml-4 mb-4 px-6 w-20"
+                        mat-flat-button
+                        [color]="'primary'"
+                        [routerLink]="['/profile/grades']"
+                    >
+                        {{ 'See all' | transloco }}
+                    </a>
+                </fuse-card>
+            </div>
+            <div class="flex w-full flex-auto flex-col lg:items-start sm:hidden">
                 <!-- Create Post -->
                 <div
                     class="my-4 mt-6 flex w-full items-center justify-between md:mx-4"
@@ -142,30 +256,31 @@
                     <p class="text-[18px] font-semibold">
                         {{ 'Schedule' | transloco }}
                     </p>
-                    <div class="flex items-center">
+                    <div class="flex items-center space-x-1">
                         <mat-icon
-                            (click)="changeDate(1)"
+                            (click)="changeDate(-1)"
                             class="cursor-pointer hover:text-blue-300"
                             >chevron_left</mat-icon
                         >
-                        <mat-form-field
+                        <span class="font-medium">{{ datePickerControl.toJSDate() | date: 'yyyy-MM-dd' }}</span>
+                       <!-- <mat-form-field
                             subscriptSizing="dynamic"
                             class="fuse-mat-dense medium-form-field"
                         >
                             <input
                                 matInput
-                                [(ngModel)]="date"
-                                [matDatepicker]="picker"
-                                (dateChange)="changeDate()"
+                                [formControl]="datePickerControl"
+                                [matDatepicker]="pickerXs"
+
                             />
                             <mat-datepicker-toggle
                                 matIconSuffix
-                                [for]="picker"
+                                [for]="pickerXs"
                             ></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
+                            <mat-datepicker #pickerXs></mat-datepicker>
+                        </mat-form-field>-->
                         <mat-icon
-                            (click)="changeDate(2)"
+                            (click)="changeDate(1)"
                             class="cursor-pointer hover:text-blue-300"
                             >chevron_right</mat-icon
                         >
@@ -174,64 +289,7 @@
                 <div class="mb-6 w-full md:prose md:prose-sm md:mx-4">
                     @if (schedules | async; as schedules) {
                         @if (schedules.lessons.length !== 0) {
-                            <table class="hidden sm:block">
-                                <thead>
-                                    <tr>
-                                        <th>{{ 'Time' | transloco }}</th>
-                                        <th>
-                                            {{ 'Subject name' | transloco }}
-                                        </th>
-                                        <th>
-                                            {{ 'Teacher name' | transloco }}
-                                        </th>
-                                        <th>{{ 'Grade' | transloco }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @for (
-                                        item of schedules.lessons;
-                                        track $index
-                                    ) {
-                                        <tr>
-                                            <td
-                                                data-label="Begin Time"
-                                                class="font-medium"
-                                            >
-                                                {{ item.start_time }}-{{
-                                                    item.end_time
-                                                }}
-                                            </td>
-                                            <td
-                                                data-label="Subject"
-                                                class="font-semibold"
-                                            >
-                                                {{
-                                                    item.subject.name
-                                                        | translateJson
-                                                        | async
-                                                }}
-                                            </td>
-                                            <td
-                                                data-label="Name"
-                                                class="font-medium"
-                                            >
-                                                {{ item.teacher.full_name }}
-                                            </td>
-                                            <td
-                                                data-label="Grade"
-                                                class="font-semibold"
-                                                [ngClass]="
-                                                    item.attendance?.grade
-                                                        | grade
-                                                "
-                                            >
-                                                {{ item.attendance?.grade }}
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                            <div class="flex w-full flex-col gap-3 sm:hidden">
+                            <div class="flex w-full flex-col gap-3 ">
                                 @for (item of schedules.lessons; track $index) {
                                     <div class="card w-full">
                                         <h3>{{ item.teacher.full_name }}</h3>
@@ -239,11 +297,13 @@
                                             <span class="font-semibold">
                                                 {{ 'Subject name' }}:
                                             </span>
-                                            {{
-                                                item.subject.name
-                                                    | translateJson
-                                                    | async
-                                            }}
+                                            <span [routerLink]="['/profile/grades']" [queryParams]="{subjectId: item.subject.id}" class="cursor-pointer hover:underline text-primary font-semibold">
+                                                 {{
+                                                    item.subject.name
+                                                        | translateJson
+                                                        | async
+                                                }}
+                                            </span>
                                         </p>
                                         <p>
                                             <span class="font-semibold">

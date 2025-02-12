@@ -13,8 +13,8 @@ export class GradeService {
 
     userId: number;
 
-    getGradesByStudent(quarterId: number) {
-        let link = `school/student/${this.userId}/quarterly/${quarterId}/attendances`;
+    getGradesByStudent(userId:number, quarterId: number, subjectId: number = null) {
+        let link = `school/student/${userId || this.userId}/quarterly/${quarterId}/attendances` +( subjectId ? `?subject_id=${subjectId}` : '');
         return this.$base.get<GradeByStudent>(link);
     }
 

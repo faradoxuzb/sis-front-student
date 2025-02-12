@@ -37,3 +37,4 @@ export interface OverviewAttendance {
     presents: number;
     missed: number;
 }
+

@@ -15,11 +15,11 @@ export class GradePipe implements PipeTransform {
         }
         switch (value) {
             case 'A':
-                return 'text-[#4CAF50] bg-[#D0E9D0]'; // hex for rgba(76, 175, 80, 0.1)
+                return 'text-[#4CAF50]'; // hex for rgba(76, 175, 80, 0.1)
             case 'B':
-                return 'text-[#2196F3] bg-[#B2E0F0]'; // hex for rgba(33, 150, 243, 0.1)
+                return 'text-[#2196F3]'; // hex for rgba(33, 150, 243, 0.1)
             case 'C':
-                return 'text-[#F44336] bg-[#F9C2C2]'; // hex for rgba(244, 67, 54, 0.1)
+                return 'text-[#F44336]'; // hex for rgba(244, 67, 54, 0.1)
         }
         return 'text-green-600';
     }

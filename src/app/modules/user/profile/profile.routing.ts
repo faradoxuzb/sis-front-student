@@ -1,9 +1,14 @@
 import { studentProfileResolver } from '../../../core/user/guardian-profile.resolver';
+import { DailyGradesComponent } from './daily-grades/daily-grades.component';
+import { quarterlyResolver } from './quarterly.resolver';
 
 export default [
     {
         path: '',
         loadComponent: () => import('./profile.component'),
+        resolve: {
+            studentProfile: studentProfileResolver
+        },
         children: [
             { path: 'bio', loadComponent: () => import('./bio/bio.component') },
             {
@@ -41,7 +46,14 @@ export default [
             },
             {
                 path: 'grades',
-                loadComponent: () => import('./grades/grades.component'),
+                component: DailyGradesComponent,
+                resolve: {
+                    quarters: quarterlyResolver
+                }
+            },
+            {
+                path: 'daily-grades',
+                component: DailyGradesComponent
             },
             {
                 path: 'medicalInfo',

@@ -12,7 +12,7 @@ interface GradeByStudentSubject {
     days: {
         date: string; // '2024-12-09';
         existsInDailyLessonForSubject: boolean;
-        attendance: OverviewAttendance;
+        attendance: any;
     }[];
 }
 export interface QuarterlyModel {

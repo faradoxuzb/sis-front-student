@@ -161,7 +161,7 @@ export class QuarterComponent implements OnInit {
     }
     getData() {
         this.$gradeService
-            .getGradesByStudent(this.selectQuarty())
+            .getGradesByStudent(null, this.selectQuarty())
             .subscribe((res) => {
                 this.data = res;
                 this.cdr.markForCheck();

@@ -1,0 +1,212 @@
+<div class="flex min-w-0 flex-auto flex-col">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="mx-auto flex w-full max-w-screen-xl flex-col px-6 sm:px-8">
+            <div
+                class="my-8 flex min-w-0 flex-auto flex-col sm:my-8 sm:flex-row sm:items-center"
+            >
+                <!-- Avatar and name -->
+                <div class="flex min-w-0 flex-auto items-center">
+                    <div class="ml-4 flex min-w-0 flex-col">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="truncate text-2xl font-semibold leading-7 tracking-tight"
+                            >
+                                {{ studentProfile | appFullName }}
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:user-circle'"
+                            ></mat-icon>
+                            <div class="text-secondary ml-1.5 truncate leading-6">
+                                <span class="text-primary-800">
+                                    {{ studentProfile.currentGroup.groupName }}-{{ studentProfile.currentGroup.classType | translateJson | async }}
+                                </span>
+                                {{ 'Subjects and Quarterly Grades for group' | transloco }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <!--<div class="mt-6 flex items-center space-x-3 sm:ml-2 sm:mt-0">
+                    <button
+                        class="bg-accent"
+                        mat-flat-button
+                        [color]="'accent'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:envelope'"
+                        ></mat-icon>
+                        <span class="ml-2">Messages</span>
+                    </button>
+                    <button mat-flat-button [color]="'primary'">
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:cog-8-tooth'"
+                        ></mat-icon>
+                        <span class="ml-2">Settings</span>
+                    </button>
+                </div>-->
+            </div>
+            <!-- Project selector -->
+            <div
+                class="bg-default relative flex cursor-pointer self-start overflow-hidden rounded-t-xl border border-b-0 pb-1 pl-5 pr-4 pt-2"
+                matRipple
+                [matMenuTriggerFor]="projectsMenu"
+            >
+                <div class="flex items-center">
+                    <div class="overflow-hidden">
+                        @if (selectedProject) {
+                            <div class="truncate font-medium leading-6">
+                                {{ selectedProject.name | translateJson | async }}
+                            </div>
+                        }
+                    </div>
+                    <div class="flex items-center justify-center pl-2">
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_mini:chevron-down'"
+                        ></mat-icon>
+                    </div>
+                </div>
+                <mat-menu #projectsMenu="matMenu" [xPosition]="'before'">
+                    @for (quarterly of quarterlies; track quarterly.id) {
+                        <button
+                            mat-menu-item
+                            (click)="onQuarterlyChanged(quarterly)"
+                        >
+                            {{ quarterly.name | translateJson | async}}
+                        </button>
+                    }
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="-mt-px flex-auto border-t pt-4 sm:pt-6">
+        <div class="mx-auto w-full max-w-screen-xl px-6 sm:px-8">
+            @if (grades$ | async; as grades) {
+                @if (subjectId) {
+                    <div
+                        class="grid w-full min-w-0 grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4"
+                    >
+                        <!-- Schedule -->
+                        @for (subject of grades.subjects; track $index)  {
+                        <div
+                            class="bg-card flex flex-auto flex-col overflow-hidden rounded-2xl p-6 shadow sm:col-span-2 md:col-span-4 lg:col-span-2"
+                        >
+                            <div
+                                class="flex flex-col items-start justify-between sm:flex-row"
+                            >
+                                <div
+                                    class="truncate text-lg font-medium leading-6 tracking-tight"
+                                >
+                                    {{ subject.name | translateJson | async }}
+                                </div>
+                            </div>
+                            <div class="mt-2 flex flex-col divide-y">
+
+                                    @for (day of subject.days; track $index) {
+                                    <div
+                                        class="flex flex-row items-center justify-between px-0.5 py-4"
+                                    >
+                                        <div class="flex flex-col">
+                                            <div class="font-medium">
+                                                <!--{{ subject.name | translateJson | async }}-->
+                                                {{ day.date}}
+                                            </div>
+                                            <div
+                                                class="-ml-0.5 mt-2 flex flex-col space-y-1 sm:mt-1 sm:flex-row sm:items-center sm:space-x-3 sm:space-y-0"
+                                            >
+                                                @if (day.attendance) {
+                                                    <div
+                                                        class="flex items-center"
+                                                    >
+                                                        <span>Grade:</span>
+                                                        <div
+                                                            class="text-secondary ml-1.5 text-md"
+                                                        >
+                                                            {{
+                                                                day.attendance.mark
+                                                            }}
+                                                        </div>
+                                                    </div>
+                                                }
+                                                @if (day.attendance) {
+                                                    <div
+                                                        class="flex items-center"
+                                                    >
+                                                        <span>Mark:</span>
+                                                        <div
+                                                            class="text-secondary ml-1.5 text-md" [ngClass]="
+                                                        day.attendance.grade
+                                                            | grade
+                                                    "
+                                                        >
+                                                            {{
+                                                                day.attendance.grade
+                                                            }}
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+
+                            </div>
+                        </div>
+                        }
+                    </div>
+                } @else {
+                    <div class="container bg-card overflow-hidden overflow-x-auto rounded-lg border border-gray-200 shadow-lg ">
+
+                            @if (grades.subjects.length > 0) {
+                                <table
+                                    class="min-w-full border-collapse table-fixed"
+                                >
+                                    <thead>
+                                    <tr
+                                        class="bg-gradient-to-r from-red-800 to-yellow-700 text-sm uppercase tracking-wide text-white"
+
+                                    >
+                                        <th class="bg-gradient-to-r from-red-800 to-red-800 border-r sticky left-0  border-b border-gray-100 p-4  dark:border-gray-700 truncate" width="200px">
+                                            {{ 'Subjects' | transloco }}
+                                        </th>
+                                        @for (day of grades.subjects[0].days; track $index) {
+                                            <th class="px-6 py-4 text-center" style="writing-mode: sideways-lr">{{ day.date }}</th>
+                                        }
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (subject of grades.subjects; track $index) {
+                                            <tr  class="border-b even:bg-gray-100 hover:bg-gray-50">
+                                                <td class="border-b px-4 py-3 font-semibold bg-gray-100 sticky left-0 truncate" width="200px">
+<!--                                                <td class="border-r bg-white sticky left-0  font-semibold border-b p-4">-->
+
+                                                    {{ subject.name | translateJson | async }}
+                                                </td>
+                                                @for (day of subject.days; track $index) {
+                                                    <td class="px-4 py-3 text-center font-bold">{{ day.attendance?.mark }}</td>
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            } @else {
+                                <div class="flex w-full justify-center">
+                                    <app-no-data></app-no-data>
+                                </div>
+                            }
+
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</div>

@@ -24,7 +24,7 @@ import { FormatCurrencyPipe } from './formatCurrency.pipe';
 @Component({
     selector: 'app-payments',
     template: `
-        <div class="w-full">
+        <div class="w-full py-2 px-4">
             <p class="my-4 text-[22px] font-semibold">
                 {{ 'Contracts and Payments' | transloco }}
             </p>

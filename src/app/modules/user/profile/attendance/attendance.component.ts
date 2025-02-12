@@ -27,7 +27,7 @@ export interface Dates {
 @Component({
     selector: 'app-attendance',
     template: `
-        <div class="w-full">
+        <div class="w-full py-2 px-4">
             <p class="my-4 text-[22px] font-semibold">
                 {{ 'Attendance' | transloco }}
             </p>

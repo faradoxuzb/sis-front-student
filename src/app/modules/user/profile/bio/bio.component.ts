@@ -16,7 +16,7 @@ import { ProfileService } from '../profile.service';
 @Component({
     selector: 'app-bio',
     template: `
-        <div class="overflow-auto" style="  ">
+        <div class="overflow-auto py-2 px-4" style="  ">
             <p class="my-4 text-[22px] font-semibold">
                 {{ 'Bio' | transloco }}
             </p>

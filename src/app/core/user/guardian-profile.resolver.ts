@@ -12,5 +12,5 @@ export const guardianProfileResolver: ResolveFn<Parent> = (route, state) => {
 
 export const studentProfileResolver: ResolveFn<ProfileInfo> =  (route, state) => {
     const profileService = inject(ProfileService);
-    return profileService.profileInfo$;
+    return profileService.loadProfileInfo();
 }
